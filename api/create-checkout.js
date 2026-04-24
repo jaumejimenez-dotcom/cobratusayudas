@@ -1,3 +1,4 @@
+// v2
 const Stripe = require('stripe'); 
 
 module.exports = async (req, res) => {
