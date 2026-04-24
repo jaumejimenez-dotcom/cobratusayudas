@@ -18,6 +18,7 @@ module.exports = async (req, res) => {
 
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
+      customer_creation: 'always',
       line_items: [
         {
           price: 'price_1TPjUzH0E1XzsUjnAd0zxaqw',
