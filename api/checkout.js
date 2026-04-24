@@ -14,7 +14,7 @@ module.exports = async (req, res) => {
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
       customer_creation: 'always',
-      line_items: [{ price: 'price_1TPIVHHnR7v3xoRAIzrXfTs0', quantity: 1 }],
+      line_items: [{ price: 'price_1TPIVHHnR7v3xoRAIzrXfTsO', quantity: 1 }],
       mode: 'payment',
       success_url: `${req.headers.origin || 'https://cobratusayudas.es'}/?pago=ok`,
       cancel_url: `${req.headers.origin || 'https://cobratusayudas.es'}/?pago=cancelado`,
