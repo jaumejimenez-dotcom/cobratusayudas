@@ -61,7 +61,7 @@
 
     .logo {
       font-family: 'DM Serif Display', serif;
-      font-size: 1.3rem;
+      font-size: 1.7rem;
       color: var(--accent);
       letter-spacing: -0.02em;
     }
@@ -69,12 +69,12 @@
     .logo span { color: #ffffff; }
 
     .header-badge {
-      font-size: 0.7rem;
+      font-size: 0.85rem;
       font-weight: 600;
       background: rgba(0,212,170,0.12);
       color: var(--accent);
       border: 1px solid rgba(0,212,170,0.3);
-      padding: 4px 10px;
+      padding: 6px 14px;
       border-radius: 20px;
       text-transform: uppercase;
       letter-spacing: 0.05em;
@@ -1196,10 +1196,10 @@
     </div>
 
     <footer>
-      <a href="#">Aviso legal</a>
-      <a href="#">Política de privacidad</a>
-      <a href="#">Cookies</a>
-      <a href="#">Contacto</a>
+      <a href="#" onclick="openLegal('aviso'); return false;">Aviso legal</a>
+      <a href="#" onclick="openLegal('privacidad'); return false;">Política de privacidad</a>
+      <a href="#" onclick="openLegal('cookies'); return false;">Cookies</a>
+      <a href="mailto:hola@cobratusayudas.es">Contacto</a>
       <br><br>
       © 2025 CobraTusAyudas.es · Datos obtenidos de fuentes oficiales (BDNS, infosubvenciones.es)
     </footer>
@@ -1584,10 +1584,10 @@
     </div>
 
     <footer>
-      <a href="#">Aviso legal</a>
-      <a href="#">Política de privacidad</a>
-      <a href="#">Cookies</a>
-      <a href="#">Contacto</a>
+      <a href="#" onclick="openLegal('aviso'); return false;">Aviso legal</a>
+      <a href="#" onclick="openLegal('privacidad'); return false;">Política de privacidad</a>
+      <a href="#" onclick="openLegal('cookies'); return false;">Cookies</a>
+      <a href="mailto:hola@cobratusayudas.es">Contacto</a>
       <br><br>
       © 2025 CobraTusAyudas.es · Datos obtenidos de fuentes oficiales (BDNS, infosubvenciones.es)
     </footer>
@@ -1719,7 +1719,9 @@
 
     // ─── SHARE ───
     function shareWhatsApp() {
-      const text = '🔒 Descubre cuánto dinero del gobierno te estás perdiendo. Yo acabo de encontrar mis ayudas en cobratusayudas.es — solo cuesta 6€ y merece mucho la pena.';
+      const moneyEl = document.getElementById('money-display');
+      const amount = moneyEl ? moneyEl.textContent : 'miles de euros';
+      const text = `Acabo de descubrir que me estaba perdiendo más de ${amount} al año en ayudas del gobierno 😱 Comprueba gratis cuánto te corresponde a ti en cobratusayudas.es — si te lo envío es porque merece la pena`;
       window.open('https://wa.me/?text=' + encodeURIComponent(text), '_blank');
     }
 
@@ -1814,6 +1816,77 @@
 
     function closeGuide() {
       document.getElementById('guide-modal').style.display = 'none';
+      document.body.style.overflow = '';
+    }
+  </script>
+
+  <!-- ══ MODAL LEGAL ══ -->
+  <div id="legal-modal" style="display:none; position:fixed; inset:0; z-index:2000; background:rgba(0,0,0,0.5); backdrop-filter:blur(4px); align-items:flex-start; justify-content:center; padding:20px; overflow-y:auto;">
+    <div style="background:#ffffff; border-radius:20px; max-width:680px; width:100%; margin:40px auto; padding:40px 32px; position:relative;">
+      <button onclick="closeLegal()" style="position:absolute; top:16px; right:16px; background:#f1f5f9; border:none; width:32px; height:32px; border-radius:50%; cursor:pointer; font-size:1rem; color:#64748b;">✕</button>
+      <div id="legal-content" style="font-size:0.88rem; color:#475569; line-height:1.7;"></div>
+    </div>
+  </div>
+
+  <script>
+    // ─── LEGAL CONTENT ───
+    const legalTexts = {
+      aviso: `
+        <h2 style="font-family:'DM Serif Display',serif;font-size:1.6rem;color:#0f172a;margin-bottom:20px;">Aviso Legal</h2>
+        <p><strong>Titular:</strong> Jaime Jiménez (en adelante, "el titular"), con domicilio en Barcelona, España.</p>
+        <p style="margin-top:12px;"><strong>Correo electrónico de contacto:</strong> hola@cobratusayudas.es</p>
+        <h3 style="font-size:1rem;color:#0f172a;margin:20px 0 8px;">Objeto y ámbito de aplicación</h3>
+        <p>El presente Aviso Legal regula el acceso y uso del sitio web cobratusayudas.es (en adelante, "el sitio web"), titularidad del responsable indicado anteriormente.</p>
+        <h3 style="font-size:1rem;color:#0f172a;margin:20px 0 8px;">Propiedad intelectual</h3>
+        <p>Todos los contenidos del sitio web, incluyendo textos, imágenes, diseño y código fuente, son propiedad del titular o cuenta con las licencias correspondientes. Queda prohibida su reproducción sin autorización expresa.</p>
+        <h3 style="font-size:1rem;color:#0f172a;margin:20px 0 8px;">Responsabilidad</h3>
+        <p>La información sobre ayudas y subvenciones se obtiene de fuentes oficiales (BDNS - Base de Datos Nacional de Subvenciones). El titular no garantiza la exactitud absoluta ni la vigencia de las ayudas mostradas, que pueden estar sujetas a cambios por parte de las administraciones públicas. El usuario es responsable de verificar los requisitos antes de realizar cualquier solicitud.</p>
+        <h3 style="font-size:1rem;color:#0f172a;margin:20px 0 8px;">Legislación aplicable</h3>
+        <p>Este aviso legal se rige por la legislación española. Para cualquier controversia, las partes se someten a los juzgados y tribunales de Barcelona.</p>
+        <p style="margin-top:20px;color:#94a3b8;font-size:0.8rem;">Última actualización: abril 2025</p>
+      `,
+      privacidad: `
+        <h2 style="font-family:'DM Serif Display',serif;font-size:1.6rem;color:#0f172a;margin-bottom:20px;">Política de Privacidad</h2>
+        <p>En cumplimiento del Reglamento (UE) 2016/679 (RGPD) y la Ley Orgánica 3/2018 (LOPDGDD), te informamos sobre el tratamiento de tus datos personales.</p>
+        <h3 style="font-size:1rem;color:#0f172a;margin:20px 0 8px;">Responsable del tratamiento</h3>
+        <p>Jaime Jiménez · hola@cobratusayudas.es · Barcelona, España</p>
+        <h3 style="font-size:1rem;color:#0f172a;margin:20px 0 8px;">Datos que recogemos</h3>
+        <p>Recogemos únicamente los datos necesarios para prestarte el servicio: las respuestas al cuestionario (anónimas, sin identificación personal) y el correo electrónico proporcionado en el momento del pago a través de Stripe.</p>
+        <h3 style="font-size:1rem;color:#0f172a;margin:20px 0 8px;">Finalidad y base legal</h3>
+        <p>Tus datos se utilizan para: (1) prestarte el servicio contratado (base legal: ejecución de contrato); (2) enviarte comunicaciones sobre nuevas ayudas relevantes para tu perfil, si nos das tu consentimiento.</p>
+        <h3 style="font-size:1rem;color:#0f172a;margin:20px 0 8px;">Conservación de datos</h3>
+        <p>Los datos se conservan mientras sea necesario para la prestación del servicio y durante los plazos legalmente exigibles.</p>
+        <h3 style="font-size:1rem;color:#0f172a;margin:20px 0 8px;">Tus derechos</h3>
+        <p>Puedes ejercer tus derechos de acceso, rectificación, supresión, oposición, limitación y portabilidad escribiendo a hola@cobratusayudas.es. También tienes derecho a presentar una reclamación ante la Agencia Española de Protección de Datos (aepd.es).</p>
+        <h3 style="font-size:1rem;color:#0f172a;margin:20px 0 8px;">Transferencias internacionales</h3>
+        <p>Los pagos se procesan a través de Stripe Payments Europe Ltd., con garantías adecuadas conforme al RGPD.</p>
+        <p style="margin-top:20px;color:#94a3b8;font-size:0.8rem;">Última actualización: abril 2025</p>
+      `,
+      cookies: `
+        <h2 style="font-family:'DM Serif Display',serif;font-size:1.6rem;color:#0f172a;margin-bottom:20px;">Política de Cookies</h2>
+        <p>Este sitio web utiliza cookies propias y de terceros para mejorar tu experiencia de navegación.</p>
+        <h3 style="font-size:1rem;color:#0f172a;margin:20px 0 8px;">¿Qué son las cookies?</h3>
+        <p>Las cookies son pequeños archivos de texto que se almacenan en tu dispositivo cuando visitas un sitio web. Permiten que el sitio recuerde tus preferencias y mejore su funcionamiento.</p>
+        <h3 style="font-size:1rem;color:#0f172a;margin:20px 0 8px;">Cookies que utilizamos</h3>
+        <p><strong>Cookies técnicas (necesarias):</strong> Imprescindibles para el funcionamiento del sitio. No requieren consentimiento.</p>
+        <p style="margin-top:8px;"><strong>Cookies de Stripe:</strong> Utilizadas por nuestro proveedor de pagos para procesar transacciones de forma segura. Consulta la política de Stripe en stripe.com/privacy.</p>
+        <h3 style="font-size:1rem;color:#0f172a;margin:20px 0 8px;">Cómo gestionar las cookies</h3>
+        <p>Puedes configurar tu navegador para rechazar o eliminar cookies. Ten en cuenta que deshabilitar ciertas cookies puede afectar al funcionamiento del sitio.</p>
+        <p style="margin-top:20px;color:#94a3b8;font-size:0.8rem;">Última actualización: abril 2025</p>
+      `
+    };
+
+    function openLegal(id) {
+      const content = legalTexts[id];
+      if (!content) return;
+      document.getElementById('legal-content').innerHTML = content;
+      const modal = document.getElementById('legal-modal');
+      modal.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLegal() {
+      document.getElementById('legal-modal').style.display = 'none';
       document.body.style.overflow = '';
     }
   </script>
