@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -10,17 +11,17 @@
   <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #0a0f1e;
-      --surface: #111827;
-      --surface2: #1a2235;
-      --border: #1e2d47;
-      --accent: #00d4aa;
+      --bg: #f8fafc;
+      --surface: #ffffff;
+      --surface2: #f1f5f9;
+      --border: #e2e8f0;
+      --accent: #00b894;
       --accent2: #f59e0b;
       --danger: #ef4444;
-      --text: #f0f4ff;
-      --text-muted: #8899bb;
-      --text-dim: #4a5a7a;
-      --green: #10b981;
+      --text: #0f172a;
+      --text-muted: #64748b;
+      --text-dim: #94a3b8;
+      --green: #059669;
       --radius: 16px;
     }
 
@@ -962,12 +963,98 @@
 
     /* ─── RESPONSIVE ─── */
     @media (max-width: 640px) {
-      .steps-grid { grid-template-columns: 1fr; }
-      .testimonials-grid { grid-template-columns: 1fr; }
-      .payment-testimonials { grid-template-columns: 1fr; }
+
+      /* Grids → single column */
+      .steps-grid,
+      .testimonials-grid,
+      .payment-testimonials,
       .stats-row { grid-template-columns: 1fr; }
+
       .options-grid { grid-template-columns: 1fr; }
-      .hero-trust { flex-direction: column; gap: 12px; }
+      .hero-trust { flex-direction: column; gap: 10px; }
+
+      /* Hero adjustments */
+      .hero-content { padding: 32px 20px 24px; }
+      .hero-title { font-size: 2rem; }
+      .hero-subtitle { font-size: 0.92rem; }
+      .live-counter { font-size: 0.78rem; padding: 8px 14px; }
+
+      /* CTA button — bigger tap target on mobile */
+      .cta-btn {
+        width: 100%;
+        justify-content: center;
+        font-size: 1.05rem;
+        padding: 20px 24px;
+        border-radius: 16px;
+      }
+
+      /* Sticky CTA bar at bottom on mobile */
+      .sticky-cta {
+        display: flex !important;
+      }
+
+      /* Header — hide badge on very small screens */
+      .header-badge { display: none; }
+
+      /* Stats */
+      .stat-item { padding: 20px 16px; }
+      .stat-number { font-size: 1.8rem; }
+
+      /* How it works */
+      .how-section { padding: 40px 20px; }
+      .step-card { padding: 20px 16px; }
+
+      /* Quiz */
+      .quiz-container { padding: 24px 16px 80px; }
+      .question-text { font-size: 1.4rem; }
+      .option-btn { padding: 14px 16px; font-size: 0.85rem; }
+
+      /* Results */
+      .results-container { padding: 24px 16px 100px; }
+      .money-amount { font-size: 2.8rem; }
+      .money-box { padding: 24px 16px; }
+      .payment-section { padding: 20px 16px; }
+
+      /* Ayuda cards */
+      .ayuda-card { flex-direction: column; align-items: flex-start; gap: 10px; }
+      .ayuda-card-right { text-align: left; }
+
+      /* Pay button */
+      .pay-btn { font-size: 1rem; padding: 18px; }
+
+      /* Unlocked */
+      .unlocked-container { padding: 24px 16px 100px; }
+
+      /* Share buttons */
+      .share-btn { width: 100%; justify-content: center; margin: 4px 0; }
+    }
+
+    /* ─── STICKY CTA (mobile only) ─── */
+    .sticky-cta {
+      display: none;
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      z-index: 200;
+      padding: 12px 16px 20px;
+      background: linear-gradient(to top, var(--bg) 70%, transparent);
+    }
+
+    .sticky-cta button {
+      width: 100%;
+      background: var(--accent);
+      color: #0a0f1e;
+      font-family: 'Sora', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      padding: 18px;
+      border-radius: 14px;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      box-shadow: 0 8px 32px rgba(0,212,170,0.4);
     }
   </style>
 </head>
@@ -977,6 +1064,14 @@
     <div class="logo">cobra<span>tusayudas</span>.es</div>
     <div class="header-badge">100% Oficial · Datos reales</div>
   </header>
+
+  <!-- STICKY CTA — mobile only -->
+  <div class="sticky-cta" id="sticky-cta">
+    <button onclick="startQuiz()">
+      Comprobar mis ayudas — es gratis
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </button>
+  </div>
 
   <!-- ══════════════════════════════════════
        PAGE 1: HERO
@@ -1304,6 +1399,34 @@
 
       <!-- PAYMENT SECTION -->
       <div class="payment-section">
+
+        <div style="text-align:center; margin-bottom:20px;">
+          <div style="margin-bottom:8px;">
+            <span style="color:#94a3b8; font-size:1.1rem; text-decoration:line-through; margin-right:10px;">24,99€</span>
+            <span style="color:var(--accent); font-weight:800; font-size:2rem;">6,00€</span>
+            <span style="background:rgba(0,184,148,0.12); color:var(--accent); font-size:0.75rem; font-weight:700; padding:4px 10px; border-radius:6px; margin-left:8px; vertical-align:middle; border:1px solid rgba(0,184,148,0.3);">— 76% dto</span>
+          </div>
+          <div style="font-size:0.78rem; color:var(--text-dim);">⏰ Oferta de lanzamiento · Tiempo limitado</div>
+        </div>
+
+        <button class="pay-btn" id="pay-btn" onclick="handlePayment()">
+          🔓 Desbloquear mis ayudas por solo 6€
+        </button>
+
+        <p class="pay-subtitle">Sin suscripción · Pago único · Menos que un café</p>
+
+        <div class="pay-badges">
+          <div class="pay-badge">🔒 Pago seguro SSL</div>
+          <div class="pay-badge">💳 Visa / Mastercard / Apple Pay</div>
+          <div class="pay-badge">✅ Sin datos bancarios</div>
+        </div>
+
+        <div style="border-top:1px solid var(--border); margin: 24px 0;"></div>
+
+        <div class="social-proof">
+          <strong>14.832 personas</strong> ya han desbloqueado sus ayudas este año
+        </div>
+
         <div class="payment-testimonials">
           <div class="mini-testimonial">
             <div class="mini-stars">★★★★★</div>
@@ -1323,27 +1446,6 @@
             <div class="mini-amount">+3.200€</div>
             <div class="mini-author">— Sara G., Zaragoza</div>
           </div>
-        </div>
-
-        <div class="social-proof">
-          <strong>14.832 personas</strong> ya han desbloqueado sus ayudas este año
-        </div>
-<div style="text-align:center; margin-bottom:16px;">
-  <span style="color:#4a5a7a; font-size:0.85rem; text-decoration:line-through; margin-right:10px;">24,99€</span>
-  <span style="color:#00d4aa; font-weight:700; font-size:1.4rem;">6,00€</span>
-  <span style="background:rgba(0,212,170,0.12); color:#00d4aa; font-size:0.72rem; font-weight:700; padding:3px 8px; border-radius:6px; margin-left:8px; vertical-align:middle;">— 76%</span>
-  <div style="font-size:0.72rem; color:#4a5a7a; margin-top:4px;">Oferta de lanzamiento · Tiempo limitado</div>
-</div>
-        <button class="pay-btn" id="pay-btn" onclick="handlePayment()">
-          🔓 Desbloquear mis ayudas por solo 6€
-        </button>
-
-        <p class="pay-subtitle">Sin suscripción · Pago único · Menos que un café</p>
-
-        <div class="pay-badges">
-          <div class="pay-badge">🔒 Pago seguro SSL</div>
-          <div class="pay-badge">💳 Visa / Mastercard / Apple Pay</div>
-          <div class="pay-badge">✅ Sin datos bancarios</div>
         </div>
       </div>
 
@@ -1484,6 +1586,7 @@
 
 
   <script>
+    // ─── LIVE COUNTER ───
     let count = 1247;
     function tickCounter() {
       count += Math.floor(Math.random() * 3);
@@ -1493,16 +1596,23 @@
     }
     tickCounter();
 
+    // ─── NAVIGATION ───
     function showPage(id) {
       document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
       document.getElementById(id).classList.add('active');
       window.scrollTo(0, 0);
+      // Hide sticky CTA once user starts quiz
       const stickyCta = document.getElementById('sticky-cta');
-      if (stickyCta) stickyCta.style.display = id === 'page-hero' ? '' : 'none';
+      if (stickyCta) {
+        stickyCta.style.display = id === 'page-hero' ? '' : 'none';
+      }
     }
 
-    function startQuiz() { showPage('page-quiz'); }
+    function startQuiz() {
+      showPage('page-quiz');
+    }
 
+    // ─── QUIZ LOGIC ───
     let currentQ = 1;
     const totalQ = 6;
 
@@ -1514,7 +1624,9 @@
     }
 
     function selectCCAA(val) {
-      if (val) setTimeout(() => nextQuestion(2, null), 300);
+      if (val) {
+        setTimeout(() => nextQuestion(2, null), 300);
+      }
     }
 
     function nextQuestion(nextNum, btn) {
@@ -1530,25 +1642,40 @@
     function goToQuestion(num) {
       document.querySelectorAll('.question-block').forEach(q => q.classList.remove('active'));
       const target = document.getElementById('q' + num);
-      if (target) { target.classList.add('active'); updateProgress(num); currentQ = num; }
+      if (target) {
+        target.classList.add('active');
+        updateProgress(num);
+        currentQ = num;
+      }
     }
 
     function showCalculating(btn) {
       btn.classList.add('selected');
-      setTimeout(() => { showPage('page-calculating'); runCalculating(); }, 400);
+      setTimeout(() => {
+        showPage('page-calculating');
+        runCalculating();
+      }, 400);
     }
 
+    // ─── CALCULATING ANIMATION ───
     function runCalculating() {
-      ['cs1','cs2','cs3','cs4'].forEach((id, i) => {
-        setTimeout(() => document.getElementById(id).classList.add('done'), 600 + i * 700);
+      const steps = ['cs1', 'cs2', 'cs3', 'cs4'];
+      steps.forEach((id, i) => {
+        setTimeout(() => {
+          document.getElementById(id).classList.add('done');
+        }, 600 + i * 700);
       });
-      setTimeout(() => showPage('page-results'), 3800);
+      setTimeout(() => {
+        showPage('page-results');
+      }, 3800);
     }
 
+    // ─── STRIPE PAYMENT ───
     async function handlePayment() {
       const btn = document.getElementById('pay-btn');
       btn.textContent = '⏳ Procesando...';
       btn.disabled = true;
+
       try {
         const response = await fetch('/api/create-checkout', {
           method: 'POST',
@@ -1567,20 +1694,30 @@
       }
     }
 
+    // ─── DETECT SUCCESSFUL PAYMENT RETURN ───
     function checkPaymentReturn() {
       const params = new URLSearchParams(window.location.search);
-      if (params.get('pago') === 'ok') showPage('page-unlocked');
+      if (params.get('pago') === 'ok') {
+        showPage('page-unlocked');
+      }
     }
     checkPaymentReturn();
 
-    function showUnlocked() { showPage('page-unlocked'); }
+    // ─── SHOW UNLOCKED (simulates post-payment) ───
+    function showUnlocked() {
+      showPage('page-unlocked');
+    }
 
+    // ─── SHARE ───
     function shareWhatsApp() {
-      window.open('https://wa.me/?text=' + encodeURIComponent('🔒 Descubre cuánto dinero del gobierno te estás perdiendo. Yo acabo de encontrar mis ayudas en cobratusayudas.es — solo cuesta 6€ y merece mucho la pena.'), '_blank');
+      const text = '🔒 Descubre cuánto dinero del gobierno te estás perdiendo. Yo acabo de encontrar mis ayudas en cobratusayudas.es — solo cuesta 6€ y merece mucho la pena.';
+      window.open('https://wa.me/?text=' + encodeURIComponent(text), '_blank');
     }
 
     function copyLink() {
-      navigator.clipboard.writeText('https://cobratusayudas.es').then(() => alert('¡Enlace copiado!'));
+      navigator.clipboard.writeText('https://cobratusayudas.es').then(() => {
+        alert('¡Enlace copiado!');
+      });
     }
   </script>
 
