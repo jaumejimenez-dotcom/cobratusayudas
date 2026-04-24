@@ -54,9 +54,9 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      background: rgba(10,15,30,0.85);
+      background: rgba(10,15,30,0.95);
       backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
     }
 
     .logo {
@@ -66,7 +66,7 @@
       letter-spacing: -0.02em;
     }
 
-    .logo span { color: var(--text); }
+    .logo span { color: #ffffff; }
 
     .header-badge {
       font-size: 0.7rem;
@@ -255,7 +255,8 @@
 
     /* ─── HOW IT WORKS ─── */
     .how-section {
-      max-width: 760px;
+      max-width: 1100px;
+      width: 100%;
       margin: 0 auto;
       padding: 64px 24px;
       text-align: center;
@@ -1153,7 +1154,7 @@
         <div class="step-card">
           <div class="step-num">03</div>
           <div class="step-title">Cobra lo que es tuyo</div>
-          <p class="step-desc">Por solo 6€ desbloqueás el listado completo con links directos para solicitarlas.</p>
+          <p class="step-desc">Accede al listado completo de ayudas con links directos para solicitarlas desde casa.</p>
         </div>
       </div>
     </div>
@@ -1166,19 +1167,19 @@
           <div class="testimonial-card">
             <div class="testimonial-stars">★★★★★</div>
             <p class="testimonial-text">"Nunca imaginé que por tener dos hijos y vivir en Andalucía me correspondían tantas ayudas. El proceso fue rapidísimo."</p>
-            <div class="testimonial-amount">+2.340€/año</div>
+            <div class="testimonial-amount">+3.340€/año</div>
             <div class="testimonial-author">— María G., Sevilla · Madre de 2 hijos</div>
           </div>
           <div class="testimonial-card">
             <div class="testimonial-stars">★★★★★</div>
             <p class="testimonial-text">"Pensaba que estas cosas solo eran para gente con pocos recursos. Me equivocaba. Encontré 4 ayudas que no sabía que existían."</p>
-            <div class="testimonial-amount">+1.890€/año</div>
+            <div class="testimonial-amount">+2.890€/año</div>
             <div class="testimonial-author">— Carlos M., Madrid · Autónomo</div>
           </div>
           <div class="testimonial-card">
             <div class="testimonial-stars">★★★★★</div>
             <p class="testimonial-text">"Por 6€ descubrí que llevaba 3 años sin cobrar una prestación a la que tenía derecho. Valió muchísimo la pena."</p>
-            <div class="testimonial-amount">+3.120€/año</div>
+            <div class="testimonial-amount">+4.120€/año</div>
             <div class="testimonial-author">— Lucía P., Barcelona · Empleada</div>
           </div>
         </div>
@@ -1186,7 +1187,7 @@
     </div>
 
     <div style="text-align:center; padding: 60px 24px;">
-      <h2 style="font-family:'DM Serif Display',serif; font-size:clamp(1.8rem,4vw,2.4rem); margin-bottom:16px;">¿Cuánto dinero te está perdiendo?</h2>
+      <h2 style="font-family:'DM Serif Display',serif; font-size:clamp(1.8rem,4vw,2.4rem); margin-bottom:16px;">¿Cuánto dinero te estás perdiendo?</h2>
       <p style="color:var(--text-muted); margin-bottom:32px; font-size:0.95rem;">Compruébalo ahora. Es gratis y solo tarda 2 minutos.</p>
       <button class="cta-btn" onclick="startQuiz()">
         Empezar ahora — es gratis
@@ -1431,19 +1432,19 @@
           <div class="mini-testimonial">
             <div class="mini-stars">★★★★★</div>
             <p class="mini-text">"Pagué 6€ y recuperé más de 2.000€. La mejor inversión del año."</p>
-            <div class="mini-amount">+2.100€</div>
+            <div class="mini-amount">+3.100€</div>
             <div class="mini-author">— Ana R., Valencia</div>
           </div>
           <div class="mini-testimonial">
             <div class="mini-stars">★★★★★</div>
             <p class="mini-text">"Increíble. No sabía que existían la mitad de estas ayudas."</p>
-            <div class="mini-amount">+1.740€</div>
+            <div class="mini-amount">+2.740€</div>
             <div class="mini-author">— Pedro M., Bilbao</div>
           </div>
           <div class="mini-testimonial">
             <div class="mini-stars">★★★★★</div>
             <p class="mini-text">"Fácil, rápido y muy útil. Lo he recomendado a toda mi familia."</p>
-            <div class="mini-amount">+3.200€</div>
+            <div class="mini-amount">+4.200€</div>
             <div class="mini-author">— Sara G., Zaragoza</div>
           </div>
         </div>
@@ -1477,7 +1478,7 @@
           </div>
           <div class="ayuda-card-right">
             <span class="ayuda-card-amount">1.200€/año</span>
-            <a href="https://www.seg-social.es" target="_blank" class="ayuda-card-link">Solicitar →</a>
+            <a href="#" class="ayuda-card-link" onclick="openGuide('hijo'); return false;">Cómo solicitarla →</a>
           </div>
         </div>
 
@@ -1493,7 +1494,7 @@
           </div>
           <div class="ayuda-card-right">
             <span class="ayuda-card-amount">hasta 240€/año</span>
-            <a href="https://www.cnmc.es" target="_blank" class="ayuda-card-link">Solicitar →</a>
+            <a href="#" class="ayuda-card-link" onclick="openGuide('bono'); return false;">Cómo solicitarlo →</a>
           </div>
         </div>
 
@@ -1509,7 +1510,7 @@
           </div>
           <div class="ayuda-card-right">
             <span class="ayuda-card-amount">hasta 840€</span>
-            <a href="https://www.mivau.gob.es" target="_blank" class="ayuda-card-link">Solicitar →</a>
+            <a href="#" class="ayuda-card-link" onclick="openGuide('vivienda'); return false;">Cómo solicitarla →</a>
           </div>
         </div>
 
@@ -1525,7 +1526,7 @@
           </div>
           <div class="ayuda-card-right">
             <span class="ayuda-card-amount">1.200€/año</span>
-            <a href="https://sede.agenciatributaria.gob.es" target="_blank" class="ayuda-card-link">Solicitar →</a>
+            <a href="#" class="ayuda-card-link" onclick="openGuide('irpf'); return false;">Cómo solicitarla →</a>
           </div>
         </div>
 
@@ -1540,7 +1541,7 @@
           </div>
           <div class="ayuda-card-right">
             <span class="ayuda-card-amount">hasta 180€/año</span>
-            <a href="#" class="ayuda-card-link">Contactar ayuntamiento →</a>
+            <a href="#" class="ayuda-card-link" onclick="openGuide('agua'); return false;">Cómo solicitarla →</a>
           </div>
         </div>
 
@@ -1556,10 +1557,18 @@
           </div>
           <div class="ayuda-card-right">
             <span class="ayuda-card-amount">hasta 1.000€/año</span>
-            <a href="https://www.seg-social.es" target="_blank" class="ayuda-card-link">Solicitar →</a>
+            <a href="#" class="ayuda-card-link" onclick="openGuide('guarderia'); return false;">Cómo solicitarla →</a>
           </div>
         </div>
       </div>
+
+  <!-- ══ MODAL GUÍA ══ -->
+  <div id="guide-modal" style="display:none; position:fixed; inset:0; z-index:1000; background:rgba(0,0,0,0.5); backdrop-filter:blur(4px); align-items:center; justify-content:center; padding:20px;">
+    <div style="background:#ffffff; border-radius:20px; max-width:560px; width:100%; max-height:90vh; overflow-y:auto; padding:32px; position:relative;">
+      <button onclick="closeGuide()" style="position:absolute; top:16px; right:16px; background:var(--surface2); border:none; width:32px; height:32px; border-radius:50%; cursor:pointer; font-size:1rem; color:var(--text-muted);">✕</button>
+      <div id="guide-content"></div>
+    </div>
+  </div>
 
       <div class="share-section">
         <h3 class="share-title">¿Conoces a alguien que también podría cobrar sus ayudas?</h3>
@@ -1587,12 +1596,12 @@
 
   <script>
     // ─── LIVE COUNTER ───
-    let count = 1247;
+    let count = Math.floor(Math.random() * 1000) + 800;
     function tickCounter() {
-      count += Math.floor(Math.random() * 3);
+      count += Math.random() > 0.4 ? 1 : (Math.random() > 0.7 ? 2 : 0);
       const el = document.getElementById('counter');
       if (el) el.textContent = count.toLocaleString('es-ES');
-      setTimeout(tickCounter, 4000 + Math.random() * 8000);
+      setTimeout(tickCounter, 3000 + Math.random() * 9000);
     }
     tickCounter();
 
@@ -1718,6 +1727,94 @@
       navigator.clipboard.writeText('https://cobratusayudas.es').then(() => {
         alert('¡Enlace copiado!');
       });
+    }
+
+    // ─── GUIDES ───
+    const guides = {
+      hijo: {
+        title: 'Prestación por hijo a cargo',
+        amount: '1.200€/año',
+        url: 'https://sede.seg-social.gob.es',
+        urlLabel: 'Ir a la Sede de la Seguridad Social',
+        docs: ['DNI o NIE del solicitante', 'Libro de familia o certificado de nacimiento', 'Certificado de empadronamiento', 'Declaración de la renta o certificado de ingresos'],
+        steps: ['Accede a la Sede Electrónica de la Seguridad Social con tu DNI electrónico o certificado digital.', 'Busca el trámite "Prestaciones familiares — hijo a cargo sin discapacidad".', 'Rellena el formulario con tus datos personales y los de tu hijo/a.', 'Adjunta los documentos requeridos en formato PDF.', 'Envía la solicitud y guarda el justificante. Recibirás resolución en 30-60 días.']
+      },
+      bono: {
+        title: 'Bono Social Eléctrico',
+        amount: 'hasta 240€/año',
+        url: 'https://www.bonosocial.gob.es',
+        urlLabel: 'Ir al portal del Bono Social',
+        docs: ['DNI del titular del contrato de luz', 'Número CUPS (en tu factura de la luz)', 'Certificado de empadronamiento', 'Justificante de ingresos'],
+        steps: ['Comprueba si cumples los requisitos: ingresos bajos, familia numerosa o con menores a cargo.', 'Entra en el portal oficial del Bono Social o contacta con tu comercializadora de luz.', 'Solicita el formulario de adhesión al Bono Social.', 'Presenta la documentación requerida online o en persona.', 'El descuento se aplica automáticamente en tu próxima factura una vez aprobado.']
+      },
+      vivienda: {
+        title: 'Plan Estatal de Vivienda — Alquiler',
+        amount: 'hasta 840€',
+        url: 'https://www.mivau.gob.es',
+        urlLabel: 'Ir al Ministerio de Vivienda',
+        docs: ['DNI del solicitante', 'Contrato de alquiler vigente', 'Últimas 3 nóminas o declaración de renta', 'Certificado de empadronamiento en la vivienda alquilada', 'Número de cuenta bancaria'],
+        steps: ['Consulta la convocatoria vigente en la web de tu Comunidad Autónoma.', 'Verifica que cumples los requisitos de ingresos y límite de alquiler.', 'Descarga y rellena el formulario de solicitud de tu comunidad.', 'Presenta la solicitud con la documentación en el organismo indicado.', 'Espera la resolución. Si es favorable, recibirás el pago directamente en tu cuenta.']
+      },
+      irpf: {
+        title: 'Deducción IRPF familia numerosa',
+        amount: '1.200€/año',
+        url: 'https://sede.agenciatributaria.gob.es',
+        urlLabel: 'Ir a la Agencia Tributaria',
+        docs: ['DNI del contribuyente', 'Título de familia numerosa vigente', 'Número de cuenta bancaria para la devolución'],
+        steps: ['Accede a la Sede de la Agencia Tributaria con tu Cl@ve o certificado digital.', 'Al hacer la declaración, busca el apartado "Familia numerosa o personas con discapacidad a cargo".', 'Marca la casilla e introduce el número de tu título de familia numerosa.', 'También puedes solicitar el cobro anticipado mensual de 100€/mes sin esperar a la declaración anual.', 'Guarda el justificante de la solicitud.']
+      },
+      agua: {
+        title: 'Tarifa Social del Agua',
+        amount: 'hasta 180€/año',
+        url: 'https://www.google.com/search?q=tarifa+social+agua+ayuntamiento',
+        urlLabel: 'Buscar en tu ayuntamiento',
+        docs: ['DNI del titular del contrato de agua', 'Contrato o factura del agua', 'Certificado de empadronamiento', 'Justificante de ingresos'],
+        steps: ['Llama o visita las oficinas de tu ayuntamiento y pregunta por la "tarifa social del agua".', 'Solicita el formulario de adhesión y los requisitos específicos de tu municipio.', 'Reúne la documentación indicada.', 'Presenta la solicitud en persona o por registro online.', 'El descuento se aplicará en tus próximas facturas del agua.']
+      },
+      guarderia: {
+        title: 'Cheque Guardería',
+        amount: 'hasta 1.000€/año',
+        url: 'https://sede.seg-social.gob.es',
+        urlLabel: 'Ir a la Sede de la Seguridad Social',
+        docs: ['DNI del solicitante', 'Libro de familia o certificado de nacimiento del menor', 'Certificado de la guardería con precio y datos del centro', 'Declaración de la renta o certificado de ingresos', 'Número de cuenta bancaria'],
+        steps: ['Verifica que tu hijo/a tiene menos de 3 años y está en una guardería privada por no haber plaza pública.', 'Accede a la Sede Electrónica de la Seguridad Social.', 'Busca "Prestación económica por cuidado de menor" o "cheque guardería".', 'Rellena el formulario con los datos del menor y del centro.', 'Adjunta la documentación y envía. La prestación se paga mensualmente.']
+      }
+    };
+
+    function openGuide(id) {
+      const g = guides[id];
+      if (!g) return;
+      const stepsHtml = g.steps.map((s, i) => `
+        <div style="display:flex;gap:12px;margin-bottom:14px;align-items:flex-start;">
+          <div style="min-width:26px;height:26px;border-radius:50%;background:rgba(0,184,148,0.1);border:1px solid rgba(0,184,148,0.3);color:#00b894;font-weight:700;font-size:0.78rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;">${i+1}</div>
+          <p style="font-size:0.87rem;color:#475569;line-height:1.6;margin:0;padding-top:3px;">${s}</p>
+        </div>`).join('');
+      const docsHtml = g.docs.map(d => `<li style="font-size:0.84rem;color:#475569;margin-bottom:6px;">📄 ${d}</li>`).join('');
+      document.getElementById('guide-content').innerHTML = `
+        <div style="margin-bottom:20px;">
+          <span style="font-size:0.7rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:#00b894;">Guía paso a paso</span>
+          <h3 style="font-family:'DM Serif Display',serif;font-size:1.4rem;color:#0f172a;margin:6px 0 4px;">${g.title}</h3>
+          <span style="color:#059669;font-weight:700;font-size:1rem;">${g.amount}</span>
+        </div>
+        <div style="background:#f8fafc;border-radius:12px;padding:14px 18px;margin-bottom:20px;">
+          <div style="font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;color:#64748b;margin-bottom:10px;">📋 Documentación necesaria</div>
+          <ul style="list-style:none;margin:0;padding:0;">${docsHtml}</ul>
+        </div>
+        <div style="margin-bottom:24px;">
+          <div style="font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;color:#64748b;margin-bottom:14px;">🗺️ Pasos a seguir</div>
+          ${stepsHtml}
+        </div>
+        <a href="${g.url}" target="_blank" style="display:flex;align-items:center;justify-content:center;gap:8px;background:#00b894;color:#ffffff;font-family:'Sora',sans-serif;font-weight:700;font-size:0.95rem;padding:16px;border-radius:12px;text-decoration:none;">
+          ${g.urlLabel} →
+        </a>`;
+      const modal = document.getElementById('guide-modal');
+      modal.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeGuide() {
+      document.getElementById('guide-modal').style.display = 'none';
+      document.body.style.overflow = '';
     }
   </script>
 
