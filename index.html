@@ -1479,7 +1479,6 @@
 
 
   <script>
-    // ─── LIVE COUNTER ───
     let count = 1247;
     function tickCounter() {
       count += Math.floor(Math.random() * 3);
@@ -1489,18 +1488,16 @@
     }
     tickCounter();
 
-    // ─── NAVIGATION ───
     function showPage(id) {
       document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
       document.getElementById(id).classList.add('active');
       window.scrollTo(0, 0);
+      const stickyCta = document.getElementById('sticky-cta');
+      if (stickyCta) stickyCta.style.display = id === 'page-hero' ? '' : 'none';
     }
 
-    function startQuiz() {
-      showPage('page-quiz');
-    }
+    function startQuiz() { showPage('page-quiz'); }
 
-    // ─── QUIZ LOGIC ───
     let currentQ = 1;
     const totalQ = 6;
 
@@ -1512,9 +1509,7 @@
     }
 
     function selectCCAA(val) {
-      if (val) {
-        setTimeout(() => nextQuestion(2, null), 300);
-      }
+      if (val) setTimeout(() => nextQuestion(2, null), 300);
     }
 
     function nextQuestion(nextNum, btn) {
@@ -1530,35 +1525,21 @@
     function goToQuestion(num) {
       document.querySelectorAll('.question-block').forEach(q => q.classList.remove('active'));
       const target = document.getElementById('q' + num);
-      if (target) {
-        target.classList.add('active');
-        updateProgress(num);
-        currentQ = num;
-      }
+      if (target) { target.classList.add('active'); updateProgress(num); currentQ = num; }
     }
 
     function showCalculating(btn) {
       btn.classList.add('selected');
-      setTimeout(() => {
-        showPage('page-calculating');
-        runCalculating();
-      }, 400);
+      setTimeout(() => { showPage('page-calculating'); runCalculating(); }, 400);
     }
 
-    // ─── CALCULATING ANIMATION ───
     function runCalculating() {
-      const steps = ['cs1', 'cs2', 'cs3', 'cs4'];
-      steps.forEach((id, i) => {
-        setTimeout(() => {
-          document.getElementById(id).classList.add('done');
-        }, 600 + i * 700);
+      ['cs1','cs2','cs3','cs4'].forEach((id, i) => {
+        setTimeout(() => document.getElementById(id).classList.add('done'), 600 + i * 700);
       });
-      setTimeout(() => {
-        showPage('page-results');
-      }, 3800);
+      setTimeout(() => showPage('page-results'), 3800);
     }
 
-    // ─── SHOW UNLOCKED (simulates post-payment) ───
     async function handlePayment() {
       const btn = document.getElementById('pay-btn');
       btn.textContent = '⏳ Procesando...';
@@ -1580,21 +1561,21 @@
         alert('Ha habido un error al procesar el pago. Inténtalo de nuevo.');
       }
     }
-    function showUnlocked() {
-      // In production: trigger Stripe payment here, then call showUnlocked on success
-      showPage('page-unlocked');
-    }
 
-    // ─── SHARE ───
+    function checkPaymentReturn() {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get('pago') === 'ok') showPage('page-unlocked');
+    }
+    checkPaymentReturn();
+
+    function showUnlocked() { showPage('page-unlocked'); }
+
     function shareWhatsApp() {
-      const text = '🔒 Descubre cuánto dinero del gobierno te estás perdiendo. Yo acabo de encontrar mis ayudas en cobratusayudas.es — solo cuesta 6€ y merece mucho la pena.';
-      window.open('https://wa.me/?text=' + encodeURIComponent(text), '_blank');
+      window.open('https://wa.me/?text=' + encodeURIComponent('🔒 Descubre cuánto dinero del gobierno te estás perdiendo. Yo acabo de encontrar mis ayudas en cobratusayudas.es — solo cuesta 6€ y merece mucho la pena.'), '_blank');
     }
 
     function copyLink() {
-      navigator.clipboard.writeText('https://cobratusayudas.es').then(() => {
-        alert('¡Enlace copiado!');
-      });
+      navigator.clipboard.writeText('https://cobratusayudas.es').then(() => alert('¡Enlace copiado!'));
     }
   </script>
 
