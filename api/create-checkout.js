@@ -21,7 +21,7 @@ module.exports = async (req, res) => {
       customer_creation: 'always',
       line_items: [
         {
-          price: 'price_1TPjUzH0E1XzsUjnAd0zxaqw',
+          price: 'price_1TPIVHHnR7v3xoRAIzrXfTsO',
           quantity: 1,
         },
       ],
