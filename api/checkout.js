@@ -10,7 +10,7 @@ module.exports = async (req, res) => {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
   try {
-    const stripe = new Stripe('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');
+    const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
       customer_creation: 'always',
