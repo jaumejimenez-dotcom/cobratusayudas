@@ -808,7 +808,7 @@ function buildResults() {
   document.getElementById("money-display").textContent = calcularImporteTotal(ayudas);
   document.getElementById("ayudas-count").textContent = ayudas.length;
 
-  document.getElementById("preview-list").innerHTML = ayudas.slice(0, 5).map(a => `
+  document.getElementById("preview-list").innerHTML = ayudas.slice(0, 2).map(a => `
     <div class="ayuda-item">
       <div class="ayuda-info"><div class="ayuda-name">${a.nombre}</div><div class="ayuda-org">${a.organismo}</div></div>
       <div class="ayuda-amount">${a.importe}</div>
