@@ -295,7 +295,7 @@
       <div class="question-label">Tus ingresos</div>
       <h2 class="question-text">¿Cuál es el ingreso neto mensual de tu hogar?</h2>
       <div class="options-grid">
-        <button class="option-btn" onclick="setAnswer('ingresos','lt600');nextQuestion(5,this)"><span class="option-icon">&#128184;</span>Menos de 600€</button>
+        <button class="option-btn" onclick="setAnswer('ingresos','<600');nextQuestion(5,this)"><span class="option-icon">&#128184;</span>Menos de 600€</button>
         <button class="option-btn" onclick="setAnswer('ingresos','600-1000');nextQuestion(5,this)"><span class="option-icon">&#128176;</span>600€ – 1.000€</button>
         <button class="option-btn" onclick="setAnswer('ingresos','1000-2000');nextQuestion(5,this)"><span class="option-icon">&#128179;</span>1.000€ – 2.000€</button>
         <button class="option-btn" onclick="setAnswer('ingresos','2000-3500');nextQuestion(5,this)"><span class="option-icon">&#128202;</span>2.000€ – 3.500€</button>
@@ -310,7 +310,7 @@
         <button class="option-btn" onclick="setAnswer('familia','pareja');nextQuestion(6,this)"><span class="option-icon">&#128107;</span>En pareja, sin hijos</button>
         <button class="option-btn" onclick="setAnswer('familia','1hijo');nextQuestion(6,this)"><span class="option-icon">&#128118;</span>1 hijo/a a cargo</button>
         <button class="option-btn" onclick="setAnswer('familia','2hijos');nextQuestion(6,this)"><span class="option-icon">&#128106;</span>2 hijos/as a cargo</button>
-        <button class="option-btn" onclick="setAnswer('familia','3mashijos');nextQuestion(6,this)"><span class="option-icon">&#128106;</span>3 o mas hijos (familia númerosa)</button>
+        <button class="option-btn" onclick="setAnswer('familia','3+hijos');nextQuestion(6,this)"><span class="option-icon">&#128106;</span>3 o mas hijos (familia númerosa)</button>
         <button class="option-btn" onclick="setAnswer('familia','monoparental');nextQuestion(6,this)"><span class="option-icon">&#129489;</span>Familia monoparental</button>
         <button class="option-btn" onclick="setAnswer('familia','dependiente');nextQuestion(6,this)"><span class="option-icon">&#128116;</span>Cuido familiar mayor/dependiente</button>
       </div>
