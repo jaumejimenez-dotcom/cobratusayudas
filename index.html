@@ -198,7 +198,7 @@
     </div>
   </div>
   <div class="stats-row">
-    <div class="stat-item"><span class="stat-number">+270</span><div class="stat-label">ayudas en nuestra base de datos</div></div>
+    <div class="stat-item"><span class="stat-number">+200</span><div class="stat-label">ayudas en nuestra base de datos</div></div>
     <div class="stat-item"><span class="stat-number">5.000M€</span><div class="stat-label">sin reclamar cada año en España</div></div>
     <div class="stat-item"><span class="stat-number">14.832</span><div class="stat-label">personas ya han comprobado sus ayudas</div></div>
   </div>
@@ -207,7 +207,7 @@
     <h2 class="section-title">En 3 pasos, descubre lo que te corresponde</h2>
     <div class="steps-grid">
       <div class="step-card"><div class="step-num">1</div><div class="step-title">Responde 12 preguntas</div><div class="step-desc">Sobre tu perfil personal, familiar, laboral y de vivienda. Sin datos personales identificativos.</div></div>
-      <div class="step-card"><div class="step-num">2</div><div class="step-title">Cruzamos tu perfil con +270 ayudas</div><div class="step-desc">Nacionales, autonómicas y locales vigentes que encajan exactamente con tu situación real.</div></div>
+      <div class="step-card"><div class="step-num">2</div><div class="step-title">Cruzamos tu perfil con +200 ayudas</div><div class="step-desc">Nacionales, autonómicas y locales vigentes que encajan exactamente con tu situación real.</div></div>
       <div class="step-card"><div class="step-num">3</div><div class="step-title">Recibe tu informe personalizado</div><div class="step-desc">Con el listado completo, importes reales, links directos e instrucciones paso a paso.</div></div>
     </div>
   </div>
@@ -242,8 +242,8 @@
       <div class="progress-track"><div class="progress-fill" id="progress-fill" style="width:8%"></div></div>
     </div>
     <div class="question-block active" id="q1">
-      <div class="question-label">Tu ubicacion</div>
-      <h2 class="question-text">En que comunidad autonoma vives?</h2>
+      <div class="question-label">Tu ubicación</div>
+      <h2 class="question-text">¿En qué comunidad autónoma vives?</h2>
       <div class="options-grid single">
         <select id="ccaa-select" style="background:var(--surface);border:1.5px solid var(--border);border-radius:12px;padding:16px 20px;color:var(--text);font-family:Sora,sans-serif;font-size:0.9rem;width:100%;cursor:pointer;appearance:none;outline:none;" onchange="selectCCAA(this.value)">
           <option value="">— Selecciona tu comunidad —</option>
@@ -271,7 +271,7 @@
     </div>
     <div class="question-block" id="q2">
       <div class="question-label">Tu edad</div>
-      <h2 class="question-text">En que rango de edad estas?</h2>
+      <h2 class="question-text">¿En qué rango de edad estás?</h2>
       <div class="options-grid">
         <button class="option-btn" onclick="setAnswer('edad','18-29');nextQuestion(3,this)"><span class="option-icon">&#129489;</span>18 – 29 años</button>
         <button class="option-btn" onclick="setAnswer('edad','30-45');nextQuestion(3,this)"><span class="option-icon">&#128100;</span>30 – 45 años</button>
@@ -280,12 +280,12 @@
       </div>
     </div>
     <div class="question-block" id="q3">
-      <div class="question-label">Tu situacion laboral</div>
-      <h2 class="question-text">Cual es tu situacion laboral actual?</h2>
+      <div class="question-label">Tu situación laboral</div>
+      <h2 class="question-text">¿Cuál es tu situación laboral actual?</h2>
       <div class="options-grid">
         <button class="option-btn" onclick="setAnswer('laboral','empleado');nextQuestion(4,this)"><span class="option-icon">&#128188;</span>Empleado/a por cuenta ajena</button>
         <button class="option-btn" onclick="setAnswer('laboral','autónomo');nextQuestion(4,this)"><span class="option-icon">&#127962;</span>Autónomo/a</button>
-        <button class="option-btn" onclick="setAnswer('laboral','desempleado');nextQuestion(4,this)"><span class="option-icon">&#128269;</span>En busqueda de empleo</button>
+        <button class="option-btn" onclick="setAnswer('laboral','desempleado');nextQuestion(4,this)"><span class="option-icon">&#128269;</span>En búsqueda de empleo</button>
         <button class="option-btn" onclick="setAnswer('laboral','estudiante');nextQuestion(4,this)"><span class="option-icon">&#127891;</span>Estudiante</button>
         <button class="option-btn" onclick="setAnswer('laboral','jubilado');nextQuestion(4,this)"><span class="option-icon">&#127958;</span>Jubilado/a o pensionista</button>
         <button class="option-btn" onclick="setAnswer('laboral','cuidador');nextQuestion(4,this)"><span class="option-icon">&#10084;</span>Cuidador/a no remunerado</button>
@@ -293,7 +293,7 @@
     </div>
     <div class="question-block" id="q4">
       <div class="question-label">Tus ingresos</div>
-      <h2 class="question-text">Cual es el ingreso neto mensual de tu hogar?</h2>
+      <h2 class="question-text">¿Cuál es el ingreso neto mensual de tu hogar?</h2>
       <div class="options-grid">
         <button class="option-btn" onclick="setAnswer('ingresos','lt600');nextQuestion(5,this)"><span class="option-icon">&#128184;</span>Menos de 600€</button>
         <button class="option-btn" onclick="setAnswer('ingresos','600-1000');nextQuestion(5,this)"><span class="option-icon">&#128176;</span>600€ – 1.000€</button>
@@ -304,7 +304,7 @@
     </div>
     <div class="question-block" id="q5">
       <div class="question-label">Tu familia</div>
-      <h2 class="question-text">Cual es tu situacion familiar?</h2>
+      <h2 class="question-text">¿Cuál es tu situación familiar?</h2>
       <div class="options-grid">
         <button class="option-btn" onclick="setAnswer('familia','soltero');nextQuestion(6,this)"><span class="option-icon">&#128100;</span>Sin hijos ni dependientes</button>
         <button class="option-btn" onclick="setAnswer('familia','pareja');nextQuestion(6,this)"><span class="option-icon">&#128107;</span>En pareja, sin hijos</button>
@@ -316,7 +316,7 @@
       </div>
     </div>
     <div class="question-block" id="q6">
-      <div class="question-label">Hijos pequenos</div>
+      <div class="question-label">Hijos pequeños</div>
       <h2 class="question-text">Tienes hijos menores de 3 años?</h2>
       <div class="options-grid">
         <button class="option-btn" onclick="setAnswer('bebes','si');nextQuestion(7,this)"><span class="option-icon">&#127868;</span>Si, tengo bebes menores de 3 años</button>
@@ -325,7 +325,7 @@
     </div>
     <div class="question-block" id="q7">
       <div class="question-label">Tu vivienda</div>
-      <h2 class="question-text">Cual es tu regimen de vivienda?</h2>
+      <h2 class="question-text">¿Cuál es tu régimen de vivienda?</h2>
       <div class="options-grid">
         <button class="option-btn" onclick="setAnswer('vivienda','alquiler');nextQuestion(8,this)"><span class="option-icon">&#128273;</span>Vivo de alquiler</button>
         <button class="option-btn" onclick="setAnswer('vivienda','propietario');nextQuestion(8,this)"><span class="option-icon">&#127968;</span>Soy propietario/a sin hipoteca</button>
@@ -336,52 +336,52 @@
     </div>
     <div class="question-block" id="q8">
       <div class="question-label">Tu zona</div>
-      <h2 class="question-text">En que tipo de zona vives?</h2>
+      <h2 class="question-text">¿En qué tipo de zona vives?</h2>
       <div class="options-grid triple">
         <button class="option-btn" onclick="setAnswer('zona','urbana');nextQuestion(9,this)"><span class="option-icon">&#127961;</span>Ciudad grande</button>
         <button class="option-btn" onclick="setAnswer('zona','semirural');nextQuestion(9,this)"><span class="option-icon">&#127960;</span>Pueblo mediano</button>
-        <button class="option-btn" onclick="setAnswer('zona','rural');nextQuestion(9,this)"><span class="option-icon">&#127807;</span>Zona rural / pequeno municipio</button>
+        <button class="option-btn" onclick="setAnswer('zona','rural');nextQuestion(9,this)"><span class="option-icon">&#127807;</span>Zona rural / pequeño municipio</button>
       </div>
     </div>
     <div class="question-block" id="q9">
       <div class="question-label">Discapacidad</div>
-      <h2 class="question-text">Hay alguna discapacidad reconocida en tu hogar?</h2>
+      <h2 class="question-text">¿Hay alguna discapacidad reconocida en tu hogar?</h2>
       <div class="options-grid">
-        <button class="option-btn" onclick="setAnswer('discapacidad','propia33');nextQuestion(10,this)"><span class="option-icon">&#9851;</span>Si, yo mismo/a (33% o mas)</button>
-        <button class="option-btn" onclick="setAnswer('discapacidad','propia65');nextQuestion(10,this)"><span class="option-icon">&#9855;</span>Si, yo mismo/a (65% o mas)</button>
-        <button class="option-btn" onclick="setAnswer('discapacidad','familiar');nextQuestion(10,this)"><span class="option-icon">&#128106;</span>Si, un familiar a cargo</button>
+        <button class="option-btn" onclick="setAnswer('discapacidad','propia33');nextQuestion(10,this)"><span class="option-icon">&#9851;</span>Sí, yo mismo/a (33% o más)</button>
+        <button class="option-btn" onclick="setAnswer('discapacidad','propia65');nextQuestion(10,this)"><span class="option-icon">&#9855;</span>Sí, yo mismo/a (65% o más)</button>
+        <button class="option-btn" onclick="setAnswer('discapacidad','familiar');nextQuestion(10,this)"><span class="option-icon">&#128106;</span>Sí, un familiar a cargo</button>
         <button class="option-btn" onclick="setAnswer('discapacidad','no');nextQuestion(10,this)"><span class="option-icon">&#10060;</span>No</button>
       </div>
     </div>
     <div class="question-block" id="q10">
-      <div class="question-label">Situacion especial</div>
-      <h2 class="question-text">Alguna de estas situaciones describe tu caso?</h2>
+      <div class="question-label">Situación especial</div>
+      <h2 class="question-text">¿Alguna de estas situaciones describe tu caso?</h2>
       <div class="options-grid">
-        <button class="option-btn" onclick="setAnswer('especial','violencia');nextQuestion(11,this)"><span class="option-icon">&#128737;</span>Victima de violencia de genero</button>
+        <button class="option-btn" onclick="setAnswer('especial','violencia');nextQuestion(11,this)"><span class="option-icon">&#128737;</span>Víctima de violencia de género</button>
         <button class="option-btn" onclick="setAnswer('especial','emigrante');nextQuestion(11,this)"><span class="option-icon">&#9992;</span>Emigrante retornado/a</button>
-        <button class="option-btn" onclick="setAnswer('especial','exrecluso');nextQuestion(11,this)"><span class="option-icon">&#128274;</span>Ex-recluso/a en reinsercion</button>
-        <button class="option-btn" onclick="setAnswer('especial','enfermedad');nextQuestion(11,this)"><span class="option-icon">&#127973;</span>Enfermedad cronica o grave</button>
+        <button class="option-btn" onclick="setAnswer('especial','exrecluso');nextQuestion(11,this)"><span class="option-icon">&#128274;</span>Ex-recluso/a en reinserción</button>
+        <button class="option-btn" onclick="setAnswer('especial','enfermedad');nextQuestion(11,this)"><span class="option-icon">&#127973;</span>Enfermedad crónica o grave</button>
         <button class="option-btn" onclick="setAnswer('especial','agricultor');nextQuestion(11,this)"><span class="option-icon">&#127807;</span>Agricultor/a o ganadero/a</button>
         <button class="option-btn" onclick="setAnswer('especial','ninguna');nextQuestion(11,this)"><span class="option-icon">&#10145;</span>Ninguna de las anteriores</button>
       </div>
     </div>
     <div class="question-block" id="q11">
-      <div class="question-label">Tu vehiculo</div>
-      <h2 class="question-text">Tienes o quieres comprar un vehiculo?</h2>
+      <div class="question-label">Tu vehículo</div>
+      <h2 class="question-text">¿Tienes o quieres comprar un vehículo?</h2>
       <div class="options-grid">
-        <button class="option-btn" onclick="setAnswer('vehiculo','electrico');nextQuestion(12,this)"><span class="option-icon">&#9889;</span>Tengo vehiculo electrico o hibrido</button>
-        <button class="option-btn" onclick="setAnswer('vehiculo','compra');nextQuestion(12,this)"><span class="option-icon">&#128663;</span>Quiero comprar vehiculo electrico</button>
-        <button class="option-btn" onclick="setAnswer('vehiculo','gasolina');nextQuestion(12,this)"><span class="option-icon">&#9981;</span>Tengo vehiculo gasolina/diesel</button>
-        <button class="option-btn" onclick="setAnswer('vehiculo','ninguno');nextQuestion(12,this)"><span class="option-icon">&#128694;</span>No tengo vehiculo</button>
+        <button class="option-btn" onclick="setAnswer('vehiculo','electrico');nextQuestion(12,this)"><span class="option-icon">&#9889;</span>Tengo vehículo eléctrico o híbrido</button>
+        <button class="option-btn" onclick="setAnswer('vehiculo','compra');nextQuestion(12,this)"><span class="option-icon">&#128663;</span>Quiero comprar vehículo eléctrico</button>
+        <button class="option-btn" onclick="setAnswer('vehiculo','gasolina');nextQuestion(12,this)"><span class="option-icon">&#9981;</span>Tengo vehículo gasolina/diésel</button>
+        <button class="option-btn" onclick="setAnswer('vehiculo','ninguno');nextQuestion(12,this)"><span class="option-icon">&#128694;</span>No tengo vehículo</button>
       </div>
     </div>
     <div class="question-block" id="q12">
-      <div class="question-label">Tu hogar y energia</div>
-      <h2 class="question-text">Tienes interes en mejoras energeticas en tu hogar?</h2>
+      <div class="question-label">Tu hogar y energía</div>
+      <h2 class="question-text">¿Tienes interés en mejoras energéticas en tu hogar?</h2>
       <div class="options-grid">
         <button class="option-btn" onclick="setAnswer('energia','placas');showCalculating(this)"><span class="option-icon">&#9728;</span>Quiero instalar placas solares</button>
         <button class="option-btn" onclick="setAnswer('energia','rehabilitacion');showCalculating(this)"><span class="option-icon">&#128295;</span>Quiero rehabilitar mi casa</button>
-        <button class="option-btn" onclick="setAnswer('energia','calefaccion');showCalculating(this)"><span class="option-icon">&#127777;</span>Quiero cambiar caldera/calefaccion</button>
+        <button class="option-btn" onclick="setAnswer('energia','calefaccion');showCalculating(this)"><span class="option-icon">&#127777;</span>Quiero cambiar caldera/calefacción</button>
         <button class="option-btn" onclick="setAnswer('energia','ninguna');showCalculating(this)"><span class="option-icon">&#10145;</span>No, por ahora nada de esto</button>
       </div>
     </div>
@@ -434,7 +434,7 @@
         <div style="font-size:0.78rem;color:var(--text-dim);margin-top:6px;">Oferta de lanzamiento · Tiempo limitado</div>
       </div>
       <button class="pay-btn" id="pay-btn" onclick="handlePayment()">&#128275; Desbloquear mis ayudas por solo 6€</button>
-      <p class="pay-subtitle">Sin suscripcion · Pago único · Menos que un cafe</p>
+      <p class="pay-subtitle">Sin suscripción · Pago único · Menos que un café</p>
       <div class="pay-badges">
         <div class="pay-badge">&#128274; Pago seguro SSL</div>
         <div class="pay-badge">&#128179; Visa / Mastercard / Apple Pay</div>
@@ -456,8 +456,8 @@
   <div class="unlocked-container">
     <div class="unlocked-header">
       <div class="success-badge">&#10003; Pago confirmado</div>
-      <h2 class="unlocked-title">Aqui estan tus ayudas!</h2>
-      <p style="color:var(--text-muted);font-size:0.9rem;max-width:500px;margin:0 auto;">Estas son las ayudas a las que tienes derecho según tu perfil. Haz clic en cada una para ver como solicitarla.</p>
+      <h2 class="unlocked-title">¡Aquí están tus ayudas!</h2>
+      <p style="color:var(--text-muted);font-size:0.9rem;max-width:500px;margin:0 auto;">Estas son las ayudas a las que tienes derecho según tu perfil. Haz clic en cada una para ver cómo solicitarla.</p>
     </div>
     <div id="ayudas-list"></div>
     <div class="share-section">
@@ -469,7 +469,7 @@
   </div>
   <footer>
     <a href="#" onclick="openLegal('aviso');return false;">Aviso legal</a>
-    <a href="#" onclick="openLegal('privacidad');return false;">Politica de privacidad</a>
+    <a href="#" onclick="openLegal('privacidad');return false;">Política de privacidad</a>
     <a href="#" onclick="openLegal('cookies');return false;">Cookies</a>
     <a href="mailto:hola@cobratusayudas.es">Contacto</a><br><br>
     &copy; 2025 CobraTusAyudas.es &middot; Datos obtenidos de fuentes oficiales (BDNS, infosubvenciones.es)
