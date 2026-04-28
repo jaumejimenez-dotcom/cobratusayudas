@@ -172,6 +172,17 @@
       .email-report-row{flex-direction:column;}
     }
   </style>
+
+  <!-- Google Analytics GA4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXXXXX');
+  </script>
+  <!-- Supabase -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 </head>
 <body>
 <header>
@@ -741,7 +752,7 @@ function goHome() {
   showPage("page-hero");
 }
 
-function startQuiz() { showPage("page-quiz"); }
+function startQuiz() { showPage("page-quiz"); trackEvent("quiz_started"); }
 
 function updateProgress(q) {
   const pct = Math.round((q / TOTAL_Q) * 100);
@@ -770,6 +781,7 @@ function goToQuestion(num) {
 
 function showCalculating(btn) {
   btn.classList.add("selected");
+  trackEvent("quiz_completed", { ccaa: respuestas.ccaa, laboral: respuestas.laboral });
   setTimeout(() => { showPage("page-calculating"); runCalculating(); }, 400);
 }
 
@@ -782,6 +794,7 @@ function runCalculating() {
 
 function buildResults() {
   const ayudas = filtrarAyudas();
+  saveQuizResponse(ayudas);
   document.getElementById("money-display").textContent = calcularImporteTotal(ayudas);
   document.getElementById("ayudas-count").textContent = ayudas.length;
 
@@ -823,6 +836,7 @@ async function handlePayment() {
   btn.textContent = "Procesando..."; btn.disabled = true;
   // Save answers to sessionStorage before redirecting to Stripe
   sessionStorage.setItem('respuestas_backup', JSON.stringify(respuestas));
+  trackEvent("begin_checkout", { value: 6, currency: "EUR" });
   try {
     const res = await fetch("/api/checkout", { method:"POST", headers:{"Content-Type":"application/json"} });
     const data = await res.json();
@@ -835,6 +849,8 @@ async function handlePayment() {
 
 function checkPaymentReturn() {
   if (new URLSearchParams(window.location.search).get("pago") === "ok") {
+    trackEvent("purchase", { value: 6, currency: "EUR" });
+    markAsPaid();
     // Restore answers from sessionStorage if available
     const saved = sessionStorage.getItem('respuestas_backup');
     if (saved) { try { respuestas = JSON.parse(saved); } catch(e) {} }
