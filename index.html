@@ -795,6 +795,8 @@ function runCalculating() {
 function buildResults() {
   const ayudas = filtrarAyudas();
   saveQuizResponse(ayudas);
+  trackEvent("quiz_results_shown", {count: ayudas.length});
+  saveQuizResponse(ayudas);
   document.getElementById("money-display").textContent = calcularImporteTotal(ayudas);
   document.getElementById("ayudas-count").textContent = ayudas.length;
 
@@ -836,6 +838,7 @@ async function handlePayment() {
   btn.textContent = "Procesando..."; btn.disabled = true;
   // Save answers to sessionStorage before redirecting to Stripe
   sessionStorage.setItem('respuestas_backup', JSON.stringify(respuestas));
+  trackEvent('begin_checkout', {value: 6, currency: 'EUR'});
   trackEvent("begin_checkout", { value: 6, currency: "EUR" });
   try {
     const res = await fetch("/api/checkout", { method:"POST", headers:{"Content-Type":"application/json"} });
@@ -849,7 +852,7 @@ async function handlePayment() {
 
 function checkPaymentReturn() {
   if (new URLSearchParams(window.location.search).get("pago") === "ok") {
-    trackEvent("purchase", { value: 6, currency: "EUR" });
+    trackEvent('purchase', {value: 6, currency: 'EUR'});
     markAsPaid();
     // Restore answers from sessionStorage if available
     const saved = sessionStorage.getItem('respuestas_backup');
@@ -956,6 +959,59 @@ function tickCounter() {
   setTimeout(tickCounter, 3000 + Math.random() * 9000);
 }
 tickCounter();
+
+// ── SUPABASE + GOOGLE ANALYTICS ──
+const SUPABASE_URL = 'https://hsojuxicjstzkhitudow.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imhzb2p1eGljanN0emtoaXR1ZG93Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzczOTg5MjgsImV4cCI6MjA5Mjk3NDkyOH0.D9gID0pJEttmYgq_rafuJXZOklYZy2m7PzuNZ6BTt6M';
+const SESSION_ID = Math.random().toString(36).slice(2) + Date.now().toString(36);
+let _sbClient = null;
+function getSB() {
+  if (!_sbClient && window.supabase) {
+    _sbClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  }
+  return _sbClient;
+}
+function trackEvent(name, params) {
+  if (typeof gtag !== 'undefined') gtag('event', name, params || {});
+}
+async function saveQuizResponse(ayudas) {
+  try {
+    const sb = getSB();
+    if (!sb) return;
+    const min = ayudas.reduce((s,a) => s+(a.importeMin||0), 0);
+    const max = ayudas.reduce((s,a) => s+(a.importeMax||0), 0);
+    const {data} = await sb.from('quiz_responses').insert({
+      session_id: SESSION_ID,
+      ccaa: respuestas.ccaa||null,
+      edad: respuestas.edad||null,
+      laboral: respuestas.laboral||null,
+      ingresos: respuestas.ingresos||null,
+      familia: respuestas.familia||null,
+      bebes: respuestas.bebes||null,
+      vivienda: respuestas.vivienda||null,
+      zona: respuestas.zona||null,
+      discapacidad: respuestas.discapacidad||null,
+      especial: respuestas.especial||null,
+      vehiculo: respuestas.vehiculo||null,
+      energia: respuestas.energia||null,
+      ayudas_count: ayudas.length,
+      importe_min: min,
+      importe_max: max,
+      pagado: false
+    }).select().single();
+    if (data) sessionStorage.setItem('quiz_response_id', data.id);
+  } catch(e) { console.log('Supabase:', e); }
+}
+async function markAsPaid() {
+  try {
+    const sb = getSB();
+    if (!sb) return;
+    const id = sessionStorage.getItem('quiz_response_id');
+    if (!id) return;
+    await sb.from('quiz_responses').update({pagado: true}).eq('id', id);
+  } catch(e) {}
+}
+
 </script>
 </body>
 </html>
