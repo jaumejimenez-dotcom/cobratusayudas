@@ -255,7 +255,7 @@
           <option value="cantabria">Cantabria</option>
           <option value="clm">Castilla-La Mancha</option>
           <option value="cyl">Castilla y León</option>
-          <option value="cataluna">Cataluna</option>
+          <option value="cataluna">Catalunya</option>
           <option value="extremadura">Extremadura</option>
           <option value="galicia">Galicia</option>
           <option value="larioja">La Rioja</option>
@@ -715,9 +715,7 @@ function calcularImporteTotal(ayudas) {
   ayudas.forEach(a => { min += a.importeMin || 0; max += a.importeMax || 0; });
   const fmt = n => {
     if (n >= 100000) return Math.round(n/1000) + "k";
-    if (n >= 10000) return (n/1000).toFixed(0) + ".000";
-    if (n >= 1000) return (n/1000).toFixed(1).replace(".0","") + ".000";
-    return n.toString();
+    return n.toLocaleString("es-ES");
   };
   return fmt(min) + "€ – " + fmt(max) + "€";
 }
