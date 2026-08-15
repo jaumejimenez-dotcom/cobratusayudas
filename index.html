@@ -912,8 +912,18 @@ async function handlePayment() {
   window.location.href = "https://buy.stripe.com/6oUeVdeHy9zYc9db5Nf3a00";
 }
 
-function checkPaymentReturn() {
-  if (new URLSearchParams(window.location.search).get("pago") === "ok") {
+async function checkPaymentReturn() {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("pago") !== "ok") return;
+    const sessionId = params.get("session_id");
+    try {
+          const res = await fetch("/api/verify-payment?session_id=" + encodeURIComponent(sessionId || ""));
+          const data = await res.json();
+          if (!data.paid) { console.warn("Pago no verificado"); return; }
+    } catch (e) {
+          console.error("Error verificando el pago", e);
+          return;
+    }
     trackEvent('purchase', {value: 6, currency: 'EUR'});
     markAsPaid();
     // Restore answers from sessionStorage if available
@@ -921,9 +931,8 @@ function checkPaymentReturn() {
     if (saved) { try { respuestas = JSON.parse(saved); } catch(e) {} }
     buildResults();
     showPage("page-unlocked");
-  }
 }
-checkPaymentReturn();
+  checkPaymentReturn();
 
 // ââ MODAL GUIA ââ
 let currentGuideTitle = "", currentGuideContent = "";
