@@ -268,8 +268,8 @@
     <div class="hero-eyebrow"><div class="pulse-dot"></div>Más de 5.000 millones € sin reclamar en España</div>
     <h1 class="hero-title">El gobierno tiene dinero<br>reservado <em>para ti.</em><br>¿Lo has reclamado?</h1>
     <p class="hero-subtitle">Millones de españoles pierden cada año miles de euros en ayudas a las que tienen derecho. Comprueba en 2 minutos cuánto te corresponde.</p>
-    <div class="live-counter"><div class="pulse-dot"></div><span>Hoy ya han comprobado sus ayudas <strong id="counter">1.247</strong> personas</span></div>
-    <button class="cta-btn" onclick="startQuiz()">Comprobar mis ayudas gratis &#8594;</button>
+      <div class="live-counter"><div class="pulse-dot"></div><span>Hoy ya han comprobado sus ayudas <strong id="counter">245</strong> personas</span></div>
+      <button class="cta-btn" onclick="startQuiz()">Comprobar mis ayudas gratis &#8594;</button>
     <div class="hero-trust">
       <div class="trust-item">&#10003; Gratis y sin registro</div>
       <div class="trust-item">&#10003; Datos de fuentes oficiales</div>
@@ -279,7 +279,7 @@
   <div class="stats-row">
     <div class="stat-item"><span class="stat-number">+200</span><div class="stat-label">ayudas en nuestra base de datos</div></div>
     <div class="stat-item"><span class="stat-number">5.000M€</span><div class="stat-label">sin reclamar cada año en España</div></div>
-    <div class="stat-item"><span class="stat-number">14.832</span><div class="stat-label">personas ya han comprobado sus ayudas</div></div>
+          <div class="stat-item"><span class="stat-number js-mes-counter">3.180</span><div class="stat-label">personas han comprobado sus ayudas este mes</div></div>
   </div>
   <div class="how-section">
     <div class="section-label">Cómo funciona</div>
@@ -295,8 +295,7 @@
       <div class="section-label">Testimonios</div>
       <h2 class="section-title">Lo que dicen quienes ya lo han comprobado</h2>
       <div class="testimonials-grid">
-        <div class="testimonial-card"><div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class="testimonial-text">"Pagué 6€ y recuperé más de 2.000€. La mejor inversión del año. No sabía que existía el bono social ni la ayuda de mi comunidad."</p><div class="testimonial-amount">+3.100€/año</div><div class="testimonial-author">— Ana R., Valencia</div></div>
-        <div class="testimonial-card"><div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class="testimonial-text">"Autónoma con dos hijos. Llevo 3 años perdiendo la prestación por maternidad ampliada. Increíble que nadie te cuente esto."</p><div class="testimonial-amount">+2.740€/año</div><div class="testimonial-author">— Pedro M., Bilbao</div></div>
+          <div class="testimonial-card"><div class="testimonial-stars">★★★★★</div><p class="testimonial-text">"Pagué 6€ y recuperé más de 3.000€. La mejor inversión del año. No sabía que existía el bono social ni la ayuda de mi comunidad."</p><div class="testimonial-amount">+3.100€/año</div><div class="testimonial-author">— Ana R., Valencia</div></div>        <div class="testimonial-card"><div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class="testimonial-text">"Autónoma con dos hijos. Llevo 3 años perdiendo la prestación por maternidad ampliada. Increíble que nadie te cuente esto."</p><div class="testimonial-amount">+2.740€/año</div><div class="testimonial-author">— Pedro M., Bilbao</div></div>
         <div class="testimonial-card"><div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class="testimonial-text">"Jubilado con pocos ingresos. Me salieron 7 ayudas que desconocía completamente. Lo recomendé a toda mi familia."</p><div class="testimonial-amount">+4.200€/año</div><div class="testimonial-author">— Sara G., Zaragoza</div></div>
       </div>
     </div>
@@ -520,10 +519,10 @@
         <div class="pay-badge">&#10003; Sin suscripción</div>
       </div>
       <div style="border-top:1px solid var(--border);margin:24px 0;"></div>
-      <div class="social-proof"><strong>14.832 personas</strong> ya han desbloqueado sus ayudas este ano</div>
+        <div class="social-proof"><strong class="js-mes-counter">3.180</strong> personas ya han desbloqueado sus ayudas este mes</div> 
       <div class="payment-testimonials">
-        <div class="mini-testimonial"><div class="mini-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class="mini-text">"Pague 6€ y recupere mas de 2.000€."</p><div class="mini-amount">+3.100€</div><div class="mini-author">— Ana R., Valencia</div></div>
-        <div class="mini-testimonial"><div class="mini-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class="mini-text">"No sabia que existian la mitad de estas ayudas."</p><div class="mini-amount">+2.740€</div><div class="mini-author">— Pedro M., Bilbao</div></div>
+                    <div class="mini-testimonial"><div class="mini-stars">★★★★★</div><p class="mini-text">"Pague 6€ y recupere mas de 3.000€."</p><div class="mini-amount">+3.100€</div><div class="mini-author">— Ana R., Valencia</div></div>
+                  <div class="mini-testimonial"><div class="mini-stars">★★★★★</div><p class="mini-text">"No sabia que existian la mitad de estas ayudas."</p><div class="mini-amount">+2.740€</div><div class="mini-author">— Pedro M., Bilbao</div></div>
         <div class="mini-testimonial"><div class="mini-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class="mini-text">"Lo he recomendado a toda mi familia."</p><div class="mini-amount">+4.200€</div><div class="mini-author">— Sara G., Zaragoza</div></div>
       </div>
     </div>
@@ -1021,16 +1020,48 @@ function openLegal(id) {
 }
 function closeLegal() { document.getElementById("legal-modal").style.display = "none"; document.body.style.overflow = ""; }
 
-// ââ CONTADOR ANIMADO ââ
-let count = Math.floor(Math.random() * 1000) + 800;
-function tickCounter() {
-  count += Math.random() > 0.4 ? 1 : (Math.random() > 0.7 ? 2 : 0);
-  const el = document.getElementById("counter");
-  if (el) el.textContent = count.toLocaleString("es-ES");
-  setTimeout(tickCounter, 3000 + Math.random() * 9000);
-}
-tickCounter();
+// —— CONTADOR "HOY" ——
+  function contadorHoyBase() {
+   const now = new Date();
+      const dayKey = now.getFullYear() + "-" + now.getMonth() + "-" + now.getDate();
+      let seed = 0;
+      for (let i = 0; i < dayKey.length; i++) seed = (seed * 31 + dayKey.charCodeAt(i)) >>> 0;
+      const inicio = 180 + (seed % 80);
+      const minutos = now.getHours() * 60 + now.getMinutes();
+      const crecimiento = Math.floor(minutos * (200 / 1440));
+      return inicio + crecimiento;
+  }
+  let count = contadorHoyBase();
+  function tickCounter() {
+      const base = contadorHoyBase() + Math.floor(Math.random() * 3);
+      count = Math.max(count, base);
+      const el = document.getElementById("counter");
+      if (el) el.textContent = count.toLocaleString("es-ES");
+      setTimeout(tickCounter, 4000 + Math.random() * 8000);
+ }
+ tickCounter();
 
+ // —— CONTADOR "ESTE MES" ——
+  function contadorMesBase() {
+      const now = new Date();
+    const monthKey = now.getFullYear() + "-" + now.getMonth();
+    let seed = 0;
+    for (let i = 0; i < monthKey.length; i++) seed = (seed * 31 + monthKey.charCodeAt(i)) >>> 0;
+    const inicio = 2800 + (seed % 400);
+    const diasDelMes = new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate();
+      const minutosDelMes = (now.getDate() - 1) * 1440 + now.getHours() * 60 + now.getMinutes();
+      const totalMinutosMes = diasDelMes * 1440;
+      const crecimiento = Math.floor((minutosDelMes / totalMinutosMes) * 2600);
+      return inicio + crecimiento;
+  }
+  let countMes = contadorMesBase();
+  function tickCounterMes() {
+      const base = contadorMesBase() + Math.floor(Math.random() * 5);
+      countMes = Math.max(countMes, base);
+      document.querySelectorAll(".js-mes-counter").forEach(function(el) { el.textContent = countMes.toLocaleString("es-ES"); });
+      setTimeout(tickCounterMes, 5000 + Math.random() * 10000);
+  }
+  tickCounterMes();
 // ── SUPABASE + GOOGLE ANALYTICS ──
 const SUPABASE_URL = 'https://hsojuxicjstzkhitudow.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imhzb2p1eGljanN0emtoaXR1ZG93Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzczOTg5MjgsImV4cCI6MjA5Mjk3NDkyOH0.D9gID0pJEttmYgq_rafuJXZOklYZy2m7PzuNZ6BTt6M';
