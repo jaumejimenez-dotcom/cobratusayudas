@@ -908,14 +908,8 @@ async function handlePayment() {
   sessionStorage.setItem('respuestas_backup', JSON.stringify(respuestas));
   trackEvent('begin_checkout', {value: 6, currency: 'EUR'});
   trackEvent("begin_checkout", { value: 6, currency: "EUR" });
-  try {
-    const res = await fetch("/api/checkout", { method:"POST", headers:{"Content-Type":"application/json"} });
-    const data = await res.json();
-    if (data.url) { window.location.href = data.url; } else { throw new Error(data.error || "Error"); }
-  } catch(e) {
-    btn.textContent = "Desbloquear mis ayudas por solo 6\u20ac"; btn.disabled = false;
-    alert("Ha habido un error al procesar el pago. Intentalo de nuevo.");
-  }
+  // Enlace de pago fijo de Stripe (no caduca, no depende de crear sesion por API)
+  window.location.href = "https://buy.stripe.com/6oUeVdeHy9zYc9db5Nf3a00";
 }
 
 function checkPaymentReturn() {
