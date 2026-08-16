@@ -17,10 +17,10 @@ module.exports = async (req, res) => {
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
     const session = await stripe.checkout.sessions.retrieve(sessionId);
 
-  const expectedPrice = 'price_1TPlVHHnR7v3xoRAIzrXfTsO';
-    const lineItems = await stripe.checkout.sessions.listLineItems(sessionId);
-    const priceMatches = lineItems.data.some(li => li.price && li.price.id === expectedPrice);
-
+      const expectedPrice = 'price_1TPlVHHnR7v3xoRAIzrXfTsO';
+        const expectedPriceTest = 'price_1U524QHnR7v3xoRAerRmQsxh'; // TEST ONLY
+        const priceMatches = lineItems.data.some(li => li.price && (li.price.id === expectedPrice || li.price.id === expectedPriceTest));
+    
   const paid = session.payment_status === 'paid' && priceMatches;
 
   res.status(200).json({ paid });
