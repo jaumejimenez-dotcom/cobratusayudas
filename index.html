@@ -1,6 +1,23 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+  <!-- Meta Pixel Code -->
+  <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+      n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+     if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+     n.queue=[];t=b.createElement(e);t.async=!0;
+     t.src=v;s=b.getElementsByTagName(e)[0];
+     s.parentNode.insertBefore(t,s)}(window, document,'script',
+                                     'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '1372837888300592');
+    fbq('track', 'PageView');
+  </script>
+  <noscript><img height="1" width="1" style="display:none"
+              src="https://www.facebook.com/tr?id=1372837888300592&ev=PageView&noscript=1"
+              /></noscript>
+<!-- End Meta Pixel Code -->
 
   <!-- SEO Meta Tags -->
   <meta name="description" content="Descubre en 2 minutos las ayudas del gobierno a las que tienes derecho. Subvenciones, prestaciones y deducciones fiscales personalizadas para tu perfil. Gratis." />
@@ -924,6 +941,7 @@ async function checkPaymentReturn() {
           return;
     }
     trackEvent('purchase', {value: 6, currency: 'EUR'});
+  if (typeof fbq === 'function') { fbq('track', 'Purchase', {value: 6, currency: 'EUR'}); }
     markAsPaid();
     // Restore answers from sessionStorage if available
     const saved = sessionStorage.getItem('respuestas_backup');
