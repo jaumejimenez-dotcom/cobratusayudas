@@ -1,1 +1,12 @@
-{}
+{
+  "rewrites": [
+    {
+      "source": "/blog/:slug",
+      "destination": "/blog/:slug.html"
+    },
+    {
+      "source": "/ayudas-:ccaa",
+      "destination": "/ayudas-:ccaa.html"
+    }
+  ]
+}
