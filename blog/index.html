@@ -1,104 +1,272 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>Blog de Ayudas y Subvenciones en España 2025 | CobraTusAyudas.es</title>
-<meta name="description" content="Guías completas sobre ayudas, subvenciones y prestaciones del gobierno español 2025. IMV, Bono Social, ayudas al alquiler, familias numerosas y mucho más."/>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Blog de Ayudas y Subvenciones 2026 | CobraTusAyudas.es</title>
+<meta name="description" content="Guías completas sobre todas las ayudas del gobierno español 2026. IMV, Bono Social, alquiler, familias numerosas y mucho más. Actualizado con fuentes oficiales."/>
 <meta name="robots" content="index,follow"/>
 <link rel="canonical" href="https://www.cobratusayudas.es/blog"/>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f8f9fa;color:#1a1a2e;line-height:1.7}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f8f9fa;color:#1a1a2e}
 .header{background:#fff;border-bottom:1px solid #e8e8f0;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:10}
 .logo{font-size:16px;font-weight:700;color:#0d1b2a;text-decoration:none}.logo span{color:#00c896}
-.cta-header{background:#00c896;color:#fff;padding:8px 18px;border-radius:8px;text-decoration:none;font-size:14px;font-weight:600}
-.hero{background:linear-gradient(135deg,#0d1b2a 0%,#1a3a5c 100%);color:#fff;padding:64px 24px;text-align:center}
-.hero h1{font-size:clamp(28px,4vw,48px);font-weight:800;max-width:700px;margin:0 auto 16px}
-.hero p{font-size:18px;color:rgba(255,255,255,0.75);max-width:550px;margin:0 auto}
-.container{max-width:1100px;margin:0 auto;padding:64px 24px}
-.section-title{font-size:14px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#5a5a7a;margin-bottom:32px}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:24px;margin-bottom:64px}
-.card{background:#fff;border:1px solid #e8e8f0;border-radius:16px;overflow:hidden;text-decoration:none;color:inherit;transition:transform .2s,box-shadow .2s;display:flex;flex-direction:column}
-.card:hover{transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,0,0,0.08)}
-.card-img{height:140px;display:flex;align-items:center;justify-content:center;font-size:56px;background:linear-gradient(135deg,#0d1b2a,#1a3a5c)}
-.card-body{padding:24px;flex:1;display:flex;flex-direction:column}
-.tag{display:inline-block;padding:4px 12px;border-radius:20px;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px}
-.t1{background:#e8f8f4;color:#007a5e}.t2{background:#fff3e0;color:#e65100}
-.t3{background:#e8eaf6;color:#303f9f}.t4{background:#fce4ec;color:#c62828}
-.card-title{font-size:18px;font-weight:700;color:#0d1b2a;margin-bottom:10px;line-height:1.3}
-.card-desc{font-size:14px;color:#5a5a7a;flex:1;margin-bottom:16px}
-.card-meta{font-size:12px;color:#9a9ab0;margin-bottom:12px}
-.card-cta{color:#00c896;font-weight:600;font-size:14px}
-.cta-box{background:linear-gradient(135deg,#0d1b2a,#1a3a5c);border-radius:20px;padding:48px;text-align:center;color:#fff}
-.cta-box h2{font-size:28px;font-weight:800;margin-bottom:12px}
-.cta-box p{color:rgba(255,255,255,0.75);margin-bottom:28px;font-size:16px;max-width:500px;margin-left:auto;margin-right:auto}
-.cta-box a{display:inline-block;background:#00c896;color:#fff;padding:16px 36px;border-radius:12px;text-decoration:none;font-weight:700;font-size:17px}
-footer{background:#0d1b2a;color:rgba(255,255,255,0.5);text-align:center;padding:32px;font-size:14px}
+.cta-h{background:#00c896;color:#fff;padding:8px 18px;border-radius:8px;text-decoration:none;font-size:14px;font-weight:600}
+.hero{background:linear-gradient(135deg,#0d1b2a,#1a3a5c);color:#fff;padding:56px 24px;text-align:center}
+.hero h1{font-size:clamp(26px,4vw,44px);font-weight:800;margin-bottom:14px}
+.hero p{font-size:17px;color:rgba(255,255,255,0.75);max-width:550px;margin:0 auto 24px}
+.cta-hero{display:inline-block;background:#00c896;color:#0d1b2a;padding:14px 32px;border-radius:10px;text-decoration:none;font-weight:800;font-size:17px}
+.container{max-width:1200px;margin:0 auto;padding:48px 24px 100px}
+.section-title{font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#5a5a7a;margin-bottom:28px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px}
+footer{background:#0d1b2a;color:rgba(255,255,255,0.5);text-align:center;padding:28px;font-size:14px}
 footer a{color:#00c896;text-decoration:none}
 </style>
 </head>
 <body>
 <header class="header">
   <a href="/" class="logo">CobraTus<span>Ayudas</span>.es</a>
-  <a href="/" class="cta-header">Comprobar mis ayudas &rarr;</a>
+  <a href="/" class="cta-h">Comprobar mis ayudas &rarr;</a>
 </header>
 <div class="hero">
-  <h1>Guías de ayudas y subvenciones en España</h1>
-  <p>Información clara, actualizada y sin tecnicismos sobre todas las ayudas del gobierno a las que puedes tener derecho.</p>
+  <h1>Gu&iacute;as de ayudas y subvenciones en Espa&ntilde;a 2026</h1>
+  <p>Informaci&oacute;n clara, actualizada y sin tecnicismos sobre todas las ayudas a las que puedes tener derecho</p>
+  <a href="/" class="cta-hero">&#128200; Comprobar mis ayudas gratis &rarr;</a>
 </div>
 <div class="container">
-  <div class="section-title">Artículos recientes</div>
+  <div class="section-title">37 gu&iacute;as disponibles</div>
   <div class="grid">
-    <a href="/blog/ingreso-minimo-vital-2025" class="card">
-      <div class="card-img">💰</div>
-      <div class="card-body">
-        <div class="tag t1">Prestaciones</div>
-        <div class="card-title">IMV 2025: Requisitos, cuantía y cómo solicitarlo paso a paso</div>
-        <div class="card-desc">Guía completa del Ingreso Mínimo Vital. Descubre si tienes derecho, cuánto cobrarías y cómo solicitarlo en menos de 20 minutos.</div>
-        <div class="card-meta">📅 Abril 2026 &nbsp;·&nbsp; ⏱ 8 min</div>
-        <span class="card-cta">Leer guía &rarr;</span>
-      </div>
-    </a>
-    <a href="/blog/bono-social-electrico-2025" class="card">
-      <div class="card-img">⚡</div>
-      <div class="card-body">
-        <div class="tag t2">Energía</div>
-        <div class="card-title">Bono Social Eléctrico 2025: Hasta 65% de descuento en tu factura</div>
-        <div class="card-desc">Más de 1,7 millones de hogares ya lo cobran. Descubre si tú también tienes derecho y cómo pedirlo a Iberdrola, Endesa o Naturgy.</div>
-        <div class="card-meta">📅 Abril 2026 &nbsp;·&nbsp; ⏱ 7 min</div>
-        <span class="card-cta">Leer guía &rarr;</span>
-      </div>
-    </a>
-    <a href="/blog/ayudas-alquiler-2025" class="card">
-      <div class="card-img">🏠</div>
-      <div class="card-body">
-        <div class="tag t3">Vivienda</div>
-        <div class="card-title">Ayudas al Alquiler 2025: Todas las subvenciones para inquilinos</div>
-        <div class="card-desc">Bono Alquiler Joven, Plan Estatal de Vivienda y ayudas autonómicas. Descubre cuánto puedes cobrar según tu CCAA y situación.</div>
-        <div class="card-meta">📅 Abril 2026 &nbsp;·&nbsp; ⏱ 9 min</div>
-        <span class="card-cta">Leer guía &rarr;</span>
-      </div>
-    </a>
-    <a href="/blog/ayudas-familias-numerosas-2025" class="card">
-      <div class="card-img">👨‍👩‍👧‍👦</div>
-      <div class="card-body">
-        <div class="tag t4">Familia</div>
-        <div class="card-title">Ayudas Familias Numerosas 2025: Descuentos y subvenciones</div>
-        <div class="card-desc">Transporte, educación, energía, vivienda y deducciones fiscales. Todo a lo que tienes derecho con el título de familia numerosa.</div>
-        <div class="card-meta">📅 Abril 2026 &nbsp;·&nbsp; ⏱ 8 min</div>
-        <span class="card-cta">Leer guía &rarr;</span>
-      </div>
-    </a>
-  </div>
-  <div class="cta-box">
-    <h2>¿Cuánto dinero te estás perdiendo?</h2>
-    <p>Responde 12 preguntas sobre tu perfil y descubre exactamente qué ayudas te corresponden. Gratis y en 2 minutos.</p>
-    <a href="/">Comprobar mis ayudas gratis &rarr;</a>
+<a href="/blog/ingreso-minimo-vital-2025" style="background:#fff;border:1px solid #e8e8f0;border-radius:14px;padding:24px;text-decoration:none;color:inherit;display:flex;flex-direction:column;gap:10px;transition:box-shadow .2s" onmouseover="this.style.boxShadow='0 8px 30px rgba(0,0,0,0.1)'" onmouseout="this.style.boxShadow='none'">
+  <div style="font-size:11px;font-weight:700;color:#00c896;text-transform:uppercase;letter-spacing:1.5px">Prestaciones</div>
+  <div style="font-size:17px;font-weight:700;color:#0d1b2a;line-height:1.35">IMV 2025: Requisitos y cómo solicitarlo</div>
+  <div style="font-size:14px;color:#5a5a7a;line-height:1.6;flex:1">¿Cobras el Ingreso Mínimo Vital? Millones de familias no lo saben y lo pierden cada mes.</div>
+  <div style="color:#00c896;font-weight:600;font-size:14px">Leer guía &rarr;</div>
+</a>
+<a href="/blog/bono-social-electrico-2025" style="background:#fff;border:1px solid #e8e8f0;border-radius:14px;padding:24px;text-decoration:none;color:inherit;display:flex;flex-direction:column;gap:10px;transition:box-shadow .2s" onmouseover="this.style.boxShadow='0 8px 30px rgba(0,0,0,0.1)'" onmouseout="this.style.boxShadow='none'">
+  <div style="font-size:11px;font-weight:700;color:#ffa502;text-transform:uppercase;letter-spacing:1.5px">Energía</div>
+  <div style="font-size:17px;font-weight:700;color:#0d1b2a;line-height:1.35">Bono Social Eléctrico: hasta 65% de descuento en tu luz</div>
+  <div style="font-size:14px;color:#5a5a7a;line-height:1.6;flex:1">Tu factura de la luz puede bajar hasta un 65%. ¿Sabes si tienes derecho al Bono Social?</div>
+  <div style="color:#ffa502;font-weight:600;font-size:14px">Leer guía &rarr;</div>
+</a>
+<a href="/blog/ayudas-alquiler-2025" style="background:#fff;border:1px solid #e8e8f0;border-radius:14px;padding:24px;text-decoration:none;color:inherit;display:flex;flex-direction:column;gap:10px;transition:box-shadow .2s" onmouseover="this.style.boxShadow='0 8px 30px rgba(0,0,0,0.1)'" onmouseout="this.style.boxShadow='none'">
+  <div style="font-size:11px;font-weight:700;color:#7c6af7;text-transform:uppercase;letter-spacing:1.5px">Vivienda</div>
+  <div style="font-size:17px;font-weight:700;color:#0d1b2a;line-height:1.35">Ayudas al alquiler 2025: hasta 250€/mes que no estás cobrando</div>
+  <div style="font-size:14px;color:#5a5a7a;line-height:1.6;flex:1">Hay dinero del gobierno para pagar tu alquiler que probablemente no estás reclamando.</div>
+  <div style="color:#7c6af7;font-weight:600;font-size:14px">Leer guía &rarr;</div>
+</a>
+<a href="/blog/ayudas-familias-numerosas-2025" style="background:#fff;border:1px solid #e8e8f0;border-radius:14px;padding:24px;text-decoration:none;color:inherit;display:flex;flex-direction:column;gap:10px;transition:box-shadow .2s" onmouseover="this.style.boxShadow='0 8px 30px rgba(0,0,0,0.1)'" onmouseout="this.style.boxShadow='none'">
+  <div style="font-size:11px;font-weight:700;color:#ff6b9d;text-transform:uppercase;letter-spacing:1.5px">Familia</div>
+  <div style="font-size:17px;font-weight:700;color:#0d1b2a;line-height:1.35">Familias numerosas: 2.000-6.000€ al año en ayudas sin reclamar</div>
+  <div style="font-size:14px;color:#5a5a7a;line-height:1.6;flex:1">Si tienes 3 o más hijos, el gobierno te debe dinero. Descubre cuánto.</div>
+  <div style="color:#ff6b9d;font-weight:600;font-size:14px">Leer guía &rarr;</div>
+</a>
+<a href="/blog/subsidio-mayores-52-anos-2026" style="background:#fff;border:1px solid #e8e8f0;border-radius:14px;padding:24px;text-decoration:none;color:inherit;display:flex;flex-direction:column;gap:10px;transition:box-shadow .2s" onmouseover="this.style.boxShadow='0 8px 30px rgba(0,0,0,0.1)'" onmouseout="this.style.boxShadow='none'">
+  <div style="font-size:11px;font-weight:700;color:#00b4d8;text-transform:uppercase;letter-spacing:1.5px">Desempleo</div>
+  <div style="font-size:17px;font-weight:700;color:#0d1b2a;line-height:1.35">Subsidio mayores de 52 años: 570€/mes que quizás no conoces</div>
+  <div style="font-size:14px;color:#5a5a7a;line-height:1.6;flex:1">Si tienes más de 52 años y estás en paro, tienes derecho a esta ayuda que poca gente solicita.</div>
+  <div style="color:#00b4d8;font-weight:600;font-size:14px">Leer guía &rarr;</div>
+</a>
+<a href="/blog/ayudas-discapacidad-33-por-ciento-2026" style="background:#fff;border:1px solid #e8e8f0;border-radius:14px;padding:24px;text-decoration:none;color:inherit;display:flex;flex-direction:column;gap:10px;transition:box-shadow .2s" onmouseover="this.style.boxShadow='0 8px 30px rgba(0,0,0,0.1)'" onmouseout="this.style.boxShadow='none'">
+  <div style="font-size:11px;font-weight:700;color:#e63946;text-transform:uppercase;letter-spacing:1.5px">Discapacidad</div>
+  <div style="font-size:17px;font-weight:700;color:#0d1b2a;line-height:1.35">Discapacidad del 33%: todas las ayudas a las que tienes derecho</div>
+  <div style="font-size:14px;color:#5a5a7a;line-height:1.6;flex:1">Con el certificado de discapacidad se abren puertas a ayudas fiscales y prestaciones que muchos desconocen.</div>
+  <div style="color:#e63946;font-weight:600;font-size:14px">Leer guía &rarr;</div>
+</a>
+<a href="/blog/plan-moves-iii-coche-electrico-2026" style="background:#fff;border:1px solid #e8e8f0;border-radius:14px;padding:24px;text-decoration:none;color:inherit;display:flex;flex-direction:column;gap:10px;transition:box-shadow .2s" onmouseover="this.style.boxShadow='0 8px 30px rgba(0,0,0,0.1)'" onmouseout="this.style.boxShadow='none'">
+  <div style="font-size:11px;font-weight:700;color:#2dc653;text-transform:uppercase;letter-spacing:1.5px">Vehículo</div>
+  <div style="font-size:17px;font-weight:700;color:#0d1b2a;line-height:1.35">Plan MOVES III: hasta 9.000€ para comprar un coche eléctrico</div>
+  <div style="font-size:14px;color:#5a5a7a;line-height:1.6;flex:1">El gobierno te da hasta 9.000€ para cambiar tu coche. ¿Sabes cómo pedirlo?</div>
+  <div style="color:#2dc653;font-weight:600;font-size:14px">Leer guía &rarr;</div>
+</a>
+<a href="/blog/ayudas-rehabilitacion-vivienda-2026" style="background:#fff;border:1px solid #e8e8f0;border-radius:14px;padding:24px;text-decoration:none;color:inherit;display:flex;flex-direction:column;gap:10px;transition:box-shadow .2s" onmouseover="this.style.boxShadow='0 8px 30px rgba(0,0,0,0.1)'" onmouseout="this.style.boxShadow='none'">
+  <div style="font-size:11px;font-weight:700;color:#7c6af7;text-transform:uppercase;letter-spacing:1.5px">Vivienda</div>
+  <div style="font-size:17px;font-weight:700;color:#0d1b2a;line-height:1.35">Rehabilitación de vivienda: hasta 12.000€ en subvenciones</div>
+  <div style="font-size:14px;color:#5a5a7a;line-height:1.6;flex:1">Reformar tu casa puede ser casi gratis con las ayudas del Plan de Recuperación europeo.</div>
+  <div style="color:#7c6af7;font-weight:600;font-size:14px">Leer guía &rarr;</div>
+</a>
+<a href="/blog/renta-activa-insercion-2026" style="background:#fff;border:1px solid #e8e8f0;border-radius:14px;padding:24px;text-decoration:none;color:inherit;display:flex;flex-direction:column;gap:10px;transition:box-shadow .2s" onmouseover="this.style.boxShadow='0 8px 30px rgba(0,0,0,0.1)'" onmouseout="this.style.boxShadow='none'">
+  <div style="font-size:11px;font-weight:700;color:#00b4d8;text-transform:uppercase;letter-spacing:1.5px">Desempleo</div>
+  <div style="font-size:17px;font-weight:700;color:#0d1b2a;line-height:1.35">Renta Activa de Inserción: 570€/mes si llevas tiempo sin trabajo</div>
+  <div style="font-size:14px;color:#5a5a7a;line-height:1.6;flex:1">Una ayuda para los que más lo necesitan y que muchos no saben que existe.</div>
+  <div style="color:#00b4d8;font-weight:600;font-size:14px">Leer guía &rarr;</div>
+</a>
+<a href="/blog/deduccion-maternidad-irpf-2026" style="background:#fff;border:1px solid #e8e8f0;border-radius:14px;padding:24px;text-decoration:none;color:inherit;display:flex;flex-direction:column;gap:10px;transition:box-shadow .2s" onmouseover="this.style.boxShadow='0 8px 30px rgba(0,0,0,0.1)'" onmouseout="this.style.boxShadow='none'">
+  <div style="font-size:11px;font-weight:700;color:#ff6b9d;text-transform:uppercase;letter-spacing:1.5px">Familia</div>
+  <div style="font-size:17px;font-weight:700;color:#0d1b2a;line-height:1.35">Deducción por maternidad: 100€ al mes que Hacienda te debe</div>
+  <div style="font-size:14px;color:#5a5a7a;line-height:1.6;flex:1">Si tienes hijos menores de 3 años y trabajas, Hacienda te debe hasta 1.200€ al año.</div>
+  <div style="color:#ff6b9d;font-weight:600;font-size:14px">Leer guía &rarr;</div>
+</a>
+<a href="/blog/ayuda-calefaccion-gas-2026" style="background:#fff;border:1px solid #e8e8f0;border-radius:14px;padding:24px;text-decoration:none;color:inherit;display:flex;flex-direction:column;gap:10px;transition:box-shadow .2s" onmouseover="this.style.boxShadow='0 8px 30px rgba(0,0,0,0.1)'" onmouseout="this.style.boxShadow='none'">
+  <div style="font-size:11px;font-weight:700;color:#ffa502;text-transform:uppercase;letter-spacing:1.5px">Energía</div>
+  <div style="font-size:17px;font-weight:700;color:#0d1b2a;line-height:1.35">Bono Social Térmico: dinero gratis para pagar la calefacción</div>
+  <div style="font-size:14px;color:#5a5a7a;line-height:1.6;flex:1">¿Sabías que si cobras el Bono Social de la luz, recibes también dinero para la calefacción automáticamente?</div>
+  <div style="color:#ffa502;font-weight:600;font-size:14px">Leer guía &rarr;</div>
+</a>
+<a href="/blog/pension-no-contributiva-2026" style="background:#fff;border:1px solid #e8e8f0;border-radius:14px;padding:24px;text-decoration:none;color:inherit;display:flex;flex-direction:column;gap:10px;transition:box-shadow .2s" onmouseover="this.style.boxShadow='0 8px 30px rgba(0,0,0,0.1)'" onmouseout="this.style.boxShadow='none'">
+  <div style="font-size:11px;font-weight:700;color:#1d3557;text-transform:uppercase;letter-spacing:1.5px">Pensiones</div>
+  <div style="font-size:17px;font-weight:700;color:#0d1b2a;line-height:1.35">Pensión no contributiva: 604€/mes si no tienes suficiente cotizado</div>
+  <div style="font-size:14px;color:#5a5a7a;line-height:1.6;flex:1">No haber cotizado suficiente no significa quedarse sin pensión. Descubre la pensión no contributiva.</div>
+  <div style="color:#1d3557;font-weight:600;font-size:14px">Leer guía &rarr;</div>
+</a>
+<a href="/blog/ayudas-emprendedores-autonomos-2026" style="background:#fff;border:1px solid #e8e8f0;border-radius:14px;padding:24px;text-decoration:none;color:inherit;display:flex;flex-direction:column;gap:10px;transition:box-shadow .2s" onmouseover="this.style.boxShadow='0 8px 30px rgba(0,0,0,0.1)'" onmouseout="this.style.boxShadow='none'">
+  <div style="font-size:11px;font-weight:700;color:#f4a261;text-transform:uppercase;letter-spacing:1.5px">Autónomos</div>
+  <div style="font-size:17px;font-weight:700;color:#0d1b2a;line-height:1.35">Autónomos: ayudas que no conoces y que pueden salvarte el negocio</div>
+  <div style="font-size:14px;color:#5a5a7a;line-height:1.6;flex:1">Tarifa plana, capitalización del paro y subvenciones que muchos autónomos dejan pasar.</div>
+  <div style="color:#f4a261;font-weight:600;font-size:14px">Leer guía &rarr;</div>
+</a>
+<a href="/blog/cheque-guarderia-2026" style="background:#fff;border:1px solid #e8e8f0;border-radius:14px;padding:24px;text-decoration:none;color:inherit;display:flex;flex-direction:column;gap:10px;transition:box-shadow .2s" onmouseover="this.style.boxShadow='0 8px 30px rgba(0,0,0,0.1)'" onmouseout="this.style.boxShadow='none'">
+  <div style="font-size:11px;font-weight:700;color:#ff6b9d;text-transform:uppercase;letter-spacing:1.5px">Familia</div>
+  <div style="font-size:17px;font-weight:700;color:#0d1b2a;line-height:1.35">Cheque guardería: hasta 1.000€ adicionales que Hacienda te devuelve</div>
+  <div style="font-size:14px;color:#5a5a7a;line-height:1.6;flex:1">Si pagas guardería, tienes derecho a 1.000€ más de deducción que probablemente no estás aplicando.</div>
+  <div style="color:#ff6b9d;font-weight:600;font-size:14px">Leer guía &rarr;</div>
+</a>
+<a href="/blog/ayudas-dependencia-cuidadores-2026" style="background:#fff;border:1px solid #e8e8f0;border-radius:14px;padding:24px;text-decoration:none;color:inherit;display:flex;flex-direction:column;gap:10px;transition:box-shadow .2s" onmouseover="this.style.boxShadow='0 8px 30px rgba(0,0,0,0.1)'" onmouseout="this.style.boxShadow='none'">
+  <div style="font-size:11px;font-weight:700;color:#9b59b6;text-transform:uppercase;letter-spacing:1.5px">Dependencia</div>
+  <div style="font-size:17px;font-weight:700;color:#0d1b2a;line-height:1.35">Cuidar a un familiar: hasta 430€/mes y cotización gratis a la SS</div>
+  <div style="font-size:14px;color:#5a5a7a;line-height:1.6;flex:1">Cuidar a un familiar dependiente tiene reconocimiento económico. Descubre cuánto te corresponde.</div>
+  <div style="color:#9b59b6;font-weight:600;font-size:14px">Leer guía &rarr;</div>
+</a>
+<a href="/blog/ayuda-alquiler-joven-cataluna-2026" style="background:#fff;border:1px solid #e8e8f0;border-radius:14px;padding:24px;text-decoration:none;color:inherit;display:flex;flex-direction:column;gap:10px;transition:box-shadow .2s" onmouseover="this.style.boxShadow='0 8px 30px rgba(0,0,0,0.1)'" onmouseout="this.style.boxShadow='none'">
+  <div style="font-size:11px;font-weight:700;color:#7c6af7;text-transform:uppercase;letter-spacing:1.5px">Vivienda · Catalunya</div>
+  <div style="font-size:17px;font-weight:700;color:#0d1b2a;line-height:1.35">Alquiler en Cataluña: hasta 200€/mes de la Generalitat</div>
+  <div style="font-size:14px;color:#5a5a7a;line-height:1.6;flex:1">Si vives de alquiler en Catalunya y tienes ingresos bajos, la Generalitat puede pagarte hasta 200€/mes.</div>
+  <div style="color:#7c6af7;font-weight:600;font-size:14px">Leer guía &rarr;</div>
+</a>
+<a href="/blog/ayudas-caldera-cambio-2026" style="background:#fff;border:1px solid #e8e8f0;border-radius:14px;padding:24px;text-decoration:none;color:inherit;display:flex;flex-direction:column;gap:10px;transition:box-shadow .2s" onmouseover="this.style.boxShadow='0 8px 30px rgba(0,0,0,0.1)'" onmouseout="this.style.boxShadow='none'">
+  <div style="font-size:11px;font-weight:700;color:#ffa502;text-transform:uppercase;letter-spacing:1.5px">Energía</div>
+  <div style="font-size:17px;font-weight:700;color:#0d1b2a;line-height:1.35">Cambiar la caldera: hasta 3.000€ de subvención más deducción fiscal</div>
+  <div style="font-size:14px;color:#5a5a7a;line-height:1.6;flex:1">Tu caldera antigua te está costando dinero. El gobierno te paga hasta 3.000€ para cambiarla.</div>
+  <div style="color:#ffa502;font-weight:600;font-size:14px">Leer guía &rarr;</div>
+</a>
+<a href="/blog/ayudas-placas-solares-particulares-2026" style="background:#fff;border:1px solid #e8e8f0;border-radius:14px;padding:24px;text-decoration:none;color:inherit;display:flex;flex-direction:column;gap:10px;transition:box-shadow .2s" onmouseover="this.style.boxShadow='0 8px 30px rgba(0,0,0,0.1)'" onmouseout="this.style.boxShadow='none'">
+  <div style="font-size:11px;font-weight:700;color:#ffa502;text-transform:uppercase;letter-spacing:1.5px">Energía</div>
+  <div style="font-size:17px;font-weight:700;color:#0d1b2a;line-height:1.35">Placas solares en casa: cómo instalarlas casi gratis en 2026</div>
+  <div style="font-size:14px;color:#5a5a7a;line-height:1.6;flex:1">Con las ayudas disponibles, instalar autoconsumo solar puede costar casi nada. Te explicamos cómo.</div>
+  <div style="color:#ffa502;font-weight:600;font-size:14px">Leer guía &rarr;</div>
+</a>
+<a href="/blog/ayudas-paro-autonomos-2026" style="background:#fff;border:1px solid #e8e8f0;border-radius:14px;padding:24px;text-decoration:none;color:inherit;display:flex;flex-direction:column;gap:10px;transition:box-shadow .2s" onmouseover="this.style.boxShadow='0 8px 30px rgba(0,0,0,0.1)'" onmouseout="this.style.boxShadow='none'">
+  <div style="font-size:11px;font-weight:700;color:#f4a261;text-transform:uppercase;letter-spacing:1.5px">Autónomos</div>
+  <div style="font-size:17px;font-weight:700;color:#0d1b2a;line-height:1.35">Paro para autónomos: sí existe y puedes cobrar hasta 12 meses</div>
+  <div style="font-size:14px;color:#5a5a7a;line-height:1.6;flex:1">Los autónomos también tienen derecho a cobrar el paro cuando cierran su negocio. ¿Lo sabías?</div>
+  <div style="color:#f4a261;font-weight:600;font-size:14px">Leer guía &rarr;</div>
+</a>
+<a href="/blog/ayudas-libros-material-escolar-2026" style="background:#fff;border:1px solid #e8e8f0;border-radius:14px;padding:24px;text-decoration:none;color:inherit;display:flex;flex-direction:column;gap:10px;transition:box-shadow .2s" onmouseover="this.style.boxShadow='0 8px 30px rgba(0,0,0,0.1)'" onmouseout="this.style.boxShadow='none'">
+  <div style="font-size:11px;font-weight:700;color:#06d6a0;text-transform:uppercase;letter-spacing:1.5px">Educación</div>
+  <div style="font-size:17px;font-weight:700;color:#0d1b2a;line-height:1.35">Libros escolares gratis: qué comunidades los dan y cómo pedirlos</div>
+  <div style="font-size:14px;color:#5a5a7a;line-height:1.6;flex:1">En muchas comunidades autónomas los libros de texto son gratuitos. Descubre si la tuya es una de ellas.</div>
+  <div style="color:#06d6a0;font-weight:600;font-size:14px">Leer guía &rarr;</div>
+</a>
+<a href="/blog/imv-compatibilidad-trabajo-2026" style="background:#fff;border:1px solid #e8e8f0;border-radius:14px;padding:24px;text-decoration:none;color:inherit;display:flex;flex-direction:column;gap:10px;transition:box-shadow .2s" onmouseover="this.style.boxShadow='0 8px 30px rgba(0,0,0,0.1)'" onmouseout="this.style.boxShadow='none'">
+  <div style="font-size:11px;font-weight:700;color:#00c896;text-transform:uppercase;letter-spacing:1.5px">Prestaciones</div>
+  <div style="font-size:17px;font-weight:700;color:#0d1b2a;line-height:1.35">IMV y trabajo: cómo seguir cobrando el IMV cuando encuentras empleo</div>
+  <div style="font-size:14px;color:#5a5a7a;line-height:1.6;flex:1">Encontrar trabajo no significa perder el IMV. Descubre cómo funcionan las nuevas reglas.</div>
+  <div style="color:#00c896;font-weight:600;font-size:14px">Leer guía &rarr;</div>
+</a>
+<a href="/blog/ayudas-comedor-escolar-2026" style="background:#fff;border:1px solid #e8e8f0;border-radius:14px;padding:24px;text-decoration:none;color:inherit;display:flex;flex-direction:column;gap:10px;transition:box-shadow .2s" onmouseover="this.style.boxShadow='0 8px 30px rgba(0,0,0,0.1)'" onmouseout="this.style.boxShadow='none'">
+  <div style="font-size:11px;font-weight:700;color:#06d6a0;text-transform:uppercase;letter-spacing:1.5px">Educación</div>
+  <div style="font-size:17px;font-weight:700;color:#0d1b2a;line-height:1.35">Comedor escolar gratis: cómo conseguirlo para tus hijos</div>
+  <div style="font-size:14px;color:#5a5a7a;line-height:1.6;flex:1">El comedor del colegio puede ser completamente gratuito. Te explicamos cómo solicitarlo.</div>
+  <div style="color:#06d6a0;font-weight:600;font-size:14px">Leer guía &rarr;</div>
+</a>
+<a href="/blog/ayudas-familias-monoparentales-2026" style="background:#fff;border:1px solid #e8e8f0;border-radius:14px;padding:24px;text-decoration:none;color:inherit;display:flex;flex-direction:column;gap:10px;transition:box-shadow .2s" onmouseover="this.style.boxShadow='0 8px 30px rgba(0,0,0,0.1)'" onmouseout="this.style.boxShadow='none'">
+  <div style="font-size:11px;font-weight:700;color:#ff6b9d;text-transform:uppercase;letter-spacing:1.5px">Familia</div>
+  <div style="font-size:17px;font-weight:700;color:#0d1b2a;line-height:1.35">Familias monoparentales: todas las ayudas específicas para ti</div>
+  <div style="font-size:14px;color:#5a5a7a;line-height:1.6;flex:1">Criar solo o sola tiene más apoyo del que crees. Descubre todas las ayudas exclusivas.</div>
+  <div style="color:#ff6b9d;font-weight:600;font-size:14px">Leer guía &rarr;</div>
+</a>
+<a href="/blog/pension-viudedad-2026-cuantia-requisitos" style="background:#fff;border:1px solid #e8e8f0;border-radius:14px;padding:24px;text-decoration:none;color:inherit;display:flex;flex-direction:column;gap:10px;transition:box-shadow .2s" onmouseover="this.style.boxShadow='0 8px 30px rgba(0,0,0,0.1)'" onmouseout="this.style.boxShadow='none'">
+  <div style="font-size:11px;font-weight:700;color:#1d3557;text-transform:uppercase;letter-spacing:1.5px">Pensiones</div>
+  <div style="font-size:17px;font-weight:700;color:#0d1b2a;line-height:1.35">Pensión de viudedad: cuánto cobrarás y cómo solicitarla</div>
+  <div style="font-size:14px;color:#5a5a7a;line-height:1.6;flex:1">La pensión de viudedad puede ser del 70% del sueldo de tu pareja. Descubre si tienes derecho.</div>
+  <div style="color:#1d3557;font-weight:600;font-size:14px">Leer guía &rarr;</div>
+</a>
+<a href="/blog/ayudas-desempleados-larga-duracion-2026" style="background:#fff;border:1px solid #e8e8f0;border-radius:14px;padding:24px;text-decoration:none;color:inherit;display:flex;flex-direction:column;gap:10px;transition:box-shadow .2s" onmouseover="this.style.boxShadow='0 8px 30px rgba(0,0,0,0.1)'" onmouseout="this.style.boxShadow='none'">
+  <div style="font-size:11px;font-weight:700;color:#00b4d8;text-transform:uppercase;letter-spacing:1.5px">Desempleo</div>
+  <div style="font-size:17px;font-weight:700;color:#0d1b2a;line-height:1.35">Llevas más de 1 año en paro: estas ayudas son para ti</div>
+  <div style="font-size:14px;color:#5a5a7a;line-height:1.6;flex:1">El desempleo de larga duración tiene prestaciones específicas que muy poca gente conoce.</div>
+  <div style="color:#00b4d8;font-weight:600;font-size:14px">Leer guía &rarr;</div>
+</a>
+<a href="/blog/ayudas-vivienda-habitual-irpf-2026" style="background:#fff;border:1px solid #e8e8f0;border-radius:14px;padding:24px;text-decoration:none;color:inherit;display:flex;flex-direction:column;gap:10px;transition:box-shadow .2s" onmouseover="this.style.boxShadow='0 8px 30px rgba(0,0,0,0.1)'" onmouseout="this.style.boxShadow='none'">
+  <div style="font-size:11px;font-weight:700;color:#7c6af7;text-transform:uppercase;letter-spacing:1.5px">Vivienda</div>
+  <div style="font-size:17px;font-weight:700;color:#0d1b2a;line-height:1.35">Vivienda habitual en el IRPF: ¿sigues pudiendo deducirte la hipoteca?</div>
+  <div style="font-size:14px;color:#5a5a7a;line-height:1.6;flex:1">Si compraste tu casa antes de 2013, Hacienda te debe hasta 1.356€ al año. ¿Lo estás cobrando?</div>
+  <div style="color:#7c6af7;font-weight:600;font-size:14px">Leer guía &rarr;</div>
+</a>
+<a href="/blog/ayudas-joven-primer-empleo-2026" style="background:#fff;border:1px solid #e8e8f0;border-radius:14px;padding:24px;text-decoration:none;color:inherit;display:flex;flex-direction:column;gap:10px;transition:box-shadow .2s" onmouseover="this.style.boxShadow='0 8px 30px rgba(0,0,0,0.1)'" onmouseout="this.style.boxShadow='none'">
+  <div style="font-size:11px;font-weight:700;color:#00b4d8;text-transform:uppercase;letter-spacing:1.5px">Empleo</div>
+  <div style="font-size:17px;font-weight:700;color:#0d1b2a;line-height:1.35">Primer empleo: ayudas y programas para jóvenes que buscan trabajo</div>
+  <div style="font-size:14px;color:#5a5a7a;line-height:1.6;flex:1">Tienes menos de 30 años y buscas trabajo. Existen programas específicos que pueden ayudarte.</div>
+  <div style="color:#00b4d8;font-weight:600;font-size:14px">Leer guía &rarr;</div>
+</a>
+<a href="/blog/ayudas-familias-vulnerables-2026" style="background:#fff;border:1px solid #e8e8f0;border-radius:14px;padding:24px;text-decoration:none;color:inherit;display:flex;flex-direction:column;gap:10px;transition:box-shadow .2s" onmouseover="this.style.boxShadow='0 8px 30px rgba(0,0,0,0.1)'" onmouseout="this.style.boxShadow='none'">
+  <div style="font-size:11px;font-weight:700;color:#ff6b9d;text-transform:uppercase;letter-spacing:1.5px">Familia</div>
+  <div style="font-size:17px;font-weight:700;color:#0d1b2a;line-height:1.35">Familia con dificultades: todas las ayudas de emergencia disponibles</div>
+  <div style="font-size:14px;color:#5a5a7a;line-height:1.6;flex:1">Si tu familia atraviesa una situación difícil, hay más ayudas de las que imaginas.</div>
+  <div style="color:#ff6b9d;font-weight:600;font-size:14px">Leer guía &rarr;</div>
+</a>
+<a href="/blog/ayuda-natalidad-hijos-2026" style="background:#fff;border:1px solid #e8e8f0;border-radius:14px;padding:24px;text-decoration:none;color:inherit;display:flex;flex-direction:column;gap:10px;transition:box-shadow .2s" onmouseover="this.style.boxShadow='0 8px 30px rgba(0,0,0,0.1)'" onmouseout="this.style.boxShadow='none'">
+  <div style="font-size:11px;font-weight:700;color:#ff6b9d;text-transform:uppercase;letter-spacing:1.5px">Familia</div>
+  <div style="font-size:17px;font-weight:700;color:#0d1b2a;line-height:1.35">Tener un hijo en 2026: todo el dinero que el gobierno te da</div>
+  <div style="font-size:14px;color:#5a5a7a;line-height:1.6;flex:1">Cuando nace un hijo se activan múltiples ayudas automáticamente. ¿Las estás reclamando todas?</div>
+  <div style="color:#ff6b9d;font-weight:600;font-size:14px">Leer guía &rarr;</div>
+</a>
+<a href="/blog/beca-general-universitaria-2026" style="background:#fff;border:1px solid #e8e8f0;border-radius:14px;padding:24px;text-decoration:none;color:inherit;display:flex;flex-direction:column;gap:10px;transition:box-shadow .2s" onmouseover="this.style.boxShadow='0 8px 30px rgba(0,0,0,0.1)'" onmouseout="this.style.boxShadow='none'">
+  <div style="font-size:11px;font-weight:700;color:#06d6a0;text-transform:uppercase;letter-spacing:1.5px">Educación</div>
+  <div style="font-size:17px;font-weight:700;color:#0d1b2a;line-height:1.35">Beca universitaria 2026: hasta 2.200€ al año para estudiar</div>
+  <div style="font-size:14px;color:#5a5a7a;line-height:1.6;flex:1">La beca del Ministerio puede cubrir tu matrícula más darte dinero. ¿Sabes si tienes derecho?</div>
+  <div style="color:#06d6a0;font-weight:600;font-size:14px">Leer guía &rarr;</div>
+</a>
+<a href="/blog/ayudas-personas-sin-hogar-2026" style="background:#fff;border:1px solid #e8e8f0;border-radius:14px;padding:24px;text-decoration:none;color:inherit;display:flex;flex-direction:column;gap:10px;transition:box-shadow .2s" onmouseover="this.style.boxShadow='0 8px 30px rgba(0,0,0,0.1)'" onmouseout="this.style.boxShadow='none'">
+  <div style="font-size:11px;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:1.5px">Exclusión social</div>
+  <div style="font-size:17px;font-weight:700;color:#0d1b2a;line-height:1.35">Sin hogar: recursos y ayudas disponibles en España</div>
+  <div style="font-size:14px;color:#5a5a7a;line-height:1.6;flex:1">El sistema de protección social tiene recursos específicos para las situaciones más vulnerables.</div>
+  <div style="color:#888;font-weight:600;font-size:14px">Leer guía &rarr;</div>
+</a>
+<a href="/blog/tarjeta-sanitaria-europea-2026" style="background:#fff;border:1px solid #e8e8f0;border-radius:14px;padding:24px;text-decoration:none;color:inherit;display:flex;flex-direction:column;gap:10px;transition:box-shadow .2s" onmouseover="this.style.boxShadow='0 8px 30px rgba(0,0,0,0.1)'" onmouseout="this.style.boxShadow='none'">
+  <div style="font-size:11px;font-weight:700;color:#e63946;text-transform:uppercase;letter-spacing:1.5px">Sanidad</div>
+  <div style="font-size:17px;font-weight:700;color:#0d1b2a;line-height:1.35">Tarjeta Sanitaria Europea: cómo conseguirla gratis en 5 minutos</div>
+  <div style="font-size:14px;color:#5a5a7a;line-height:1.6;flex:1">Si viajas por Europa, necesitas esta tarjeta. Es gratuita y te protege en cualquier país de la UE.</div>
+  <div style="color:#e63946;font-weight:600;font-size:14px">Leer guía &rarr;</div>
+</a>
+<a href="/blog/ayudas-victimas-violencia-genero-2026" style="background:#fff;border:1px solid #e8e8f0;border-radius:14px;padding:24px;text-decoration:none;color:inherit;display:flex;flex-direction:column;gap:10px;transition:box-shadow .2s" onmouseover="this.style.boxShadow='0 8px 30px rgba(0,0,0,0.1)'" onmouseout="this.style.boxShadow='none'">
+  <div style="font-size:11px;font-weight:700;color:#ff6b9d;text-transform:uppercase;letter-spacing:1.5px">Apoyo</div>
+  <div style="font-size:17px;font-weight:700;color:#0d1b2a;line-height:1.35">Víctimas de violencia de género: todas las ayudas económicas disponibles</div>
+  <div style="font-size:14px;color:#5a5a7a;line-height:1.6;flex:1">Existe un sistema completo de ayudas económicas para víctimas de violencia de género.</div>
+  <div style="color:#ff6b9d;font-weight:600;font-size:14px">Leer guía &rarr;</div>
+</a>
+<a href="/blog/ayudas-inmigrantes-espana-2026" style="background:#fff;border:1px solid #e8e8f0;border-radius:14px;padding:24px;text-decoration:none;color:inherit;display:flex;flex-direction:column;gap:10px;transition:box-shadow .2s" onmouseover="this.style.boxShadow='0 8px 30px rgba(0,0,0,0.1)'" onmouseout="this.style.boxShadow='none'">
+  <div style="font-size:11px;font-weight:700;color:#f4a261;text-transform:uppercase;letter-spacing:1.5px">Extranjería</div>
+  <div style="font-size:17px;font-weight:700;color:#0d1b2a;line-height:1.35">Inmigrantes en España: qué ayudas puedes solicitar si resides legalmente</div>
+  <div style="font-size:14px;color:#5a5a7a;line-height:1.6;flex:1">La residencia legal en España abre el acceso a la mayoría de ayudas sociales. Descubre cuáles.</div>
+  <div style="color:#f4a261;font-weight:600;font-size:14px">Leer guía &rarr;</div>
+</a>
+<a href="/blog/ayudas-reformar-casa-2026" style="background:#fff;border:1px solid #e8e8f0;border-radius:14px;padding:24px;text-decoration:none;color:inherit;display:flex;flex-direction:column;gap:10px;transition:box-shadow .2s" onmouseover="this.style.boxShadow='0 8px 30px rgba(0,0,0,0.1)'" onmouseout="this.style.boxShadow='none'">
+  <div style="font-size:11px;font-weight:700;color:#7c6af7;text-transform:uppercase;letter-spacing:1.5px">Vivienda</div>
+  <div style="font-size:17px;font-weight:700;color:#0d1b2a;line-height:1.35">Reformar tu casa: subvenciones y deducciones que no sabías que existen</div>
+  <div style="font-size:14px;color:#5a5a7a;line-height:1.6;flex:1">Reformar puede ser mucho más barato de lo que crees con las ayudas disponibles en 2026.</div>
+  <div style="color:#7c6af7;font-weight:600;font-size:14px">Leer guía &rarr;</div>
+</a>
+<a href="/blog/ayudas-gafas-optica-2026" style="background:#fff;border:1px solid #e8e8f0;border-radius:14px;padding:24px;text-decoration:none;color:inherit;display:flex;flex-direction:column;gap:10px;transition:box-shadow .2s" onmouseover="this.style.boxShadow='0 8px 30px rgba(0,0,0,0.1)'" onmouseout="this.style.boxShadow='none'">
+  <div style="font-size:11px;font-weight:700;color:#e63946;text-transform:uppercase;letter-spacing:1.5px">Sanidad</div>
+  <div style="font-size:17px;font-weight:700;color:#0d1b2a;line-height:1.35">Gafas y óptica: qué ayudas existen y cómo conseguirlas</div>
+  <div style="font-size:14px;color:#5a5a7a;line-height:1.6;flex:1">La Seguridad Social no cubre las gafas, pero hay ayudas autonómicas que probablemente no conoces.</div>
+  <div style="color:#e63946;font-weight:600;font-size:14px">Leer guía &rarr;</div>
+</a>
+<a href="/blog/ayudas-mayores-65-anos-2026" style="background:#fff;border:1px solid #e8e8f0;border-radius:14px;padding:24px;text-decoration:none;color:inherit;display:flex;flex-direction:column;gap:10px;transition:box-shadow .2s" onmouseover="this.style.boxShadow='0 8px 30px rgba(0,0,0,0.1)'" onmouseout="this.style.boxShadow='none'">
+  <div style="font-size:11px;font-weight:700;color:#1d3557;text-transform:uppercase;letter-spacing:1.5px">Mayores</div>
+  <div style="font-size:17px;font-weight:700;color:#0d1b2a;line-height:1.35">Mayores de 65 años: el catálogo completo de ayudas y descuentos</div>
+  <div style="font-size:14px;color:#5a5a7a;line-height:1.6;flex:1">Pensiones, Bono Social, transporte, dependencia... todo lo que te corresponde después de los 65.</div>
+  <div style="color:#1d3557;font-weight:600;font-size:14px">Leer guía &rarr;</div>
+</a>
   </div>
 </div>
+<div style="position:fixed;bottom:0;left:0;right:0;background:linear-gradient(135deg,#0d1b2a,#1a3a5c);padding:14px 24px;z-index:1000;display:flex;align-items:center;justify-content:space-between;box-shadow:0 -4px 20px rgba(0,0,0,0.3)">
+  <div style="color:white;font-size:15px;font-weight:600">&#128200; ¿Tienes ayudas sin reclamar?</div>
+  <a href="/" style="background:#00c896;color:#0d1b2a;padding:10px 24px;border-radius:8px;text-decoration:none;font-weight:800;font-size:15px;white-space:nowrap">Comprobar gratis &rarr;</a>
+</div>
+<div style="height:60px"></div>
 <footer>
-  <p>&copy; 2026 <a href="/">CobraTusAyudas.es</a> &nbsp;&middot;&nbsp; <a href="/">Inicio</a> &nbsp;&middot;&nbsp; <a href="/blog">Blog</a></p>
+  <p>&copy; 2026 <a href="/">CobraTusAyudas.es</a> &middot; <a href="/">Inicio</a></p>
 </footer>
 </body>
 </html>
