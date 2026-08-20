@@ -910,6 +910,7 @@ function buildResults() {
   const ayudas = filtrarAyudas();
   saveQuizResponse(ayudas);
   trackEvent("quiz_results_shown", {count: ayudas.length});
+      if (typeof fbq === 'function') { fbq('track', 'ViewContent', {content_name: 'resultados_ayudas', content_category: 'quiz_results'}); }
   saveQuizResponse(ayudas);
   document.getElementById("money-display").textContent = calcularImporteTotal(ayudas);
   document.getElementById("ayudas-count").textContent = ayudas.length;
