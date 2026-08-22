@@ -954,6 +954,7 @@ function buildResults() {
   saveQuizResponse(ayudas);
   trackEvent("quiz_results_shown", {count: ayudas.length});
       if (typeof fbq === 'function') { fbq('track', 'ViewContent', {content_name: 'resultados_ayudas', content_category: 'quiz_results'}); }
+  try { history.replaceState(null, '', location.pathname + '?view=resultado'); } catch(e) {}
   saveQuizResponse(ayudas);
   document.getElementById("money-display").textContent = calcularImporteTotal(ayudas);
   document.getElementById("ayudas-count").textContent = ayudas.length;
@@ -997,7 +998,7 @@ async function handlePayment() {
   // Save answers to sessionStorage before redirecting to Stripe
   sessionStorage.setItem('respuestas_backup', JSON.stringify(respuestas));
   trackEvent('begin_checkout', {value: 6, currency: 'EUR'});
-  trackEvent("begin_checkout", { value: 6, currency: "EUR" });
+  if (typeof fbq === 'function') { fbq('track', 'InitiateCheckout', {value: 6, currency: 'EUR', content_name: 'desbloquear_ayudas'}); }
   // Enlace de pago fijo de Stripe (no caduca, no depende de crear sesion por API)
   window.location.href = "https://buy.stripe.com/6oUeVdeHy9zYc9db5Nf3a00";
 }
