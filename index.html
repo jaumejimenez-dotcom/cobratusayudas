@@ -1014,6 +1014,13 @@ function goHome() {
   showPage("page-hero");
 }
 
+function trackEvent(name, params) {
+  try {
+    if (typeof gtag === 'function') gtag('event', name, params || {});
+    if (window.dataLayer) window.dataLayer.push(Object.assign({event: name}, params || {}));
+  } catch(e) {}
+}
+
 function startQuiz() { showPage("page-quiz"); trackEvent("quiz_started"); }
 
 function updateProgress(q) {
