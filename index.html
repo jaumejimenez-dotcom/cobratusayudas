@@ -315,6 +315,33 @@
 .res-t-author{display:flex;align-items:center;gap:8px;font-size:0.8rem;color:var(--text-dim);}
 .res-t-avatar{width:30px;height:30px;border-radius:50%;object-fit:cover;border:1.5px solid var(--border);flex-shrink:0;}
 @media(max-width:480px){.paywall-features{grid-template-columns:1fr;}.res-title{font-size:1.3rem;}}
+
+/* ── PAYMENT MODAL ── */
+.pay-modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.55);backdrop-filter:blur(3px);z-index:2000;display:none;align-items:center;justify-content:center;padding:16px;}
+.pay-modal-overlay.open{display:flex;}
+.pay-modal{background:#fff;border-radius:20px;width:100%;max-width:420px;box-shadow:0 24px 80px rgba(0,0,0,0.2);overflow:hidden;animation:modalIn .25s ease;}
+@keyframes modalIn{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+.pay-modal-header{background:linear-gradient(135deg,#0d1b2a,#1a3a5c);padding:20px 24px;display:flex;align-items:center;justify-content:space-between;}
+.pay-modal-title{color:#fff;font-size:1rem;font-weight:700;}
+.pay-modal-price{color:#00c896;font-size:1.2rem;font-weight:800;}
+.pay-modal-close{background:none;border:none;color:rgba(255,255,255,0.6);font-size:1.4rem;cursor:pointer;padding:0;line-height:1;}
+.pay-modal-body{padding:24px;}
+.pay-modal-what{background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;padding:14px;margin-bottom:20px;}
+.pay-modal-what-title{font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:#16a34a;margin-bottom:8px;}
+.pay-modal-what ul{list-style:none;padding:0;margin:0;}
+.pay-modal-what li{font-size:0.82rem;color:#166534;padding:2px 0;display:flex;align-items:center;gap:6px;}
+.pay-modal-what li::before{content:"✓";color:#16a34a;font-weight:700;}
+#modal-stripe-element{margin-bottom:16px;}
+.pay-modal-submit{width:100%;background:#00c896;color:#0a0f1e;font-weight:800;font-size:1rem;padding:15px;border:none;border-radius:10px;cursor:pointer;transition:background .2s;}
+.pay-modal-submit:hover{background:#00e5b0;}
+.pay-modal-submit:disabled{opacity:0.6;cursor:not-allowed;}
+.pay-modal-security{display:flex;align-items:center;justify-content:center;gap:6px;margin-top:14px;font-size:0.72rem;color:#6b7280;}
+.pay-modal-security svg{width:14px;height:14px;color:#6b7280;}
+.pay-modal-brands{display:flex;align-items:center;justify-content:center;gap:10px;margin-top:10px;opacity:0.5;}
+.pay-modal-brands img{height:20px;}
+#modal-error{color:#ef4444;font-size:0.82rem;margin-top:8px;text-align:center;display:none;}
+#modal-processing{display:none;text-align:center;padding:20px;}
+.modal-spinner{width:32px;height:32px;border:3px solid #e5e7eb;border-top-color:#00c896;border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 10px;}
 </style>
 
   <!-- Google Analytics GA4 -->
@@ -1160,9 +1187,11 @@ var _spk = 'pk_live_51TPiMpHnR7v3xoRAUWGuTjmri5TIW2KvgXtXQqwgyCBx7teZAHF4tyvG6Vf
 var _si = null, _se = null;
 
 async function initStripePayment() {
-  document.getElementById('pay-state-btn').style.display = 'none';
-  document.getElementById('pay-state-loading').style.display = 'block';
   if (typeof fbq === 'function') { fbq('track', 'InitiateCheckout', {value:6,currency:'EUR'}); }
+  // Open modal immediately
+  document.getElementById('pay-modal-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  // Load Stripe and mount element
   try {
     var resp = await fetch('/api/payment-intent', {method:'POST', headers:{'Content-Type':'application/json'}});
     var data = await resp.json();
@@ -1177,47 +1206,61 @@ async function initStripePayment() {
         document.head.appendChild(s);
       });
     }
-    _se = _si.elements({clientSecret: data.clientSecret, appearance:{theme:'night',variables:{colorPrimary:'#00b894',colorText:'#ffffff',fontFamily:'Sora,sans-serif',borderRadius:'8px'}}});
+    _se = _si.elements({
+      clientSecret: data.clientSecret,
+      appearance:{
+        theme:'stripe',
+        variables:{colorPrimary:'#00c896', colorBackground:'#ffffff', colorText:'#0f172a', fontFamily:'system-ui,sans-serif', borderRadius:'8px'},
+        rules:{'.Input':{border:'1px solid #e2e8f0', boxShadow:'none'}}
+      }
+    });
     var pel = _se.create('payment', {layout:'tabs'});
-    document.getElementById('pay-state-loading').style.display = 'none';
-    document.getElementById('pay-state-form').style.display = 'block';
-    pel.mount('#stripe-payment-element');
+    pel.mount('#modal-stripe-element');
+    pel.on('ready', function() {
+      document.getElementById('modal-submit-btn').style.display = 'block';
+    });
   } catch(err) {
-    console.error('Stripe:', err);
-    document.getElementById('pay-state-loading').style.display = 'none';
-    document.getElementById('pay-state-btn').style.display = 'block';
-    // Show error briefly then fallback to Stripe hosted
-    var btn = document.getElementById('pay-btn');
-    if (btn) {
-      btn.textContent = 'Error cargando pago. Redirigiendo...';
-      setTimeout(function() {
-        sessionStorage.setItem('respuestas_backup', JSON.stringify(respuestas));
-        window.location.href = 'https://buy.stripe.com/6oUeVdeHy9zYc9db5Nf3a00';
-      }, 1500);
-    }
+    console.error('Stripe modal:', err);
+    closePayModal();
+    sessionStorage.setItem('respuestas_backup', JSON.stringify(respuestas));
+    window.location.href = 'https://buy.stripe.com/6oUeVdeHy9zYc9db5Nf3a00';
   }
 }
 
-async function confirmPayment() {
-  var btn = document.getElementById('submit-payment-btn');
+function closePayModal() {
+  document.getElementById('pay-modal-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+async function confirmModalPayment() {
+  var btn = document.getElementById('modal-submit-btn');
   btn.disabled = true; btn.textContent = 'Procesando...';
-  document.getElementById('stripe-error-msg').style.display = 'none';
-  document.getElementById('pay-state-form').style.display = 'none';
-  document.getElementById('pay-state-processing').style.display = 'block';
-  var result = await _si.confirmPayment({elements:_se, confirmParams:{return_url: window.location.origin+'/?pago=ok'}, redirect:'if_required'});
+  document.getElementById('modal-error').style.display = 'none';
+  document.getElementById('modal-stripe-element').style.display = 'none';
+  document.getElementById('modal-processing').style.display = 'block';
+  btn.style.display = 'none';
+  var result = await _si.confirmPayment({
+    elements: _se,
+    confirmParams: {return_url: window.location.origin + '/?pago=ok'},
+    redirect: 'if_required'
+  });
   if (result.error) {
-    document.getElementById('pay-state-processing').style.display = 'none';
-    document.getElementById('pay-state-form').style.display = 'block';
-    var errEl = document.getElementById('stripe-error-msg');
+    document.getElementById('modal-processing').style.display = 'none';
+    document.getElementById('modal-stripe-element').style.display = 'block';
+    btn.style.display = 'block';
+    var errEl = document.getElementById('modal-error');
     errEl.textContent = result.error.message; errEl.style.display = 'block';
     btn.disabled = false; btn.textContent = 'Pagar 6€ y desbloquear';
   } else if (result.paymentIntent && result.paymentIntent.status === 'succeeded') {
     if (typeof fbq === 'function') { fbq('track', 'Purchase', {value:6,currency:'EUR'}); }
+    closePayModal();
     sessionStorage.setItem('cobratusayudas_paid','1');
     sessionStorage.setItem('respuestas_backup', JSON.stringify(respuestas));
     buildUnlocked(); showPage('page-unlocked');
   }
 }
+
+function confirmPayment() { confirmModalPayment(); }
 
 
 function getSB() {
@@ -1321,5 +1364,46 @@ async function markAsPaid() {
   }
 })();
 </script>
+
+<!-- PAYMENT MODAL -->
+<div class="pay-modal-overlay" id="pay-modal-overlay" onclick="if(event.target===this)closePayModal()">
+  <div class="pay-modal">
+    <div class="pay-modal-header">
+      <div class="pay-modal-title">&#128275; Desbloquear informe</div>
+      <div class="pay-modal-price">6&euro;</div>
+      <button class="pay-modal-close" onclick="closePayModal()">&times;</button>
+    </div>
+    <div class="pay-modal-body">
+      <div class="pay-modal-what">
+        <div class="pay-modal-what-title">Incluido en tu informe</div>
+        <ul>
+          <li>Importe exacto de cada ayuda</li>
+          <li>C&oacute;mo solicitarla paso a paso</li>
+          <li>Enlace oficial a la solicitud</li>
+          <li>Todas las fichas completas de tu perfil</li>
+        </ul>
+      </div>
+      <div id="modal-processing">
+        <div class="modal-spinner"></div>
+        <div style="font-size:0.85rem;color:#6b7280;">Procesando pago...</div>
+      </div>
+      <div id="modal-stripe-element"></div>
+      <div id="modal-error"></div>
+      <button class="pay-modal-submit" id="modal-submit-btn" onclick="confirmModalPayment()" style="display:none;">
+        Pagar 6&euro; y desbloquear
+      </button>
+      <div class="pay-modal-security">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        Pago seguro con Stripe &middot; No guardamos tu tarjeta
+      </div>
+      <div class="pay-modal-brands">
+        <svg viewBox="0 0 38 24" width="38" height="24"><rect width="38" height="24" rx="4" fill="#1434CB"/><text x="19" y="16" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold">VISA</text></svg>
+        <svg viewBox="0 0 38 24" width="38" height="24"><rect width="38" height="24" rx="4" fill="#EB001B" opacity=".9"/><circle cx="15" cy="12" r="7" fill="#EB001B"/><circle cx="23" cy="12" r="7" fill="#F79E1B"/><path d="M19 7.3a7 7 0 0 1 0 9.4A7 7 0 0 1 19 7.3z" fill="#FF5F00"/></svg>
+        <svg viewBox="0 0 38 24" width="38" height="24"><rect width="38" height="24" rx="4" fill="#000"/><text x="19" y="16" text-anchor="middle" fill="#fff" font-size="8" font-weight="bold"> Pay</text></svg>
+      </div>
+    </div>
+  </div>
+</div>
+
 </body>
 </html>
