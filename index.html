@@ -959,17 +959,41 @@ let respuestas = {};
 function setAnswer(k, v) { respuestas[k] = v; }
 
 function filtrarAyudas() {
-  const { ccaa, edad, laboral, ingresos, familia, bebes, vivienda, zona, discapacidad, especial, vehiculo, energia } = respuestas;
+  // Mapeo de valores del quiz a valores de la BD
+  var _r = respuestas || {};
+  var bebesBD = {si:'si', si_menores:'si', si_mayores:'si', no:'no'}[_r.bebes] || _r.bebes;
+  var laboralBD = {asalariado:'empleado', empleado:'empleado', autonomo:'autónomo', desempleado:'desempleado', jubilado:'jubilado', estudios:'estudios'}[_r.laboral] || _r.laboral;
+  var ingresosBD = {menos_1000:'<1000', '1000_1500':'1000-1500', '1500_2500':'1500-2500', mas_2500:'>2500', menos_600:'<600', '600_1000':'600-1000', '1000_2000':'1000-2000', '2000_3000':'2000-3000', mas_3000:'>3000'}[_r.ingresos] || _r.ingresos;
+  // Aliases for ingresos ranges  
+  var ingresosAliases = {
+    'menos_1000': ['<600','600-1000','<1000','menos_1000'],
+    '1000_1500': ['1000-1500','1000-2000','1000_1500'],
+    '1500_2500': ['1500-2500','1000-2000','1500_2500'],
+    'mas_2500': ['>2500','>3000','2000-3000','mas_2500'],
+  };
+  var validIngresos = ingresosAliases[_r.ingresos] || [ingresosBD, _r.ingresos];
+  const ccaa = _r.ccaa;
+  const edad = _r.edad;
+  const laboral = laboralBD;
+  const ingresos = _r.ingresos;
+  const familia = _r.familia;
+  const bebes = bebesBD;
+  const vivienda = _r.vivienda;
+  const zona = _r.zona;
+  const discapacidad = _r.discapacidad;
+  const especial = _r.especial;
+  const vehiculo = _r.vehiculo;
+  const energia = _r.energia;
   return AYUDAS.filter(a => {
     const c = a.condiciones;
     if (a.ccaa && a.ccaa.length > 0) {
       if (!ccaa || !a.ccaa.includes(ccaa)) return false;
     }
     if (c.edad && c.edad.length > 0 && (!edad || !c.edad.includes(edad))) return false;
-    if (c.laboral && c.laboral.length > 0 && (!laboral || !c.laboral.includes(laboral))) return false;
-    if (c.ingresos && c.ingresos.length > 0 && (!ingresos || !c.ingresos.includes(ingresos))) return false;
+    if (c.laboral && c.laboral.length > 0 && !c.laboral.some(function(v){return v===laboral || v===_r.laboral || (v==='empleado'&&_r.laboral==='asalariado') || (v==='autónomo'&&_r.laboral==='autonomo');})) return false;
+    if (c.ingresos && c.ingresos.length > 0 && !c.ingresos.some(function(v){return validIngresos.indexOf(v)>=0 || v===ingresos || v===ingresosBD;})) return false;
     if (c.familia && c.familia.length > 0 && (!familia || !c.familia.includes(familia))) return false;
-    if (c.bebes && c.bebes.length > 0 && (!bebes || !c.bebes.includes(bebes))) return false;
+    if (c.bebes && c.bebes.length > 0 && !c.bebes.some(function(v){return v===bebes || v===_r.bebes || (v==='si'&&(_r.bebes==='si_menores'||_r.bebes==='si_mayores'||_r.bebes==='si'));})) return false;
     if (c.vivienda && c.vivienda.length > 0 && (!vivienda || !c.vivienda.includes(vivienda))) return false;
     if (c.zona && c.zona.length > 0 && (!zona || !c.zona.includes(zona))) return false;
     if (c.discapacidad && c.discapacidad.length > 0 && (!discapacidad || !c.discapacidad.includes(discapacidad))) return false;
