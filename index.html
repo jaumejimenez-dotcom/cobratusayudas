@@ -1186,7 +1186,15 @@ async function initStripePayment() {
     console.error('Stripe:', err);
     document.getElementById('pay-state-loading').style.display = 'none';
     document.getElementById('pay-state-btn').style.display = 'block';
-    window.open('https://buy.stripe.com/6oUeVdeHy9zYc9db5Nf3a00', '_blank');
+    // Show error briefly then fallback to Stripe hosted
+    var btn = document.getElementById('pay-btn');
+    if (btn) {
+      btn.textContent = 'Error cargando pago. Redirigiendo...';
+      setTimeout(function() {
+        sessionStorage.setItem('respuestas_backup', JSON.stringify(respuestas));
+        window.location.href = 'https://buy.stripe.com/6oUeVdeHy9zYc9db5Nf3a00';
+      }, 1500);
+    }
   }
 }
 
@@ -1259,6 +1267,59 @@ async function markAsPaid() {
   } catch(e) {}
 }
 
+
+/* ── INIT: check if returning from Stripe payment ── */
+(function() {
+  var params = new URLSearchParams(window.location.search);
+  
+  // Case 1: Stripe redirect with payment_intent param
+  var pi = params.get('payment_intent');
+  var piStatus = params.get('payment_intent_client_secret');
+  if (pi) {
+    // Verify payment server-side
+    fetch('/api/verify-intent?payment_intent=' + pi)
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        if (data.paid) {
+          if (typeof fbq === 'function') { fbq('track', 'Purchase', {value:6,currency:'EUR'}); }
+          sessionStorage.setItem('cobratusayudas_paid', '1');
+          markAsPaid();
+          // Restore respuestas from sessionStorage
+          var backup = sessionStorage.getItem('respuestas_backup');
+          if (backup) { try { respuestas = JSON.parse(backup); } catch(e) {} }
+          buildUnlocked();
+          showPage('page-unlocked');
+          history.replaceState(null, '', '/');
+        }
+      })
+      .catch(function(e) { console.error('verify-intent:', e); });
+    return;
+  }
+
+  // Case 2: ?pago=ok (legacy / manual)
+  if (params.get('pago') === 'ok') {
+    sessionStorage.setItem('cobratusayudas_paid', '1');
+    markAsPaid();
+    var backup = sessionStorage.getItem('respuestas_backup');
+    if (backup) { try { respuestas = JSON.parse(backup); } catch(e) {} }
+    buildUnlocked();
+    showPage('page-unlocked');
+    history.replaceState(null, '', '/');
+    return;
+  }
+
+  // Case 3: already paid in this session
+  if (sessionStorage.getItem('cobratusayudas_paid') === '1') {
+    var backup = sessionStorage.getItem('respuestas_backup');
+    if (backup) {
+      try {
+        respuestas = JSON.parse(backup);
+        buildUnlocked();
+        showPage('page-unlocked');
+      } catch(e) {}
+    }
+  }
+})();
 </script>
 </body>
 </html>
