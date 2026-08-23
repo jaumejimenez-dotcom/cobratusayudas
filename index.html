@@ -260,15 +260,13 @@
       .email-report-row{flex-direction:column;}
     }
   
-/* ═══ RESULTS PAGE 2.0 ═══ */
+/* results 2.0 */
 .results-wrap{max-width:600px;width:100%;margin:0 auto;padding:24px 16px 60px;}
 .res-header{text-align:center;margin-bottom:28px;padding-top:16px;}
 .res-eyebrow{display:inline-block;background:rgba(0,184,148,0.12);color:var(--accent);border:1px solid rgba(0,184,148,0.3);font-size:0.78rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;padding:5px 14px;border-radius:20px;margin-bottom:14px;}
 .res-title{font-size:1.5rem;font-weight:800;color:var(--text);line-height:1.2;margin-bottom:8px;}
 .res-count{color:var(--accent);}
 .res-sub{font-size:0.88rem;color:var(--text-muted);line-height:1.5;}
-
-/* Sample card */
 .sample-card{background:var(--surface);border:2px solid var(--accent);border-radius:16px;overflow:hidden;margin-bottom:20px;box-shadow:0 4px 24px rgba(0,184,148,0.12);}
 .sample-label{background:var(--accent);color:#0a0f1e;font-size:0.75rem;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;padding:8px 16px;}
 .sample-inner{padding:20px;}
@@ -280,8 +278,6 @@
 .sample-steps li{font-size:0.82rem;color:var(--text-muted);margin-bottom:5px;line-height:1.4;}
 .sample-org{font-size:0.75rem;color:var(--text-dim);border-top:1px solid var(--border);padding-top:10px;margin-top:4px;}
 .sample-link{display:inline-block;margin-top:10px;background:var(--accent);color:#0a0f1e;font-size:0.82rem;font-weight:700;padding:8px 16px;border-radius:8px;text-decoration:none;}
-
-/* Locked list */
 .locked-list-wrap{background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden;margin-bottom:20px;}
 .locked-list-header{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid var(--border);background:var(--surface2);}
 .locked-list-title{font-size:0.88rem;font-weight:700;color:var(--text);}
@@ -295,26 +291,20 @@
 .prev-name{font-size:0.88rem;flex:1;}
 .prev-amount{font-size:0.82rem;font-weight:700;color:var(--green);margin-left:12px;white-space:nowrap;}
 .prev-lock{font-size:0.75rem;color:var(--text-dim);margin-left:8px;}
-
-/* Paywall box */
 .paywall-box{background:linear-gradient(135deg,#0a0f1e,#1a2744);border-radius:16px;padding:24px;margin-bottom:24px;color:#fff;}
 .paywall-header{display:flex;align-items:flex-start;gap:14px;margin-bottom:20px;}
 .paywall-icon{font-size:2rem;line-height:1;}
 .paywall-title{font-size:1.1rem;font-weight:800;color:#fff;margin-bottom:4px;}
 .paywall-price{font-size:0.82rem;color:rgba(255,255,255,0.6);}
 .paywall-features{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:22px;}
-.pf-item{font-size:0.82rem;color:rgba(255,255,255,0.85);display:flex;align-items:flex-start;gap:6px;}
-.pay-btn-main{width:100%;background:var(--accent);color:#0a0f1e;font-family:"Sora",sans-serif;font-weight:800;font-size:1.05rem;padding:16px;border:none;border-radius:12px;cursor:pointer;transition:all .2s;letter-spacing:-0.01em;}
+.pf-item{font-size:0.82rem;color:rgba(255,255,255,0.85);}
+.pay-btn-main{width:100%;background:var(--accent);color:#0a0f1e;font-family:"Sora",sans-serif;font-weight:800;font-size:1.05rem;padding:16px;border:none;border-radius:12px;cursor:pointer;transition:all .2s;}
 .pay-btn-main:hover{background:#00f0c0;transform:translateY(-1px);}
 .pay-btn-main:disabled{opacity:0.6;cursor:not-allowed;transform:none;}
 .pay-security{text-align:center;font-size:0.75rem;color:rgba(255,255,255,0.45);margin-top:10px;}
 .pay-spinner{width:32px;height:32px;border:3px solid rgba(255,255,255,0.15);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto;}
 @keyframes spin{to{transform:rotate(360deg)}}
-
-/* Stripe element theming */
 #stripe-payment-element{background:rgba(255,255,255,0.06);border-radius:10px;padding:16px;margin-top:4px;}
-
-/* Testimonials */
 .res-testimonials{margin-top:8px;}
 .res-t-title{font-size:0.78rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-dim);text-align:center;margin-bottom:14px;}
 .res-t-grid{display:grid;grid-template-columns:1fr;gap:12px;}
@@ -324,12 +314,7 @@
 .res-t-amount{font-weight:700;color:var(--green);font-size:0.88rem;margin-bottom:8px;}
 .res-t-author{display:flex;align-items:center;gap:8px;font-size:0.8rem;color:var(--text-dim);}
 .res-t-avatar{width:30px;height:30px;border-radius:50%;object-fit:cover;border:1.5px solid var(--border);flex-shrink:0;}
-
-/* Mobile */
-@media(max-width:480px){
-  .paywall-features{grid-template-columns:1fr;}
-  .res-title{font-size:1.3rem;}
-}
+@media(max-width:480px){.paywall-features{grid-template-columns:1fr;}.res-title{font-size:1.3rem;}}
 </style>
 
   <!-- Google Analytics GA4 -->
@@ -346,10 +331,10 @@
 <body>
 <header>
   <a class="logo" onclick="goHome();return false;" href="#">cobra<span>tusayudas</span>.es</a>
-  <a href="/blog" style="color:#00c896;font-weight:600;font-size:14px;text-decoration:none">Blog</a><div class="header-badge">Test gratis · Informe 6€</div>
+  <a href="/blog" style="color:#00c896;font-weight:600;font-size:14px;text-decoration:none">Blog</a><div class="header-badge">Datos de fuentes oficiales</div>
 </header>
 <div class="sticky-cta" id="sticky-cta">
-  <button onclick="startQuiz()">Hacer el test gratis &#8594;</button>
+  <button onclick="startQuiz()">Comprobar mis ayudas gratis &#8594;</button>
 </div>
 
 <!-- HERO -->
@@ -360,7 +345,7 @@
     <h1 class="hero-title">El gobierno tiene dinero<br>reservado <em>para ti.</em><br>¿Lo has reclamado?</h1>
     <p class="hero-subtitle">Millones de españoles pierden cada año miles de euros en ayudas a las que tienen derecho. Comprueba en 2 minutos cuánto te corresponde.</p>
       <div class="live-counter"><div class="pulse-dot"></div><span>Hoy ya han comprobado sus ayudas <strong id="counter">245</strong> personas</span></div>
-      <button class="cta-btn" onclick="startQuiz()">Hacer el test — es gratis &#8594;</button>
+      <button class="cta-btn" onclick="startQuiz()">Comprobar mis ayudas gratis &#8594;</button>
     <div class="hero-trust">
       <div class="trust-item">&#10003; Gratis y sin registro</div>
       <div class="trust-item">&#10003; Datos de fuentes oficiales</div>
@@ -392,7 +377,7 @@
     </div>
   </div>
   <div style="text-align:center;padding:48px 24px;">
-    <button class="cta-btn" onclick="startQuiz()">Empezar ahora — es gratis &#8594;</button>
+    <button class="cta-btn" onclick="startQuiz()">Comprobar mis ayudas gratis &#8594;</button>
   </div>
   
 <section style="background:#f8f9fa;padding:64px 24px">
@@ -605,23 +590,15 @@
 <!-- RESULTS LOCKED -->
 <div class="page" id="page-results">
 <div class="results-wrap">
-
-  <!-- ═══ BLOQUE 1: HEADER ═══ -->
   <div class="res-header">
     <div class="res-eyebrow">&#10003; An&aacute;lisis completado</div>
     <h2 class="res-title">Hemos encontrado <span id="ayudas-count" class="res-count">0</span> ayudas para tu perfil</h2>
-    <p class="res-sub">Basado en tus respuestas. Aqu&iacute; tienes una muestra gratuita y el listado completo bloqueado.</p>
+    <p class="res-sub">Aqu&iacute; tienes una muestra gratuita. Desbloquea el informe completo por 6&euro;.</p>
   </div>
-
-  <!-- ═══ BLOQUE 2: FICHA MUESTRA (gratis, completa) ═══ -->
   <div class="sample-card" id="sample-card">
-    <div class="sample-label">&#128275; Ejemplo gratuito &mdash; as&iacute; ser&aacute;n todas tus fichas</div>
-    <div class="sample-inner" id="sample-inner">
-      <!-- populated by JS -->
-    </div>
+    <div class="sample-label">&#128275; Muestra gratuita &mdash; as&iacute; ser&aacute;n todas tus fichas</div>
+    <div class="sample-inner" id="sample-inner"></div>
   </div>
-
-  <!-- ═══ BLOQUE 3: LISTA BLOQUEADA ═══ -->
   <div class="locked-list-wrap">
     <div class="locked-list-header">
       <span class="locked-list-title">Tus ayudas identificadas</span>
@@ -629,8 +606,6 @@
     </div>
     <div id="preview-list" class="preview-list"></div>
   </div>
-
-  <!-- ═══ BLOQUE 4: PAYWALL (inmediatamente tras la lista) ═══ -->
   <div class="paywall-box">
     <div class="paywall-header">
       <div class="paywall-icon">&#128275;</div>
@@ -639,46 +614,31 @@
         <div class="paywall-price">6&euro; &middot; pago &uacute;nico &middot; sin suscripci&oacute;n</div>
       </div>
     </div>
-
     <div class="paywall-features">
       <div class="pf-item">&#10003; Importe exacto de cada ayuda</div>
-      <div class="pf-item">&#10003; Enlace oficial directo a la solicitud</div>
+      <div class="pf-item">&#10003; Enlace oficial a la solicitud</div>
       <div class="pf-item">&#10003; Instrucciones paso a paso</div>
-      <div class="pf-item">&#10003; Las <span id="ayudas-count-2">0</span> fichas completas de tu perfil</div>
+      <div class="pf-item">&#10003; Las <span id="ayudas-count-2">0</span> fichas completas</div>
     </div>
-
-    <!-- Estado inicial: botón -->
     <div id="pay-state-btn">
-      <button class="pay-btn-main" id="pay-btn" onclick="initStripePayment()">
-        Desbloquear mi informe &mdash; 6&euro;
-      </button>
+      <button class="pay-btn-main" id="pay-btn" onclick="initStripePayment()">Desbloquear mi informe &mdash; 6&euro;</button>
       <div class="pay-security">&#128274; Pago seguro con Stripe &middot; Visa, Mastercard, Apple Pay</div>
     </div>
-
-    <!-- Estado loading -->
     <div id="pay-state-loading" style="display:none;text-align:center;padding:20px;">
       <div class="pay-spinner"></div>
-      <div style="font-size:0.85rem;color:var(--text-muted);margin-top:10px;">Preparando pago seguro...</div>
+      <div style="font-size:0.85rem;color:rgba(255,255,255,0.5);margin-top:10px;">Preparando pago seguro...</div>
     </div>
-
-    <!-- Estado: Stripe Payment Element -->
     <div id="pay-state-form" style="display:none;">
       <div id="stripe-payment-element"></div>
-      <button class="pay-btn-main" id="submit-payment-btn" onclick="confirmPayment()" style="margin-top:16px;">
-        Pagar 6&euro; y desbloquear
-      </button>
-      <div id="stripe-error-msg" style="color:#e53e3e;font-size:0.82rem;margin-top:8px;text-align:center;display:none;"></div>
-      <div class="pay-security" style="margin-top:12px;">&#128274; Pago seguro con Stripe &middot; No almacenamos datos de tarjeta</div>
+      <button class="pay-btn-main" id="submit-payment-btn" onclick="confirmPayment()" style="margin-top:16px;">Pagar 6&euro; y desbloquear</button>
+      <div id="stripe-error-msg" style="color:#ef4444;font-size:0.82rem;margin-top:8px;text-align:center;display:none;"></div>
+      <div class="pay-security" style="margin-top:12px;">&#128274; No almacenamos datos de tarjeta</div>
     </div>
-
-    <!-- Estado: procesando pago -->
     <div id="pay-state-processing" style="display:none;text-align:center;padding:20px;">
       <div class="pay-spinner"></div>
-      <div style="font-size:0.85rem;color:var(--text-muted);margin-top:10px;">Procesando pago...</div>
+      <div style="font-size:0.85rem;color:rgba(255,255,255,0.5);margin-top:10px;">Procesando pago...</div>
     </div>
   </div>
-
-  <!-- ═══ BLOQUE 5: TESTIMONIOS (DESPUÉS del CTA, refuerzo) ═══ -->
   <div class="res-testimonials">
     <div class="res-t-title">Lo que dicen otros usuarios</div>
     <div class="res-t-grid">
@@ -693,7 +653,7 @@
       </div>
       <div class="res-t-card">
         <div class="res-t-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-        <p class="res-t-text">&ldquo;Soy aut&oacute;nomo y no sab&iacute;a que pod&iacute;a cobrar el paro al cerrar mi negocio. Adem&aacute;s me sali&oacute; la tarifa plana.&rdquo;</p>
+        <p class="res-t-text">&ldquo;Soy aut&oacute;nomo y no sab&iacute;a que pod&iacute;a cobrar el paro al cerrar mi negocio.&rdquo;</p>
         <div class="res-t-amount">+4.100&euro;/a&ntilde;o</div>
         <div class="res-t-author">
           <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=80&h=80&fit=crop&crop=face&q=80" alt="Javier M." class="res-t-avatar"/>
@@ -711,10 +671,8 @@
       </div>
     </div>
   </div>
-
-</div><!-- .results-wrap -->
-</div><!-- #page-results -->
-
+</div>
+</div>
 
 <div class="page" id="page-unlocked">
   <div class="unlocked-container">
@@ -1049,54 +1007,45 @@ function runCalculating() {
 }
 
 function buildResults() {
-  const ayudas = filtrarAyudas();
+  var ayudas = filtrarAyudas();
   saveQuizResponse(ayudas);
   trackEvent("quiz_results_shown", {count: ayudas.length});
   if (typeof fbq === 'function') { fbq('track', 'ViewContent', {content_name: 'resultados_ayudas', content_category: 'quiz_results'}); }
   try { history.replaceState(null, '', location.pathname + '?view=resultado'); } catch(e) {}
 
-  // Update counts
   document.getElementById("ayudas-count").textContent = ayudas.length;
-  document.getElementById("ayudas-count-2").textContent = ayudas.length;
+  var c2 = document.getElementById("ayudas-count-2");
+  if (c2) c2.textContent = ayudas.length;
 
-  // ── BLOQUE 2: Ficha muestra completa (primera ayuda) ──
-  const top = ayudas[0];
+  var top = ayudas[0];
   if (top) {
-    const stepsHtml = top.pasos && top.pasos.length
-      ? `<div class="sample-steps-title">Cómo solicitarla:</div>
-         <ol class="sample-steps">${top.pasos.slice(0,3).map(p => `<li>${p}</li>`).join('')}</ol>`
+    var stepsHtml = (top.pasos && top.pasos.length)
+      ? '<div class="sample-steps-title">C\u00f3mo solicitarla:</div><ol class="sample-steps">' + top.pasos.slice(0,3).map(function(p){return '<li>'+p+'</li>';}).join('') + '</ol>'
       : '';
-    const linkHtml = top.url
-      ? `<a href="${top.url}" target="_blank" rel="noopener" class="sample-link">&#128279; Ir a la solicitud oficial</a>`
-      : '';
-    document.getElementById('sample-inner').innerHTML = `
-      <div class="sample-nombre">${top.nombre}</div>
-      <div class="sample-importe">${top.importe}</div>
-      ${top.descripcion ? `<div class="sample-desc">${top.descripcion}</div>` : ''}
-      ${stepsHtml}
-      ${linkHtml}
-      <div class="sample-org">&#128196; ${top.organismo || ''}</div>
-    `;
+    var linkHtml = top.url ? '<a href="'+top.url+'" target="_blank" rel="noopener" class="sample-link">&#128279; Ir a la solicitud oficial</a>' : '';
+    document.getElementById('sample-inner').innerHTML =
+      '<div class="sample-nombre">'+top.nombre+'</div>'+
+      '<div class="sample-importe">'+top.importe+'</div>'+
+      (top.descripcion ? '<div class="sample-desc">'+top.descripcion+'</div>' : '')+
+      stepsHtml+linkHtml+
+      '<div class="sample-org">&#128196; '+(top.organismo||'')+'</div>';
   } else {
-    document.getElementById('sample-card').style.display = 'none';
+    var sc = document.getElementById('sample-card');
+    if (sc) sc.style.display = 'none';
   }
 
-  // ── BLOQUE 3: Lista bloqueada — 3 visibles, resto blur ──
-  const previewHtml = ayudas.map((a, i) => {
-    const locked = i >= 3;
-    return `<div class="prev-item ${locked ? 'locked' : 'unlocked'}">
-      <span class="prev-name">${locked ? a.nombre.replace(/./g, '█').slice(0,20) : a.nombre}</span>
-      <span class="prev-amount">${locked ? '███€' : a.importe}</span>
-      ${locked ? '<span class="prev-lock">&#128274;</span>' : ''}
-    </div>`;
+  document.getElementById('preview-list').innerHTML = ayudas.map(function(a,i){
+    var locked = i >= 3;
+    return '<div class="prev-item '+(locked?'locked':'unlocked')+'">'+
+      '<span class="prev-name">'+(locked?'\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588':a.nombre)+'</span>'+
+      '<span class="prev-amount">'+(locked?'\u2588\u2588\u2588\u20ac':a.importe)+'</span>'+
+      (locked?'<span class="prev-lock">&#128274;</span>':'')+
+      '</div>';
   }).join('');
-  document.getElementById('preview-list').innerHTML = previewHtml;
 
-  // Reset payment states
-  document.getElementById('pay-state-btn').style.display = 'block';
-  document.getElementById('pay-state-loading').style.display = 'none';
-  document.getElementById('pay-state-form').style.display = 'none';
-  document.getElementById('pay-state-processing').style.display = 'none';
+  ['pay-state-btn','pay-state-loading','pay-state-form','pay-state-processing'].forEach(function(id,i){
+    var el=document.getElementById(id); if(el) el.style.display=i===0?'block':'none';
+  });
 }
 
 function openGuide(id) {
@@ -1225,67 +1174,40 @@ function closeLegal() { document.getElementById("legal-modal").style.display = "
       setTimeout(tickCounterMes, 5000 + Math.random() * 10000);
   }
   tickCounterMes();
-/* ═══ STRIPE PAYMENT ELEMENT ═══ */
-const STRIPE_PK = 'pk_live_51TPiMpHnR7v3xoRAUWGuTjmri5TIW2KvgXtXQqwgyCBx7teZAHF4tyvG6VfCANk5RSo64ce1mjTE94syj4jr3nsY00QaDnWdga';
-let stripeInstance = null;
-let stripeElements = null;
+
+/* stripe payment element 2.0 */
+var STRIPE_PK = 'pk_live_51TPiMpHnR7v3xoRAUWGuTjmri5TIW2KvgXtXQqwgyCBx7teZAHF4tyvG6VfCANk5RSo64ce1mjTE94syj4jr3nsY00QaDnWdga';
+var stripeInstance = null;
+var stripeElements = null;
 
 async function initStripePayment() {
-  // Show loading
   document.getElementById('pay-state-btn').style.display = 'none';
   document.getElementById('pay-state-loading').style.display = 'block';
-  
-  // Track
-  if (typeof fbq === 'function') { fbq('track', 'InitiateCheckout', {value: 6, currency: 'EUR'}); }
-  
+  if (typeof fbq === 'function') { fbq('track', 'InitiateCheckout', {value:6,currency:'EUR'}); }
   try {
-    // Create PaymentIntent via API
-    const resp = await fetch('/api/payment-intent', {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-    });
-    const data = await resp.json();
+    var resp = await fetch('/api/payment-intent', {method:'POST',headers:{'Content-Type':'application/json'}});
+    var data = await resp.json();
     if (!data.clientSecret) throw new Error('No client secret');
-    
-    // Load Stripe.js if not already loaded
     if (!stripeInstance) {
-      await new Promise((resolve, reject) => {
+      await new Promise(function(resolve, reject) {
         if (window.Stripe) { stripeInstance = Stripe(STRIPE_PK); resolve(); return; }
-        const s = document.createElement('script');
+        var s = document.createElement('script');
         s.src = 'https://js.stripe.com/v3/';
-        s.onload = () => { stripeInstance = Stripe(STRIPE_PK); resolve(); };
+        s.onload = function() { stripeInstance = Stripe(STRIPE_PK); resolve(); };
         s.onerror = reject;
         document.head.appendChild(s);
       });
     }
-    
-    // Create Payment Element
     stripeElements = stripeInstance.elements({
       clientSecret: data.clientSecret,
-      appearance: {
-        theme: 'night',
-        variables: {
-          colorPrimary: '#00b894',
-          colorBackground: 'rgba(255,255,255,0.04)',
-          colorText: '#ffffff',
-          colorDanger: '#ef4444',
-          fontFamily: 'Sora, sans-serif',
-          borderRadius: '8px',
-        }
-      }
+      appearance: {theme:'night',variables:{colorPrimary:'#00b894',colorText:'#ffffff',fontFamily:'Sora,sans-serif',borderRadius:'8px'}}
     });
-    
-    const paymentEl = stripeElements.create('payment', {
-      layout: 'tabs',
-    });
-    
+    var paymentEl = stripeElements.create('payment', {layout:'tabs'});
     document.getElementById('pay-state-loading').style.display = 'none';
     document.getElementById('pay-state-form').style.display = 'block';
     paymentEl.mount('#stripe-payment-element');
-    
   } catch(err) {
-    console.error('Stripe init error:', err);
-    // Fallback to buy.stripe.com
+    console.error('Stripe init:', err);
     document.getElementById('pay-state-loading').style.display = 'none';
     document.getElementById('pay-state-btn').style.display = 'block';
     window.open('https://buy.stripe.com/6oUeVdeHy9zYc9db5Nf3a00', '_blank');
@@ -1293,38 +1215,234 @@ async function initStripePayment() {
 }
 
 async function confirmPayment() {
-  const btn = document.getElementById('submit-payment-btn');
-  btn.disabled = true;
-  btn.textContent = 'Procesando...';
+  var btn = document.getElementById('submit-payment-btn');
+  btn.disabled = true; btn.textContent = 'Procesando...';
   document.getElementById('stripe-error-msg').style.display = 'none';
-  
   document.getElementById('pay-state-form').style.display = 'none';
   document.getElementById('pay-state-processing').style.display = 'block';
-  
-  const result = await stripeInstance.confirmPayment({
+  var result = await stripeInstance.confirmPayment({
     elements: stripeElements,
-    confirmParams: {
-      return_url: window.location.origin + '/?pago=ok',
-    },
-    redirect: 'if_required',
+    confirmParams: {return_url: window.location.origin + '/?pago=ok'},
+    redirect: 'if_required'
   });
-  
   if (result.error) {
-    // Show error, go back to form
     document.getElementById('pay-state-processing').style.display = 'none';
     document.getElementById('pay-state-form').style.display = 'block';
-    const errEl = document.getElementById('stripe-error-msg');
-    errEl.textContent = result.error.message;
-    errEl.style.display = 'block';
-    btn.disabled = false;
-    btn.textContent = 'Pagar 6€ y desbloquear';
+    var errEl = document.getElementById('stripe-error-msg');
+    errEl.textContent = result.error.message; errEl.style.display = 'block';
+    btn.disabled = false; btn.textContent = 'Pagar 6€ y desbloquear';
   } else if (result.paymentIntent && result.paymentIntent.status === 'succeeded') {
-    // Payment succeeded without redirect
-    if (typeof fbq === 'function') { fbq('track', 'Purchase', {value: 6, currency: 'EUR'}); }
-    sessionStorage.setItem('cobratusayudas_paid', '1');
+    if (typeof fbq === 'function') { fbq('track', 'Purchase', {value:6,currency:'EUR'}); }
+    sessionStorage.setItem('cobratusayudas_paid','1');
     sessionStorage.setItem('respuestas_backup', JSON.stringify(respuestas));
-    buildUnlocked();
-    showPage('page-unlocked');
+    buildUnlocked(); showPage('page-unlocked');
   }
 }
 
+async function checkPaymentReturn() {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("pago") !== "ok") return;
+    const sessionId = params.get("session_id");
+    try {
+          const res = await fetch("/api/verify-payment?session_id=" + encodeURIComponent(sessionId || ""));
+          const data = await res.json();
+          if (!data.paid) { console.warn("Pago no verificado"); return; }
+    } catch (e) {
+          console.error("Error verificando el pago", e);
+          return;
+    }
+    trackEvent('purchase', {value: 6, currency: 'EUR'});
+  if (typeof fbq === 'function') { fbq('track', 'Purchase', {value: 6, currency: 'EUR'}); }
+    markAsPaid();
+    // Restore answers from sessionStorage if available
+    const saved = sessionStorage.getItem('respuestas_backup');
+    if (saved) { try { respuestas = JSON.parse(saved); } catch(e) {} }
+    buildResults();
+    showPage("page-unlocked");
+}
+  checkPaymentReturn();
+
+// ââ MODAL GUIA ââ
+let currentGuideTitle = "", currentGuideContent = "";
+
+function openGuide(id) {
+  const a = AYUDAS.find(x => x.id === id);
+  if (!a) return;
+  currentGuideTitle = a.nombre;
+  const steps = a.steps.map((s,i) => `<div style="display:flex;gap:12px;margin-bottom:14px;align-items:flex-start;"><div style="min-width:26px;height:26px;border-radius:50%;background:rgba(0,184,148,0.1);border:1px solid rgba(0,184,148,0.3);color:#00b894;font-weight:700;font-size:0.78rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;">${i+1}</div><p style="font-size:0.87rem;color:#475569;line-height:1.6;margin:0;padding-top:3px;">${s}</p></div>`).join("");
+  const docs = a.docs.map(d => `<li style="font-size:0.84rem;color:#475569;margin-bottom:6px;">&#128196; ${d}</li>`).join("");
+  currentGuideContent = `
+    <div style="margin-bottom:20px;">
+      <span style="font-size:0.7rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:#00b894;">Guia paso a paso</span>
+      <h3 style="font-family:'DM Serif Display',serif;font-size:1.4rem;color:#0f172a;margin:6px 0 4px;">${a.nombre}</h3>
+      <span style="color:#059669;font-weight:700;font-size:1rem;">${a.importe}</span>
+    </div>
+    <p style="font-size:0.85rem;color:#64748b;margin-bottom:18px;line-height:1.6;">${a.desc}</p>
+    <div style="background:#f8fafc;border-radius:12px;padding:14px 18px;margin-bottom:20px;">
+      <div style="font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;color:#64748b;margin-bottom:10px;">&#128203; Documentacion necesaria</div>
+      <ul style="list-style:none;margin:0;padding:0;">${docs}</ul>
+    </div>
+    <div style="margin-bottom:24px;">
+      <div style="font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;color:#64748b;margin-bottom:14px;">&#128506; Pasos para solicitarla</div>
+      ${steps}
+    </div>
+    <a href="${a.url}" target="_blank" style="display:flex;align-items:center;justify-content:center;gap:8px;background:#00b894;color:#fff;font-family:'Sora',sans-serif;font-weight:700;font-size:0.95rem;padding:16px;border-radius:12px;text-decoration:none;">Ir a ${a.urlLabel} &rarr;</a>`;
+  document.getElementById("guide-content").innerHTML = currentGuideContent;
+  document.getElementById("guide-email").value = "";
+  document.getElementById("guide-email-success").style.display = "none";
+  document.getElementById("guide-email-btn").disabled = false;
+  document.getElementById("guide-email-btn").textContent = "Enviar";
+  document.getElementById("guide-modal").style.display = "flex";
+  document.body.style.overflow = "hidden";
+}
+
+function closeGuide() {
+  document.getElementById("guide-modal").style.display = "none";
+  document.body.style.overflow = "";
+}
+
+// ââ EMAILJS
+// IMPORTANTE: reemplaza estas 3 constantes con tus datos de EmailJS (emailjs.com)
+const EMAILJS_PUBLIC_KEY = "FKz9hkNC_Y6QmZZVq";
+const EMAILJS_SERVICE_ID = "service_5r2xo2l";
+const EMAILJS_TEMPLATE_ID = "template_pfiai6z";
+emailjs.init(EMAILJS_PUBLIC_KEY);
+
+function sendGuideByEmail() {
+  const email = document.getElementById("guide-email").value.trim();
+  if (!email || !email.includes("@")) { alert("Por favor, introduce un email valido."); return; }
+  const btn = document.getElementById("guide-email-btn");
+  btn.disabled = true; btn.textContent = "Enviando...";
+  const tmp = document.createElement("div");
+  tmp.innerHTML = currentGuideContent;
+  emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+    to_email: email, guide_title: currentGuideTitle, guide_content: tmp.innerText || tmp.textContent
+  }).then(() => {
+    document.getElementById("guide-email-success").style.display = "block";
+    btn.textContent = "Enviado!";
+  }).catch(err => {
+    console.error(err); btn.disabled = false; btn.textContent = "Enviar";
+    alert("Error al enviar. Comprueba la configuracion de EmailJS.");
+  });
+}
+
+// ââ COMPARTIR ââ
+function shareWhatsApp() {
+  const el = document.getElementById("money-display");
+  const amount = el ? el.textContent : "miles de euros";
+  window.open("https://wa.me/?text=" + encodeURIComponent("Acabo de descubrir que me perdia " + amount + " al año en ayudas del gobierno! Comprueba gratis cuanto te corresponde a ti en cobratusayudas.es"), "_blank");
+}
+function copyLink() { navigator.clipboard.writeText("https://cobratusayudas.es").then(() => alert("Enlace copiado!")); }
+
+// ââ LEGAL ââ
+const legalTexts = {
+  aviso: `<h2 style="font-family:'DM Serif Display',serif;font-size:1.6rem;color:#0f172a;margin-bottom:20px;">Aviso Legal</h2><p><strong>Titular:</strong> CobraTusAyudas.es, con domicilio en Barcelona, Espana.</p><p style="margin-top:12px;"><strong>Correo de contacto:</strong> hola@cobratusayudas.es</p><h3 style="font-size:1rem;color:#0f172a;margin:20px 0 8px;">Responsabilidad</h3><p>La informacion sobre ayudas y subvenciones se obtiene de fuentes oficiales. El titular no garantiza la exactitud absoluta ni la vigencia de las ayudas mostradas. El usuario es responsable de verificar los requisitos antes de realizar cualquier solicitud.</p><h3 style="font-size:1rem;color:#0f172a;margin:20px 0 8px;">Legislacion aplicable</h3><p>Este aviso legal se rige por la legislacion espanola. Para cualquier controversia, las partes se someten a los juzgados y tribunales de Barcelona.</p>`,
+  privacidad: `<h2 style="font-family:'DM Serif Display',serif;font-size:1.6rem;color:#0f172a;margin-bottom:20px;">Politica de Privacidad</h2><p>En cumplimiento del RGPD y la LOPDGDD te informamos sobre el tratamiento de tus datos personales.</p><h3 style="font-size:1rem;color:#0f172a;margin:20px 0 8px;">Responsable</h3><p>CobraTusAyudas.es &middot; hola@cobratusayudas.es &middot; Barcelona, Espana</p><h3 style="font-size:1rem;color:#0f172a;margin:20px 0 8px;">Datos que recogemos</h3><p>Recogemos unicamente las respuestas al cuestionario (anonimas) y el correo electronico para el envio de informes si el usuario lo facilita voluntariamente.</p><h3 style="font-size:1rem;color:#0f172a;margin:20px 0 8px;">Tus derechos</h3><p>Puedes ejercer tus derechos escribiendo a hola@cobratusayudas.es. También puedes presentar reclamacion ante la AEPD (aepd.es).</p>`,
+  cookies: `<h2 style="font-family:'DM Serif Display',serif;font-size:1.6rem;color:#0f172a;margin-bottom:20px;">Politica de Cookies</h2><p>Este sitio web utiliza cookies tecnicas necesarias para su funcionamiento y cookies de Stripe para el procesamiento de pagos. No se usan cookies de seguimiento o publicidad.</p>`
+};
+
+function openLegal(id) {
+  if (!legalTexts[id]) return;
+  document.getElementById("legal-content").innerHTML = legalTexts[id];
+  document.getElementById("legal-modal").style.display = "flex";
+  document.body.style.overflow = "hidden";
+}
+function closeLegal() { document.getElementById("legal-modal").style.display = "none"; document.body.style.overflow = ""; }
+
+// —— CONTADOR "HOY" ——
+  function contadorHoyBase() {
+   const now = new Date();
+      const dayKey = now.getFullYear() + "-" + now.getMonth() + "-" + now.getDate();
+      let seed = 0;
+      for (let i = 0; i < dayKey.length; i++) seed = (seed * 31 + dayKey.charCodeAt(i)) >>> 0;
+      const inicio = 180 + (seed % 80);
+      const minutos = now.getHours() * 60 + now.getMinutes();
+      const crecimiento = Math.floor(minutos * (200 / 1440));
+      return inicio + crecimiento;
+  }
+  let count = contadorHoyBase();
+  function tickCounter() {
+      const base = contadorHoyBase() + Math.floor(Math.random() * 3);
+      count = Math.max(count, base);
+      const el = document.getElementById("counter");
+      if (el) el.textContent = count.toLocaleString("es-ES");
+      setTimeout(tickCounter, 4000 + Math.random() * 8000);
+ }
+ tickCounter();
+
+ // —— CONTADOR "ESTE MES" ——
+  function contadorMesBase() {
+      const now = new Date();
+    const monthKey = now.getFullYear() + "-" + now.getMonth();
+    let seed = 0;
+    for (let i = 0; i < monthKey.length; i++) seed = (seed * 31 + monthKey.charCodeAt(i)) >>> 0;
+    const inicio = 2800 + (seed % 400);
+    const diasDelMes = new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate();
+      const minutosDelMes = (now.getDate() - 1) * 1440 + now.getHours() * 60 + now.getMinutes();
+      const totalMinutosMes = diasDelMes * 1440;
+      const crecimiento = Math.floor((minutosDelMes / totalMinutosMes) * 2600);
+      return inicio + crecimiento;
+  }
+  let countMes = contadorMesBase();
+  function tickCounterMes() {
+      const base = contadorMesBase() + Math.floor(Math.random() * 5);
+      countMes = Math.max(countMes, base);
+      document.querySelectorAll(".js-mes-counter").forEach(function(el) { el.textContent = countMes.toLocaleString("es-ES"); });
+      setTimeout(tickCounterMes, 5000 + Math.random() * 10000);
+  }
+  tickCounterMes();
+// ── SUPABASE + GOOGLE ANALYTICS ──
+const SUPABASE_URL = 'https://hsojuxicjstzkhitudow.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imhzb2p1eGljanN0emtoaXR1ZG93Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzczOTg5MjgsImV4cCI6MjA5Mjk3NDkyOH0.D9gID0pJEttmYgq_rafuJXZOklYZy2m7PzuNZ6BTt6M';
+const SESSION_ID = Math.random().toString(36).slice(2) + Date.now().toString(36);
+let _sbClient = null;
+function getSB() {
+  if (!_sbClient && window.supabase) {
+    _sbClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  }
+  return _sbClient;
+}
+function trackEvent(name, params) {
+  if (typeof gtag !== 'undefined') gtag('event', name, params || {});
+}
+async function saveQuizResponse(ayudas) {
+  try {
+    const sb = getSB();
+    if (!sb) return;
+    const min = ayudas.reduce((s,a) => s+(a.importeMin||0), 0);
+    const max = ayudas.reduce((s,a) => s+(a.importeMax||0), 0);
+    const {data} = await sb.from('quiz_responses').insert({
+      session_id: SESSION_ID,
+      ccaa: respuestas.ccaa||null,
+      edad: respuestas.edad||null,
+      laboral: respuestas.laboral||null,
+      ingresos: respuestas.ingresos||null,
+      familia: respuestas.familia||null,
+      bebes: respuestas.bebes||null,
+      vivienda: respuestas.vivienda||null,
+      zona: respuestas.zona||null,
+      discapacidad: respuestas.discapacidad||null,
+      especial: respuestas.especial||null,
+      vehiculo: respuestas.vehiculo||null,
+      energia: respuestas.energia||null,
+      ayudas_count: ayudas.length,
+      importe_min: min,
+      importe_max: max,
+      pagado: false
+    }).select().single();
+    if (data) sessionStorage.setItem('quiz_response_id', data.id);
+  } catch(e) { console.log('Supabase:', e); }
+}
+async function markAsPaid() {
+  try {
+    const sb = getSB();
+    if (!sb) return;
+    const id = sessionStorage.getItem('quiz_response_id');
+    if (!id) return;
+    await sb.from('quiz_responses').update({pagado: true}).eq('id', id);
+  } catch(e) {}
+}
+
+</script>
+</body>
+</html>
