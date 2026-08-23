@@ -331,10 +331,10 @@
 <body>
 <header>
   <a class="logo" onclick="goHome();return false;" href="#">cobra<span>tusayudas</span>.es</a>
-  <a href="/blog" style="color:#00c896;font-weight:600;font-size:14px;text-decoration:none">Blog</a><div class="header-badge">Datos de fuentes oficiales</div>
+  <a href="/blog" style="color:#00c896;font-weight:600;font-size:14px;text-decoration:none">Blog</a><div class="header-badge">Test gratis · Informe 6€</div>
 </header>
 <div class="sticky-cta" id="sticky-cta">
-  <button onclick="startQuiz()">Comprobar mis ayudas gratis &#8594;</button>
+  <button onclick="startQuiz()">Hacer el test gratis &#8594;</button>
 </div>
 
 <!-- HERO -->
@@ -345,7 +345,7 @@
     <h1 class="hero-title">El gobierno tiene dinero<br>reservado <em>para ti.</em><br>¿Lo has reclamado?</h1>
     <p class="hero-subtitle">Millones de españoles pierden cada año miles de euros en ayudas a las que tienen derecho. Comprueba en 2 minutos cuánto te corresponde.</p>
       <div class="live-counter"><div class="pulse-dot"></div><span>Hoy ya han comprobado sus ayudas <strong id="counter">245</strong> personas</span></div>
-      <button class="cta-btn" onclick="startQuiz()">Comprobar mis ayudas gratis &#8594;</button>
+      <button class="cta-btn" onclick="startQuiz()">Hacer el test — es gratis &#8594;</button>
     <div class="hero-trust">
       <div class="trust-item">&#10003; Gratis y sin registro</div>
       <div class="trust-item">&#10003; Datos de fuentes oficiales</div>
@@ -377,7 +377,7 @@
     </div>
   </div>
   <div style="text-align:center;padding:48px 24px;">
-    <button class="cta-btn" onclick="startQuiz()">Comprobar mis ayudas gratis &#8594;</button>
+    <button class="cta-btn" onclick="startQuiz()">Empezar ahora — es gratis &#8594;</button>
   </div>
   
 <section style="background:#f8f9fa;padding:64px 24px">
@@ -644,7 +644,7 @@
     <div class="res-t-grid">
       <div class="res-t-card">
         <div class="res-t-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-        <p class="res-t-text">&ldquo;Llevo a&ntilde;os en paro y no sab&iacute;a que ten&iacute;a derecho al subsidio especial. Me ha cambiado la vida.&rdquo;</p>
+        <p class="res-t-text">&ldquo;Llevo a&ntilde;os en paro y no sab&iacute;a que ten&iacute;a derecho al subsidio especial.&rdquo;</p>
         <div class="res-t-amount">+6.840&euro;/a&ntilde;o</div>
         <div class="res-t-author">
           <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80&h=80&fit=crop&crop=face&q=80" alt="Rosa L." class="res-t-avatar"/>
@@ -662,7 +662,7 @@
       </div>
       <div class="res-t-card">
         <div class="res-t-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-        <p class="res-t-text">&ldquo;Pagaba 750&euro; de alquiler y no sab&iacute;a que exist&iacute;a el Bono Alquiler Joven. Ahora pago 200&euro; menos.&rdquo;</p>
+        <p class="res-t-text">&ldquo;No sab&iacute;a que exist&iacute;a el Bono Alquiler Joven. Ahora pago 200&euro; menos al mes.&rdquo;</p>
         <div class="res-t-amount">+2.400&euro;/a&ntilde;o</div>
         <div class="res-t-author">
           <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=80&h=80&fit=crop&crop=face&q=80" alt="Luc&iacute;a P." class="res-t-avatar"/>
@@ -1012,40 +1012,16 @@ function buildResults() {
   trackEvent("quiz_results_shown", {count: ayudas.length});
   if (typeof fbq === 'function') { fbq('track', 'ViewContent', {content_name: 'resultados_ayudas', content_category: 'quiz_results'}); }
   try { history.replaceState(null, '', location.pathname + '?view=resultado'); } catch(e) {}
-
   document.getElementById("ayudas-count").textContent = ayudas.length;
-  var c2 = document.getElementById("ayudas-count-2");
-  if (c2) c2.textContent = ayudas.length;
-
+  var c2 = document.getElementById("ayudas-count-2"); if (c2) c2.textContent = ayudas.length;
   var top = ayudas[0];
   if (top) {
-    var stepsHtml = (top.pasos && top.pasos.length)
-      ? '<div class="sample-steps-title">C\u00f3mo solicitarla:</div><ol class="sample-steps">' + top.pasos.slice(0,3).map(function(p){return '<li>'+p+'</li>';}).join('') + '</ol>'
-      : '';
+    var stepsHtml = (top.pasos && top.pasos.length) ? '<div class="sample-steps-title">C\u00f3mo solicitarla:</div><ol class="sample-steps">' + top.pasos.slice(0,3).map(function(p){return '<li>'+p+'</li>';}).join('') + '</ol>' : '';
     var linkHtml = top.url ? '<a href="'+top.url+'" target="_blank" rel="noopener" class="sample-link">&#128279; Ir a la solicitud oficial</a>' : '';
-    document.getElementById('sample-inner').innerHTML =
-      '<div class="sample-nombre">'+top.nombre+'</div>'+
-      '<div class="sample-importe">'+top.importe+'</div>'+
-      (top.descripcion ? '<div class="sample-desc">'+top.descripcion+'</div>' : '')+
-      stepsHtml+linkHtml+
-      '<div class="sample-org">&#128196; '+(top.organismo||'')+'</div>';
-  } else {
-    var sc = document.getElementById('sample-card');
-    if (sc) sc.style.display = 'none';
-  }
-
-  document.getElementById('preview-list').innerHTML = ayudas.map(function(a,i){
-    var locked = i >= 3;
-    return '<div class="prev-item '+(locked?'locked':'unlocked')+'">'+
-      '<span class="prev-name">'+(locked?'\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588':a.nombre)+'</span>'+
-      '<span class="prev-amount">'+(locked?'\u2588\u2588\u2588\u20ac':a.importe)+'</span>'+
-      (locked?'<span class="prev-lock">&#128274;</span>':'')+
-      '</div>';
-  }).join('');
-
-  ['pay-state-btn','pay-state-loading','pay-state-form','pay-state-processing'].forEach(function(id,i){
-    var el=document.getElementById(id); if(el) el.style.display=i===0?'block':'none';
-  });
+    document.getElementById('sample-inner').innerHTML = '<div class="sample-nombre">'+top.nombre+'</div><div class="sample-importe">'+top.importe+'</div>'+(top.descripcion?'<div class="sample-desc">'+top.descripcion+'</div>':'')+stepsHtml+linkHtml+'<div class="sample-org">&#128196; '+(top.organismo||'')+'</div>';
+  } else { var sc=document.getElementById('sample-card'); if(sc) sc.style.display='none'; }
+  document.getElementById('preview-list').innerHTML = ayudas.map(function(a,i){ var locked=i>=3; return '<div class="prev-item '+(locked?'locked':'unlocked')+'"><span class="prev-name">'+(locked?'\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588':a.nombre)+'</span><span class="prev-amount">'+(locked?'\u2588\u2588\u2588\u20ac':a.importe)+'</span>'+(locked?'<span class="prev-lock">&#128274;</span>':'')+'</div>'; }).join('');
+  ['pay-state-btn','pay-state-loading','pay-state-form','pay-state-processing'].forEach(function(id,i){ var el=document.getElementById(id); if(el) el.style.display=i===0?'block':'none'; });
 }
 
 function openGuide(id) {
@@ -1175,39 +1151,35 @@ function closeLegal() { document.getElementById("legal-modal").style.display = "
   }
   tickCounterMes();
 
-/* stripe payment element 2.0 */
-var STRIPE_PK = 'pk_live_51TPiMpHnR7v3xoRAUWGuTjmri5TIW2KvgXtXQqwgyCBx7teZAHF4tyvG6VfCANk5RSo64ce1mjTE94syj4jr3nsY00QaDnWdga';
-var stripeInstance = null;
-var stripeElements = null;
+/* stripe payment element */
+var _spk = 'pk_live_51TPiMpHnR7v3xoRAUWGuTjmri5TIW2KvgXtXQqwgyCBx7teZAHF4tyvG6VfCANk5RSo64ce1mjTE94syj4jr3nsY00QaDnWdga';
+var _si = null, _se = null;
 
 async function initStripePayment() {
   document.getElementById('pay-state-btn').style.display = 'none';
   document.getElementById('pay-state-loading').style.display = 'block';
   if (typeof fbq === 'function') { fbq('track', 'InitiateCheckout', {value:6,currency:'EUR'}); }
   try {
-    var resp = await fetch('/api/payment-intent', {method:'POST',headers:{'Content-Type':'application/json'}});
+    var resp = await fetch('/api/payment-intent', {method:'POST', headers:{'Content-Type':'application/json'}});
     var data = await resp.json();
     if (!data.clientSecret) throw new Error('No client secret');
-    if (!stripeInstance) {
+    if (!_si) {
       await new Promise(function(resolve, reject) {
-        if (window.Stripe) { stripeInstance = Stripe(STRIPE_PK); resolve(); return; }
+        if (window.Stripe) { _si = Stripe(_spk); resolve(); return; }
         var s = document.createElement('script');
         s.src = 'https://js.stripe.com/v3/';
-        s.onload = function() { stripeInstance = Stripe(STRIPE_PK); resolve(); };
+        s.onload = function() { _si = Stripe(_spk); resolve(); };
         s.onerror = reject;
         document.head.appendChild(s);
       });
     }
-    stripeElements = stripeInstance.elements({
-      clientSecret: data.clientSecret,
-      appearance: {theme:'night',variables:{colorPrimary:'#00b894',colorText:'#ffffff',fontFamily:'Sora,sans-serif',borderRadius:'8px'}}
-    });
-    var paymentEl = stripeElements.create('payment', {layout:'tabs'});
+    _se = _si.elements({clientSecret: data.clientSecret, appearance:{theme:'night',variables:{colorPrimary:'#00b894',colorText:'#ffffff',fontFamily:'Sora,sans-serif',borderRadius:'8px'}}});
+    var pel = _se.create('payment', {layout:'tabs'});
     document.getElementById('pay-state-loading').style.display = 'none';
     document.getElementById('pay-state-form').style.display = 'block';
-    paymentEl.mount('#stripe-payment-element');
+    pel.mount('#stripe-payment-element');
   } catch(err) {
-    console.error('Stripe init:', err);
+    console.error('Stripe:', err);
     document.getElementById('pay-state-loading').style.display = 'none';
     document.getElementById('pay-state-btn').style.display = 'block';
     window.open('https://buy.stripe.com/6oUeVdeHy9zYc9db5Nf3a00', '_blank');
@@ -1220,11 +1192,7 @@ async function confirmPayment() {
   document.getElementById('stripe-error-msg').style.display = 'none';
   document.getElementById('pay-state-form').style.display = 'none';
   document.getElementById('pay-state-processing').style.display = 'block';
-  var result = await stripeInstance.confirmPayment({
-    elements: stripeElements,
-    confirmParams: {return_url: window.location.origin + '/?pago=ok'},
-    redirect: 'if_required'
-  });
+  var result = await _si.confirmPayment({elements:_se, confirmParams:{return_url: window.location.origin+'/?pago=ok'}, redirect:'if_required'});
   if (result.error) {
     document.getElementById('pay-state-processing').style.display = 'none';
     document.getElementById('pay-state-form').style.display = 'block';
@@ -1239,163 +1207,7 @@ async function confirmPayment() {
   }
 }
 
-async function checkPaymentReturn() {
-    const params = new URLSearchParams(window.location.search);
-    if (params.get("pago") !== "ok") return;
-    const sessionId = params.get("session_id");
-    try {
-          const res = await fetch("/api/verify-payment?session_id=" + encodeURIComponent(sessionId || ""));
-          const data = await res.json();
-          if (!data.paid) { console.warn("Pago no verificado"); return; }
-    } catch (e) {
-          console.error("Error verificando el pago", e);
-          return;
-    }
-    trackEvent('purchase', {value: 6, currency: 'EUR'});
-  if (typeof fbq === 'function') { fbq('track', 'Purchase', {value: 6, currency: 'EUR'}); }
-    markAsPaid();
-    // Restore answers from sessionStorage if available
-    const saved = sessionStorage.getItem('respuestas_backup');
-    if (saved) { try { respuestas = JSON.parse(saved); } catch(e) {} }
-    buildResults();
-    showPage("page-unlocked");
-}
-  checkPaymentReturn();
 
-// ââ MODAL GUIA ââ
-let currentGuideTitle = "", currentGuideContent = "";
-
-function openGuide(id) {
-  const a = AYUDAS.find(x => x.id === id);
-  if (!a) return;
-  currentGuideTitle = a.nombre;
-  const steps = a.steps.map((s,i) => `<div style="display:flex;gap:12px;margin-bottom:14px;align-items:flex-start;"><div style="min-width:26px;height:26px;border-radius:50%;background:rgba(0,184,148,0.1);border:1px solid rgba(0,184,148,0.3);color:#00b894;font-weight:700;font-size:0.78rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;">${i+1}</div><p style="font-size:0.87rem;color:#475569;line-height:1.6;margin:0;padding-top:3px;">${s}</p></div>`).join("");
-  const docs = a.docs.map(d => `<li style="font-size:0.84rem;color:#475569;margin-bottom:6px;">&#128196; ${d}</li>`).join("");
-  currentGuideContent = `
-    <div style="margin-bottom:20px;">
-      <span style="font-size:0.7rem;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:#00b894;">Guia paso a paso</span>
-      <h3 style="font-family:'DM Serif Display',serif;font-size:1.4rem;color:#0f172a;margin:6px 0 4px;">${a.nombre}</h3>
-      <span style="color:#059669;font-weight:700;font-size:1rem;">${a.importe}</span>
-    </div>
-    <p style="font-size:0.85rem;color:#64748b;margin-bottom:18px;line-height:1.6;">${a.desc}</p>
-    <div style="background:#f8fafc;border-radius:12px;padding:14px 18px;margin-bottom:20px;">
-      <div style="font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;color:#64748b;margin-bottom:10px;">&#128203; Documentacion necesaria</div>
-      <ul style="list-style:none;margin:0;padding:0;">${docs}</ul>
-    </div>
-    <div style="margin-bottom:24px;">
-      <div style="font-size:0.75rem;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;color:#64748b;margin-bottom:14px;">&#128506; Pasos para solicitarla</div>
-      ${steps}
-    </div>
-    <a href="${a.url}" target="_blank" style="display:flex;align-items:center;justify-content:center;gap:8px;background:#00b894;color:#fff;font-family:'Sora',sans-serif;font-weight:700;font-size:0.95rem;padding:16px;border-radius:12px;text-decoration:none;">Ir a ${a.urlLabel} &rarr;</a>`;
-  document.getElementById("guide-content").innerHTML = currentGuideContent;
-  document.getElementById("guide-email").value = "";
-  document.getElementById("guide-email-success").style.display = "none";
-  document.getElementById("guide-email-btn").disabled = false;
-  document.getElementById("guide-email-btn").textContent = "Enviar";
-  document.getElementById("guide-modal").style.display = "flex";
-  document.body.style.overflow = "hidden";
-}
-
-function closeGuide() {
-  document.getElementById("guide-modal").style.display = "none";
-  document.body.style.overflow = "";
-}
-
-// ââ EMAILJS
-// IMPORTANTE: reemplaza estas 3 constantes con tus datos de EmailJS (emailjs.com)
-const EMAILJS_PUBLIC_KEY = "FKz9hkNC_Y6QmZZVq";
-const EMAILJS_SERVICE_ID = "service_5r2xo2l";
-const EMAILJS_TEMPLATE_ID = "template_pfiai6z";
-emailjs.init(EMAILJS_PUBLIC_KEY);
-
-function sendGuideByEmail() {
-  const email = document.getElementById("guide-email").value.trim();
-  if (!email || !email.includes("@")) { alert("Por favor, introduce un email valido."); return; }
-  const btn = document.getElementById("guide-email-btn");
-  btn.disabled = true; btn.textContent = "Enviando...";
-  const tmp = document.createElement("div");
-  tmp.innerHTML = currentGuideContent;
-  emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
-    to_email: email, guide_title: currentGuideTitle, guide_content: tmp.innerText || tmp.textContent
-  }).then(() => {
-    document.getElementById("guide-email-success").style.display = "block";
-    btn.textContent = "Enviado!";
-  }).catch(err => {
-    console.error(err); btn.disabled = false; btn.textContent = "Enviar";
-    alert("Error al enviar. Comprueba la configuracion de EmailJS.");
-  });
-}
-
-// ââ COMPARTIR ââ
-function shareWhatsApp() {
-  const el = document.getElementById("money-display");
-  const amount = el ? el.textContent : "miles de euros";
-  window.open("https://wa.me/?text=" + encodeURIComponent("Acabo de descubrir que me perdia " + amount + " al año en ayudas del gobierno! Comprueba gratis cuanto te corresponde a ti en cobratusayudas.es"), "_blank");
-}
-function copyLink() { navigator.clipboard.writeText("https://cobratusayudas.es").then(() => alert("Enlace copiado!")); }
-
-// ââ LEGAL ââ
-const legalTexts = {
-  aviso: `<h2 style="font-family:'DM Serif Display',serif;font-size:1.6rem;color:#0f172a;margin-bottom:20px;">Aviso Legal</h2><p><strong>Titular:</strong> CobraTusAyudas.es, con domicilio en Barcelona, Espana.</p><p style="margin-top:12px;"><strong>Correo de contacto:</strong> hola@cobratusayudas.es</p><h3 style="font-size:1rem;color:#0f172a;margin:20px 0 8px;">Responsabilidad</h3><p>La informacion sobre ayudas y subvenciones se obtiene de fuentes oficiales. El titular no garantiza la exactitud absoluta ni la vigencia de las ayudas mostradas. El usuario es responsable de verificar los requisitos antes de realizar cualquier solicitud.</p><h3 style="font-size:1rem;color:#0f172a;margin:20px 0 8px;">Legislacion aplicable</h3><p>Este aviso legal se rige por la legislacion espanola. Para cualquier controversia, las partes se someten a los juzgados y tribunales de Barcelona.</p>`,
-  privacidad: `<h2 style="font-family:'DM Serif Display',serif;font-size:1.6rem;color:#0f172a;margin-bottom:20px;">Politica de Privacidad</h2><p>En cumplimiento del RGPD y la LOPDGDD te informamos sobre el tratamiento de tus datos personales.</p><h3 style="font-size:1rem;color:#0f172a;margin:20px 0 8px;">Responsable</h3><p>CobraTusAyudas.es &middot; hola@cobratusayudas.es &middot; Barcelona, Espana</p><h3 style="font-size:1rem;color:#0f172a;margin:20px 0 8px;">Datos que recogemos</h3><p>Recogemos unicamente las respuestas al cuestionario (anonimas) y el correo electronico para el envio de informes si el usuario lo facilita voluntariamente.</p><h3 style="font-size:1rem;color:#0f172a;margin:20px 0 8px;">Tus derechos</h3><p>Puedes ejercer tus derechos escribiendo a hola@cobratusayudas.es. También puedes presentar reclamacion ante la AEPD (aepd.es).</p>`,
-  cookies: `<h2 style="font-family:'DM Serif Display',serif;font-size:1.6rem;color:#0f172a;margin-bottom:20px;">Politica de Cookies</h2><p>Este sitio web utiliza cookies tecnicas necesarias para su funcionamiento y cookies de Stripe para el procesamiento de pagos. No se usan cookies de seguimiento o publicidad.</p>`
-};
-
-function openLegal(id) {
-  if (!legalTexts[id]) return;
-  document.getElementById("legal-content").innerHTML = legalTexts[id];
-  document.getElementById("legal-modal").style.display = "flex";
-  document.body.style.overflow = "hidden";
-}
-function closeLegal() { document.getElementById("legal-modal").style.display = "none"; document.body.style.overflow = ""; }
-
-// —— CONTADOR "HOY" ——
-  function contadorHoyBase() {
-   const now = new Date();
-      const dayKey = now.getFullYear() + "-" + now.getMonth() + "-" + now.getDate();
-      let seed = 0;
-      for (let i = 0; i < dayKey.length; i++) seed = (seed * 31 + dayKey.charCodeAt(i)) >>> 0;
-      const inicio = 180 + (seed % 80);
-      const minutos = now.getHours() * 60 + now.getMinutes();
-      const crecimiento = Math.floor(minutos * (200 / 1440));
-      return inicio + crecimiento;
-  }
-  let count = contadorHoyBase();
-  function tickCounter() {
-      const base = contadorHoyBase() + Math.floor(Math.random() * 3);
-      count = Math.max(count, base);
-      const el = document.getElementById("counter");
-      if (el) el.textContent = count.toLocaleString("es-ES");
-      setTimeout(tickCounter, 4000 + Math.random() * 8000);
- }
- tickCounter();
-
- // —— CONTADOR "ESTE MES" ——
-  function contadorMesBase() {
-      const now = new Date();
-    const monthKey = now.getFullYear() + "-" + now.getMonth();
-    let seed = 0;
-    for (let i = 0; i < monthKey.length; i++) seed = (seed * 31 + monthKey.charCodeAt(i)) >>> 0;
-    const inicio = 2800 + (seed % 400);
-    const diasDelMes = new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate();
-      const minutosDelMes = (now.getDate() - 1) * 1440 + now.getHours() * 60 + now.getMinutes();
-      const totalMinutosMes = diasDelMes * 1440;
-      const crecimiento = Math.floor((minutosDelMes / totalMinutosMes) * 2600);
-      return inicio + crecimiento;
-  }
-  let countMes = contadorMesBase();
-  function tickCounterMes() {
-      const base = contadorMesBase() + Math.floor(Math.random() * 5);
-      countMes = Math.max(countMes, base);
-      document.querySelectorAll(".js-mes-counter").forEach(function(el) { el.textContent = countMes.toLocaleString("es-ES"); });
-      setTimeout(tickCounterMes, 5000 + Math.random() * 10000);
-  }
-  tickCounterMes();
-// ── SUPABASE + GOOGLE ANALYTICS ──
-const SUPABASE_URL = 'https://hsojuxicjstzkhitudow.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imhzb2p1eGljanN0emtoaXR1ZG93Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzczOTg5MjgsImV4cCI6MjA5Mjk3NDkyOH0.D9gID0pJEttmYgq_rafuJXZOklYZy2m7PzuNZ6BTt6M';
-const SESSION_ID = Math.random().toString(36).slice(2) + Date.now().toString(36);
-let _sbClient = null;
 function getSB() {
   if (!_sbClient && window.supabase) {
     _sbClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
