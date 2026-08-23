@@ -275,10 +275,10 @@
 <body>
 <header>
   <a class="logo" onclick="goHome();return false;" href="#">cobra<span>tusayudas</span>.es</a>
-  <a href="/blog" style="color:#00c896;font-weight:600;font-size:14px;text-decoration:none">Blog</a><div class="header-badge">100% Oficial · Datos reales</div>
+  <a href="/blog" style="color:#00c896;font-weight:600;font-size:14px;text-decoration:none">Blog</a><div class="header-badge">Test gratis · Informe 6€</div>
 </header>
 <div class="sticky-cta" id="sticky-cta">
-  <button onclick="startQuiz()">Comprobar mis ayudas — es gratis &#8594;</button>
+  <button onclick="startQuiz()">Hacer el test gratis &#8594;</button>
 </div>
 
 <!-- HERO -->
@@ -289,7 +289,7 @@
     <h1 class="hero-title">El gobierno tiene dinero<br>reservado <em>para ti.</em><br>¿Lo has reclamado?</h1>
     <p class="hero-subtitle">Millones de españoles pierden cada año miles de euros en ayudas a las que tienen derecho. Comprueba en 2 minutos cuánto te corresponde.</p>
       <div class="live-counter"><div class="pulse-dot"></div><span>Hoy ya han comprobado sus ayudas <strong id="counter">245</strong> personas</span></div>
-      <button class="cta-btn" onclick="startQuiz()">Comprobar mis ayudas gratis &#8594;</button>
+      <button class="cta-btn" onclick="startQuiz()">Hacer el test — es gratis &#8594;</button>
     <div class="hero-trust">
       <div class="trust-item">&#10003; Gratis y sin registro</div>
       <div class="trust-item">&#10003; Datos de fuentes oficiales</div>
@@ -540,17 +540,17 @@
       <p style="color:var(--text-muted);font-size:0.88rem;">Basado en tus respuestas y datos oficiales del gobierno</p>
     </div>
     <div class="money-box">
-      <div class="money-label">Podrías estar perdiendo cada año</div>
+      <div class="money-label">Estimación de ayudas para tu perfil</div>
       <div class="money-amount" id="money-display">calculando...</div>
-      <div class="money-sublabel">en ayudas, prestaciones y subvenciones a las que tienes derecho</div>
+      <div class="money-sublabel">Suma de las principales ayudas que encajan con tu perfil (importes orientativos)</div>
     </div>
     <div class="ayudas-section">
-      <div class="ayudas-title">&#128274; Tus ayudas identificadas (<span id="ayudas-count">0</span> ayudas)</div>
+      <div class="ayudas-title">Hemos encontrado <span id="ayudas-count">0</span> ayudas para tu perfil</div>
       <div class="lock-overlay">
         <div id="preview-list"></div>
         <div class="lock-overlay-inner">
           <div class="lock-icon">&#128274;</div>
-          <div class="lock-text">Desbloquea el listado completo con links directos y guias para solicitarlas</div>
+          <div class="lock-text">Desbloquea importes exactos, enlaces oficiales e instrucciones paso a paso</div>
         </div>
       </div>
     </div>
@@ -593,12 +593,11 @@
 </div>
 <div class="payment-section">
       <div style="text-align:center;margin-bottom:20px;">
-        <span style="color:#94a3b8;font-size:1.1rem;text-decoration:line-through;margin-right:10px;">24,99€</span>
-        <span style="color:var(--accent);font-weight:800;font-size:2rem;">6,00€</span>
-        <span style="background:rgba(0,184,148,0.12);color:var(--accent);font-size:0.75rem;font-weight:700;padding:4px 10px;border-radius:6px;margin-left:8px;vertical-align:middle;border:1px solid rgba(0,184,148,0.3);">— 76% dto</span>
-        <div style="font-size:0.78rem;color:var(--text-dim);margin-top:6px;">Oferta de lanzamiento · Tiempo limitado</div>
+        <div style="font-size:0.82rem;color:var(--text-muted);margin-bottom:8px;">Informe completo &middot; Pago único</div>
+        <span style="color:var(--accent);font-weight:800;font-size:2.4rem;">6€</span>
+        <div style="font-size:0.78rem;color:var(--text-dim);margin-top:6px;">Sin suscripción &middot; Sin registro previo</div>
       </div>
-      <button class="pay-btn" id="pay-btn" onclick="handlePayment()">&#128275; Desbloquear mis ayudas por solo 6€</button>
+      <button class="pay-btn" id="pay-btn" onclick="handlePayment()">&#128275; Desbloquear mi informe completo &mdash; 6€</button>
       <p class="pay-subtitle">Sin suscripción · Pago único · Menos que un café</p>
       <div class="pay-badges">
         <div class="pay-badge">&#128274; Pago seguro SSL</div>
@@ -879,12 +878,15 @@ function filtrarAyudas() {
 }
 
 function calcularImporteTotal(ayudas) {
+  // Top 5 ayudas por importe para evitar sumar incompatibles
+  const top = [...ayudas]
+    .sort((a,b) => (b.importeMax||0) - (a.importeMax||0))
+    .slice(0, 5);
   let min = 0, max = 0;
-  ayudas.forEach(a => { min += a.importeMin || 0; max += a.importeMax || 0; });
-  const fmt = n => {
-    if (n >= 100000) return Math.round(n/1000) + "k";
-    return n.toLocaleString("es-ES");
-  };
+  top.forEach(a => { min += a.importeMin || 0; max += a.importeMax || 0; });
+  const fmt = n => n.toLocaleString("es-ES");
+  if (max === 0) return "consultar";
+  if (min === 0) return "hasta " + fmt(max) + "€";
   return fmt(min) + "€ – " + fmt(max) + "€";
 }
 
@@ -959,11 +961,30 @@ function buildResults() {
   document.getElementById("money-display").textContent = calcularImporteTotal(ayudas);
   document.getElementById("ayudas-count").textContent = ayudas.length;
 
-  document.getElementById("preview-list").innerHTML = ayudas.slice(0, 2).map(a => `
-    <div class="ayuda-item">
-      <div class="ayuda-info"><div class="ayuda-name">${a.nombre}</div><div class="ayuda-org blurred">${a.organismo}</div></div>
-      <div class="ayuda-amount blurred">${a.importe}</div>
-    </div>`).join("");
+  // Sample card (primera ayuda completa) + lista de nombres
+  const topAyuda = ayudas[0];
+  const sampleCard = topAyuda ? `
+    <div style="background:var(--surface);border:2px solid var(--accent);border-radius:14px;padding:20px;margin-bottom:16px;">
+      <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--accent);margin-bottom:6px;">Ejemplo de ficha completa</div>
+      <div style="font-size:1rem;font-weight:700;color:var(--text);margin-bottom:6px;">${topAyuda.nombre}</div>
+      <div style="font-size:0.95rem;color:var(--green);font-weight:700;margin-bottom:8px;">${topAyuda.importe}</div>
+      ${topAyuda.descripcion ? `<div style="font-size:0.82rem;color:var(--text-muted);margin-bottom:10px;line-height:1.5;">${topAyuda.descripcion}</div>` : ""}
+      ${topAyuda.pasos && topAyuda.pasos.length ? `<div style="font-size:0.8rem;font-weight:600;color:var(--text);margin-bottom:5px;">Cómo solicitarla:</div><ol style="font-size:0.8rem;color:var(--text-muted);padding-left:18px;margin-bottom:8px;">${topAyuda.pasos.slice(0,3).map(p=>"<li style='margin-bottom:3px;'>"+p+"</li>").join("")}</ol>` : ""}
+      <div style="font-size:0.75rem;color:var(--text-dim);">📋 ${topAyuda.organismo || ""}</div>
+    </div>` : "";
+
+  const allNames = ayudas.map((a,i) => {
+    const locked = i >= 2;
+    return `<div class="ayuda-item" style="${locked ? 'opacity:0.45;filter:blur(2.5px);user-select:none;pointer-events:none;' : ''}">
+      <div class="ayuda-info">
+        <div class="ayuda-name">${locked ? "████████████████" : a.nombre}</div>
+        <div style="font-size:0.78rem;color:var(--text-dim);">${locked ? "██████" : a.organismo}</div>
+      </div>
+      <div style="color:var(--green);font-weight:700;font-size:0.88rem;">${locked ? "███€" : a.importe}</div>
+    </div>`;
+  }).join("");
+
+  document.getElementById("preview-list").innerHTML = sampleCard + allNames;
 
   const el = document.getElementById("ayudas-list");
   if (!ayudas.length) {
@@ -1000,7 +1021,7 @@ async function handlePayment() {
   trackEvent('begin_checkout', {value: 6, currency: 'EUR'});
   if (typeof fbq === 'function') { fbq('track', 'InitiateCheckout', {value: 6, currency: 'EUR', content_name: 'desbloquear_ayudas'}); }
   // Enlace de pago fijo de Stripe (no caduca, no depende de crear sesion por API)
-  window.location.href = "https://buy.stripe.com/6oUeVdeHy9zYc9db5Nf3a00";
+  window.open("https://buy.stripe.com/6oUeVdeHy9zYc9db5Nf3a00", "_blank");
 }
 
 async function checkPaymentReturn() {
