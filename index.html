@@ -1085,8 +1085,8 @@ function runCalculating() {
 function buildResults() {
   var ayudas = filtrarAyudas();
   ayudas.sort(function(a,b){ return (b.importeMax||0)-(a.importeMax||0); });
-  saveQuizResponse(ayudas);
-  trackEvent('quiz_results_shown',{count:ayudas.length});
+  try { if(typeof saveQuizResponse==='function') saveQuizResponse(ayudas); } catch(e){}
+  try { trackEvent('quiz_results_shown',{count:ayudas.length}); } catch(e){}
   if(typeof fbq==='function'){fbq('track','ViewContent',{content_name:'resultados_ayudas'});}
   try{history.replaceState(null,'',location.pathname+'?view=resultado');}catch(e){}
   document.getElementById('ayudas-count').textContent=ayudas.length;
