@@ -98,8 +98,8 @@
     :root{--bg:#f8fafc;--surface:#fff;--surface2:#f1f5f9;--border:#e2e8f0;--accent:#00b894;--accent2:#f59e0b;--text:#0f172a;--text-muted:#64748b;--text-dim:#94a3b8;--green:#059669;--radius:16px;}
     *{box-sizing:border-box;margin:0;padding:0;}
     body{background:var(--bg);color:var(--text);font-family:"Sora",sans-serif;min-height:100vh;overflow-x:hidden;}
-    header{position:fixed;top:0;left:0;right:0;z-index:100;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;background:rgba(10,15,30,0.95);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.08);}
-    .logo{font-family:"DM Serif Display",serif;font-size:1.7rem;color:var(--accent);cursor:pointer;text-decoration:none;}
+    header{position:fixed;top:0;left:0;right:0;z-index:100;padding:16px 24px;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;background:rgba(10,15,30,0.95);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.08);}
+    .logo{font-family:"DM Serif Display",serif;font-size:1.7rem;color:var(--accent);cursor:pointer;text-decoration:none;grid-column:2;text-align:center;}
     .logo span{color:#fff;}
     .header-badge{font-size:0.82rem;font-weight:600;background:rgba(0,212,170,0.12);color:var(--accent);border:1px solid rgba(0,212,170,0.3);padding:6px 14px;border-radius:20px;text-transform:uppercase;letter-spacing:0.05em;}
     .page{display:none;min-height:100vh;padding-top:72px;}
@@ -330,8 +330,12 @@
 </head>
 <body>
 <header>
+  <div></div>
   <a class="logo" onclick="goHome();return false;" href="#">cobra<span>tusayudas</span>.es</a>
-  <a href="/blog" style="color:#00c896;font-weight:600;font-size:14px;text-decoration:none">Blog</a><div class="header-badge">Test gratis · Informe 6€</div>
+  <div style="display:flex;align-items:center;justify-content:flex-end;gap:16px;">
+    <a href="/blog" style="color:rgba(255,255,255,0.7);font-weight:500;font-size:14px;text-decoration:none;white-space:nowrap;">Gu&iacute;as sobre ayudas</a>
+    <div class="header-badge">Datos de fuentes oficiales</div>
+  </div>
 </header>
 <div class="sticky-cta" id="sticky-cta">
   <button onclick="startQuiz()">Comprobar mis ayudas &#8594;</button>
