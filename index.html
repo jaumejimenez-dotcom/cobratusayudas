@@ -1222,6 +1222,103 @@ async function markAsPaid() {
     }
   }
 })();
+
+/* ═══ STRIPE PAYMENT MODAL ═══ */
+var _spk = 'pk_live_51TPiMpHnR7v3xoRAUWGuTjmri5TIW2KvgXtXQqwgyCBx7teZAHF4tyvG6VfCANk5RSo64ce1mjTE94syj4jr3nsY00QaDnWdga';
+var _si = null, _se = null;
+
+function closePayModal() {
+  var overlay = document.getElementById('pay-modal-overlay');
+  if (overlay) overlay.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+async function initStripePayment() {
+  var emailEl = document.getElementById('pay-email');
+  if (emailEl && emailEl.value) sessionStorage.setItem('user_email', emailEl.value);
+  if (typeof fbq === 'function') { fbq('track', 'InitiateCheckout', {value:6,currency:'EUR'}); }
+  try { trackEvent('begin_checkout', {value:6,currency:'EUR'}); } catch(e){}
+
+  // Open modal
+  var overlay = document.getElementById('pay-modal-overlay');
+  if (overlay) {
+    overlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  try {
+    var resp = await fetch('/api/payment-intent', {method:'POST', headers:{'Content-Type':'application/json'}});
+    var data = await resp.json();
+    if (!data.clientSecret) throw new Error('No client secret');
+
+    if (!_si) {
+      await new Promise(function(resolve, reject) {
+        if (window.Stripe) { _si = Stripe(_spk); resolve(); return; }
+        var s = document.createElement('script');
+        s.src = 'https://js.stripe.com/v3/';
+        s.onload = function() { _si = Stripe(_spk); resolve(); };
+        s.onerror = reject;
+        document.head.appendChild(s);
+      });
+    }
+
+    _se = _si.elements({
+      clientSecret: data.clientSecret,
+      appearance: {
+        theme: 'stripe',
+        variables: {colorPrimary:'#00c896', colorBackground:'#ffffff', colorText:'#0f172a', fontFamily:'system-ui,sans-serif', borderRadius:'8px'},
+        rules: {'.Input': {border:'1px solid #e2e8f0', boxShadow:'none'}}
+      }
+    });
+
+    var pel = _se.create('payment', {layout:'tabs'});
+    pel.mount('#modal-stripe-element');
+    pel.on('ready', function() {
+      var btn = document.getElementById('modal-submit-btn');
+      if (btn) btn.style.display = 'block';
+    });
+  } catch(err) {
+    console.error('Stripe modal error:', err);
+    closePayModal();
+    sessionStorage.setItem('respuestas_backup', JSON.stringify(respuestas));
+    window.location.href = 'https://buy.stripe.com/6oUeVdeHy9zYc9db5Nf3a00';
+  }
+}
+
+async function confirmModalPayment() {
+  var btn = document.getElementById('modal-submit-btn');
+  if (btn) { btn.disabled = true; btn.textContent = 'Procesando...'; }
+  var errEl = document.getElementById('modal-error');
+  if (errEl) errEl.style.display = 'none';
+  var stripeEl = document.getElementById('modal-stripe-element');
+  var procEl = document.getElementById('modal-processing');
+  if (stripeEl) stripeEl.style.display = 'none';
+  if (procEl) procEl.style.display = 'block';
+  if (btn) btn.style.display = 'none';
+
+  var result = await _si.confirmPayment({
+    elements: _se,
+    confirmParams: {return_url: window.location.origin + '/?pago=ok'},
+    redirect: 'if_required'
+  });
+
+  if (result.error) {
+    if (procEl) procEl.style.display = 'none';
+    if (stripeEl) stripeEl.style.display = 'block';
+    if (btn) { btn.style.display = 'block'; btn.disabled = false; btn.textContent = 'Pagar 6\u20ac y desbloquear'; }
+    if (errEl) { errEl.textContent = result.error.message; errEl.style.display = 'block'; }
+  } else if (result.paymentIntent && result.paymentIntent.status === 'succeeded') {
+    if (typeof fbq === 'function') { fbq('track', 'Purchase', {value:6,currency:'EUR'}); }
+    closePayModal();
+    sessionStorage.setItem('cobratusayudas_paid', '1');
+    sessionStorage.setItem('respuestas_backup', JSON.stringify(respuestas));
+    buildUnlocked();
+    showPage('page-unlocked');
+  }
+}
+
+function confirmPayment() { confirmModalPayment(); }
+
 </script>
 
 <!-- PAYMENT MODAL -->
