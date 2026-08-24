@@ -1230,6 +1230,45 @@ async function markAsPaid() {
     }
   });
 })();
+
+function buildUnlocked() {
+  var ayudas = filtrarAyudas();
+  ayudas.sort(function(a,b){ return (b.importeMax||0)-(a.importeMax||0); });
+  var el = document.getElementById('ayudas-list');
+  if (!el) return;
+  if (!ayudas.length) {
+    el.innerHTML = '<p style="color:var(--text-muted);text-align:center;padding:40px 0;">No encontramos ayudas espec\u00edficas para tu perfil exacto. Consulta <a href="https://infosubvenciones.es" target="_blank">infosubvenciones.es</a> para m\u00e1s informaci\u00f3n.</p>';
+    return;
+  }
+  el.innerHTML = ayudas.map(function(a) {
+    var steps = a.steps || a.pasos || [];
+    var desc = a.desc || a.descripcion || '';
+    var docs = a.docs || a.documentacion || [];
+    var importe = a.importe || '';
+    var stepsHtml = steps.length
+      ? '<div class="guide-steps">' + steps.map(function(s,i){
+          return '<div class="guide-step"><div class="step-num">'+(i+1)+'</div><div class="step-text">'+s+'</div></div>';
+        }).join('') + '</div>'
+      : '';
+    var docsHtml = docs.length
+      ? '<div class="guide-docs"><strong>Documentaci\u00f3n necesaria:</strong><ul>'+docs.map(function(d){return '<li>'+d+'</li>';}).join('')+'</ul></div>'
+      : '';
+    var linkHtml = a.url
+      ? '<a href="'+a.url+'" target="_blank" rel="noopener" class="guide-link">Solicitar oficialmente \u2192</a>'
+      : '';
+    return '<div class="ayuda-card">' +
+      '<div class="ayuda-card-header">' +
+        '<div class="ayuda-card-name">'+a.nombre+'</div>' +
+        (importe ? '<div class="ayuda-card-amount">'+importe+'</div>' : '') +
+      '</div>' +
+      (desc ? '<div class="ayuda-card-desc">'+desc+'</div>' : '') +
+      stepsHtml + docsHtml +
+      (linkHtml ? '<div style="margin-top:12px;">'+linkHtml+'</div>' : '') +
+      '</div>';
+  }).join('');
+  try { if(typeof markAsPaid==='function') markAsPaid(); } catch(e){}
+}
+
 /* ═══ STRIPE PAYMENT MODAL ═══ */
 var _spk = 'pk_live_51TPiMpHnR7v3xoRAUWGuTjmri5TIW2KvgXtXQqwgyCBx7teZAHF4tyvG6VfCANk5RSo64ce1mjTE94syj4jr3nsY00QaDnWdga';
 var _si = null, _se = null;
