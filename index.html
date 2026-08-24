@@ -1249,7 +1249,7 @@ async function initStripePayment() {
   try { trackEvent('begin_checkout', {value:6,currency:'EUR'}); } catch(e){}
 
   // CRITICAL: save respuestas NOW before any redirect
-  try { sessionStorage.setItem('respuestas_backup', JSON.stringify(respuestas)); } catch(e){}
+  try { localStorage.setItem('cta_respuestas', JSON.stringify(respuestas)); sessionStorage.setItem('respuestas_backup', JSON.stringify(respuestas)); } catch(e){}
 
   // Open modal
   var overlay = document.getElementById('pay-modal-overlay');
@@ -1292,7 +1292,7 @@ async function initStripePayment() {
   } catch(err) {
     console.error('Stripe modal error:', err);
     closePayModal();
-    sessionStorage.setItem('respuestas_backup', JSON.stringify(respuestas));
+    localStorage.setItem('cta_respuestas', JSON.stringify(respuestas)); sessionStorage.setItem('respuestas_backup', JSON.stringify(respuestas));
     window.location.href = 'https://buy.stripe.com/6oUeVdeHy9zYc9db5Nf3a00';
   }
 }
@@ -1309,7 +1309,7 @@ async function confirmModalPayment() {
   if (btn) btn.style.display = 'none';
 
   // Save respuestas before any potential redirect
-  try { sessionStorage.setItem('respuestas_backup', JSON.stringify(respuestas)); } catch(e){}
+  try { localStorage.setItem('cta_respuestas', JSON.stringify(respuestas)); sessionStorage.setItem('respuestas_backup', JSON.stringify(respuestas)); } catch(e){}
   
   var result = await _si.confirmPayment({
     elements: _se,
@@ -1326,7 +1326,7 @@ async function confirmModalPayment() {
     if (typeof fbq === 'function') { fbq('track', 'Purchase', {value:6,currency:'EUR'}); }
     closePayModal();
     sessionStorage.setItem('cobratusayudas_paid', '1');
-    sessionStorage.setItem('respuestas_backup', JSON.stringify(respuestas));
+    localStorage.setItem('cta_respuestas', JSON.stringify(respuestas)); sessionStorage.setItem('respuestas_backup', JSON.stringify(respuestas));
     buildUnlocked();
     showPage('page-unlocked');
   }
