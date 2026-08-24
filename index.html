@@ -1208,26 +1208,27 @@ async function markAsPaid() {
     history.replaceState(null, '', '/');
   }
 
-  if (hasPago || hasPI) {
-    if (hasPI && piParam !== 'pi_test_simulation') {
-      // Verify with server
-      fetch('/api/verify-intent?payment_intent=' + piParam)
-        .then(function(r) { return r.json(); })
-        .then(function(d) { if (d.paid || hasPago) showUnlocked(); else history.replaceState(null,'','/'); })
-        .catch(function() { if (hasPago) showUnlocked(); else history.replaceState(null,'','/'); });
-    } else if (hasPago) {
-      showUnlocked();
+  // Delay execution until all JS functions are defined
+  window.addEventListener('load', function() {
+    if (hasPago || hasPI) {
+      if (hasPI && piParam !== 'pi_test_simulation') {
+        fetch('/api/verify-intent?payment_intent=' + piParam)
+          .then(function(r) { return r.json(); })
+          .then(function(d) { if (d.paid || hasPago) showUnlocked(); else history.replaceState(null,'','/'); })
+          .catch(function() { if (hasPago) showUnlocked(); else history.replaceState(null,'','/'); });
+      } else if (hasPago) {
+        showUnlocked();
+      }
+      return;
     }
-    return;
-  }
-
-  // Not a payment return — check if already paid
-  if (localStorage.getItem('cobratusayudas_paid') === '1' || sessionStorage.getItem('cobratusayudas_paid') === '1') {
-    var backup = getBackup();
-    if (backup) {
-      try { respuestas = backup; buildUnlocked(); showPage('page-unlocked'); } catch(e){}
+    // Check if already paid
+    if (localStorage.getItem('cobratusayudas_paid') === '1' || sessionStorage.getItem('cobratusayudas_paid') === '1') {
+      var backup = getBackup();
+      if (backup) {
+        try { respuestas = backup; buildUnlocked(); showPage('page-unlocked'); } catch(e){}
+      }
     }
-  }
+  });
 })();
 /* ═══ STRIPE PAYMENT MODAL ═══ */
 var _spk = 'pk_live_51TPiMpHnR7v3xoRAUWGuTjmri5TIW2KvgXtXQqwgyCBx7teZAHF4tyvG6VfCANk5RSo64ce1mjTE94syj4jr3nsY00QaDnWdga';
