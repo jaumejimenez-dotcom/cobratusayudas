@@ -1173,21 +1173,34 @@ async function markAsPaid() {
 /* ── INIT: check if returning from Stripe payment ── */
 (function() {
   var params = new URLSearchParams(window.location.search);
-  
-  function restoreAndShow() {
-    // Restore respuestas from sessionStorage
-    var backup = sessionStorage.getItem('respuestas_backup');
-    if (backup) {
-      try { respuestas = JSON.parse(backup); } catch(e) {}
-    }
-    // If respuestas is still empty, show a generic message
-    if (!respuestas || Object.keys(respuestas).length === 0) {
-      // Can't show unlocked without respuestas — show a recovery page
-      document.getElementById('page-hero').innerHTML = '<div style="text-align:center;padding:80px 24px;"><h2 style="font-size:1.5rem;margin-bottom:16px;">&#9989; Pago confirmado</h2><p style="color:#666;margin-bottom:24px;">Tu pago se ha procesado correctamente. Por favor, vuelve a hacer el test para ver tu informe personalizado.</p><button onclick="startQuiz()" style="background:#00c896;color:#0d1b2a;border:none;padding:14px 28px;border-radius:10px;font-weight:700;font-size:1rem;cursor:pointer;">Hacer el test</button></div>';
+  var hasPago = params.get('pago') === 'ok';
+  var piParam = params.get('payment_intent') || '';
+  var hasPI = piParam.startsWith('pi_');
+
+  function getBackup() {
+    var b = localStorage.getItem('cta_respuestas') || sessionStorage.getItem('respuestas_backup');
+    if (b) { try { return JSON.parse(b); } catch(e) {} }
+    return null;
+  }
+
+  function showUnlocked() {
+    var backup = getBackup();
+    if (backup) respuestas = backup;
+    if (!respuestas || !respuestas.ccaa) {
+      // No quiz data — show confirmation and ask to redo
+      history.replaceState(null, '', '/');
       showPage('page-hero');
+      var btn = document.querySelector('.cta-btn, .hero-cta');
+      if (btn) {
+        var msg = document.createElement('div');
+        msg.style.cssText = 'background:#00c896;color:#0a0f1e;padding:12px 16px;border-radius:8px;margin-bottom:16px;font-weight:700;text-align:center;';
+        msg.textContent = '✅ Pago confirmado. Haz el test para ver tu informe personalizado.';
+        btn.parentNode.insertBefore(msg, btn);
+      }
       return;
     }
-    if (typeof fbq === 'function') { try { fbq('track', 'Purchase', {value:6,currency:'EUR'}); } catch(e){} }
+    try { if (typeof fbq === 'function') fbq('track', 'Purchase', {value:6,currency:'EUR'}); } catch(e){}
+    localStorage.setItem('cobratusayudas_paid', '1');
     sessionStorage.setItem('cobratusayudas_paid', '1');
     try { markAsPaid(); } catch(e){}
     buildUnlocked();
@@ -1195,43 +1208,27 @@ async function markAsPaid() {
     history.replaceState(null, '', '/');
   }
 
-  // Case 1: Stripe redirect with payment_intent param
-  var pi = params.get('payment_intent');
-  if (pi) {
-    fetch('/api/verify-intent?payment_intent=' + pi)
-      .then(function(r) { return r.json(); })
-      .then(function(data) {
-        if (data.paid) { restoreAndShow(); }
-        else { history.replaceState(null, '', '/'); }
-      })
-      .catch(function(e) {
-        // If verify fails, check sessionStorage as fallback
-        console.error('verify-intent error:', e);
-        if (sessionStorage.getItem('cobratusayudas_paid') === '1') { restoreAndShow(); }
-        else { history.replaceState(null, '', '/'); }
-      });
+  if (hasPago || hasPI) {
+    if (hasPI && piParam !== 'pi_test_simulation') {
+      // Verify with server
+      fetch('/api/verify-intent?payment_intent=' + piParam)
+        .then(function(r) { return r.json(); })
+        .then(function(d) { if (d.paid || hasPago) showUnlocked(); else history.replaceState(null,'','/'); })
+        .catch(function() { if (hasPago) showUnlocked(); else history.replaceState(null,'','/'); });
+    } else if (hasPago) {
+      showUnlocked();
+    }
     return;
   }
 
-  // Case 2: ?pago=ok
-  if (params.get('pago') === 'ok') {
-    restoreAndShow();
-    return;
-  }
-
-  // Case 3: already paid in this session
-  if (sessionStorage.getItem('cobratusayudas_paid') === '1') {
-    var backup = sessionStorage.getItem('respuestas_backup');
+  // Not a payment return — check if already paid
+  if (localStorage.getItem('cobratusayudas_paid') === '1' || sessionStorage.getItem('cobratusayudas_paid') === '1') {
+    var backup = getBackup();
     if (backup) {
-      try {
-        respuestas = JSON.parse(backup);
-        buildUnlocked();
-        showPage('page-unlocked');
-      } catch(e) {}
+      try { respuestas = backup; buildUnlocked(); showPage('page-unlocked'); } catch(e){}
     }
   }
 })();
-
 /* ═══ STRIPE PAYMENT MODAL ═══ */
 var _spk = 'pk_live_51TPiMpHnR7v3xoRAUWGuTjmri5TIW2KvgXtXQqwgyCBx7teZAHF4tyvG6VfCANk5RSo64ce1mjTE94syj4jr3nsY00QaDnWdga';
 var _si = null, _se = null;
