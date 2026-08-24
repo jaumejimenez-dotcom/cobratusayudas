@@ -1231,7 +1231,7 @@ async function markAsPaid() {
   });
 })();
 
-function buildUnlocked() {
+window.buildUnlocked = function() {
   var ayudas = filtrarAyudas();
   ayudas.sort(function(a,b){ return (b.importeMax||0)-(a.importeMax||0); });
   var el = document.getElementById('ayudas-list');
@@ -1371,6 +1371,18 @@ async function confirmModalPayment() {
 
 function confirmPayment() { confirmModalPayment(); }
 
+
+// Ensure critical functions are globally accessible
+window.buildUnlocked = window.buildUnlocked || buildUnlocked;
+window.buildResults = buildResults;
+window.filtrarAyudas = filtrarAyudas;
+window.showPage = showPage;
+window.startQuiz = startQuiz;
+window.runCalculating = runCalculating;
+window.initStripePayment = initStripePayment;
+window.confirmModalPayment = confirmModalPayment;
+window.closePayModal = closePayModal;
+window.trackEvent = trackEvent;
 </script>
 
 <!-- PAYMENT MODAL -->
