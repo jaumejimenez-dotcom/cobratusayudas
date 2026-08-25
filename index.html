@@ -282,15 +282,18 @@
 .locked-list-header{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid var(--border);background:var(--surface2);}
 .locked-list-title{font-size:0.88rem;font-weight:700;color:var(--text);}
 .locked-badge{font-size:0.72rem;font-weight:700;background:rgba(239,68,68,0.1);color:#ef4444;border:1px solid rgba(239,68,68,0.2);padding:3px 10px;border-radius:20px;}
-.preview-list{padding:8px 0;}
-.prev-item{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;border-bottom:1px solid var(--border);}
+.preview-list-wrap{position:relative;border-radius:14px;overflow:hidden;border:1px solid var(--border);background:var(--surface);}
+.preview-list{padding:4px 0;}
+.prev-item{display:flex;align-items:center;justify-content:space-between;padding:11px 16px;border-bottom:1px solid var(--border);}
 .prev-item:last-child{border-bottom:none;}
-.prev-item.locked .prev-name{filter:blur(5px);user-select:none;color:var(--text-dim);}
-.prev-item.locked .prev-amount{filter:blur(4px);user-select:none;}
-.prev-item.unlocked .prev-name{font-weight:600;color:var(--text);}
-.prev-name{font-size:0.88rem;flex:1;}
-.prev-amount{font-size:0.82rem;font-weight:700;color:var(--green);margin-left:12px;white-space:nowrap;}
-.prev-lock{font-size:0.75rem;color:var(--text-dim);margin-left:8px;}
+.prev-name{font-size:0.88rem;flex:1;color:var(--text);}
+.prev-item.clear .prev-name{font-weight:600;color:var(--text);}
+.prev-item.blur-1 .prev-name{filter:blur(2px);color:var(--text-muted);user-select:none;}
+.prev-item.blur-2 .prev-name{filter:blur(4px);color:var(--text-dim);user-select:none;}
+.prev-item.blur-3 .prev-name{filter:blur(6px);color:var(--text-dim);user-select:none;opacity:.6;}
+.preview-lock-overlay{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;pointer-events:none;background:linear-gradient(to bottom,transparent 15%,rgba(255,255,255,0.6) 45%,rgba(255,255,255,0.92) 100%);}
+.preview-lock-icon{font-size:2rem;margin-bottom:6px;filter:drop-shadow(0 2px 4px rgba(0,0,0,.15));}
+.preview-lock-text{font-size:0.78rem;font-weight:700;color:var(--text);background:rgba(255,255,255,.9);padding:6px 14px;border-radius:20px;border:1px solid var(--border);}
 .paywall-box{background:linear-gradient(135deg,#0a0f1e,#1a2744);border-radius:16px;padding:24px;margin-bottom:24px;color:#fff;}
 .paywall-header{display:flex;align-items:flex-start;gap:14px;margin-bottom:20px;}
 .paywall-icon{font-size:2rem;line-height:1;}
@@ -317,10 +320,10 @@
 @media(max-width:480px){.paywall-features{grid-template-columns:1fr;}.res-title{font-size:1.3rem;}}
 
 /* ── PAYMENT MODAL ── */
-.pay-modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.55);backdrop-filter:blur(3px);z-index:2000;display:none;align-items:center;justify-content:center;padding:16px;}
+.pay-modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:2000;display:none;align-items:flex-end;justify-content:center;overflow:hidden;}
 .pay-modal-overlay.open{display:flex;}
-.pay-modal{background:#fff;border-radius:20px;width:100%;max-width:420px;box-shadow:0 24px 80px rgba(0,0,0,0.2);overflow:hidden;animation:modalIn .25s ease;}
-@keyframes modalIn{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+.pay-modal{background:#fff;border-radius:20px 20px 0 0;width:100%;max-width:480px;max-height:92vh;overflow-y:auto;-webkit-overflow-scrolling:touch;box-shadow:0 -8px 40px rgba(0,0,0,0.18);animation:modalUp .28s ease;} @media(min-width:540px){.pay-modal{border-radius:20px;max-height:88vh;animation:modalIn .25s ease;}}
+@keyframes modalIn{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}} @keyframes modalUp{from{opacity:0;transform:translateY(60px);}to{opacity:1;transform:translateY(0);}}
 .pay-modal-header{background:linear-gradient(135deg,#0d1b2a,#1a3a5c);padding:20px 24px;display:flex;align-items:center;justify-content:space-between;}
 .pay-modal-title{color:#fff;font-size:1rem;font-weight:700;}
 .pay-modal-price{color:#00c896;font-size:1.2rem;font-weight:800;}
@@ -643,26 +646,28 @@
     <div class="sample-label">&#128275; Muestra gratuita &mdash; as&iacute; ser&aacute;n todas tus fichas</div>
     <div class="sample-inner" id="sample-inner"></div>
   </div>
-  <div class="locked-list-wrap">
-    <div class="locked-list-header">
-      <span class="locked-list-title">Tus ayudas identificadas</span>
-      <span class="locked-badge">&#128274; Bloqueadas</span>
+  <div style="margin-bottom:20px;">
+    <div style="font-size:0.82rem;font-weight:700;color:var(--text);margin-bottom:8px;">Tus ayudas identificadas</div>
+    <div class="preview-list-wrap">
+      <div id="preview-list" class="preview-list"></div>
+      <div class="preview-lock-overlay">
+        <div class="preview-lock-icon">&#128274;</div>
+        <div class="preview-lock-text">Desbloquea para ver todas</div>
+      </div>
     </div>
-    <div id="preview-list" class="preview-list"></div>
   </div>
   <div class="paywall-box">
-    <div class="paywall-header">
-      <div class="paywall-icon">&#128275;</div>
+    <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:10px;">
       <div>
-        <div class="paywall-title">Desbloquea tu informe completo</div>
+        <div class="paywall-title">&#128275; Desbloquea tu informe completo</div>
         <div class="paywall-price">6&euro; &middot; pago &uacute;nico &middot; sin suscripci&oacute;n</div>
       </div>
     </div>
     <div class="paywall-features">
       <div class="pf-item">&#10003; Importe exacto de cada ayuda</div>
-      <div class="pf-item">&#10003; Enlace oficial a la solicitud</div>
+      <div class="pf-item">&#10003; <span id="ayudas-count-2">0</span> fichas completas</div>
       <div class="pf-item">&#10003; Instrucciones paso a paso</div>
-      <div class="pf-item">&#10003; Las <span id="ayudas-count-2">0</span> fichas completas</div>
+      <div class="pf-item">&#10003; Enlace oficial para solicitarla</div>
     </div>
     <div id="pay-state-btn">
       <div style="margin-bottom:12px;">
@@ -1147,11 +1152,12 @@ function buildResults() {
       '<div class="sample-org">&#128196; '+(top.organismo||'')+'</div>';
   } else { var sc=document.getElementById('sample-card'); if(sc) sc.style.display='none'; }
   // Lista — solo nombres, sin importes
+  // Progressive blur: first clear, then increasing blur
   document.getElementById('preview-list').innerHTML=ayudas.map(function(a,i){
-    var locked=i>=3;
-    return '<div class="prev-item '+(locked?'locked':'unlocked')+'">'+
-      '<span class="prev-name">'+(locked?'\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588':a.nombre)+'</span>'+
-      (locked?'<span class="prev-lock">&#128274;</span>':'')+
+    var cls = i===0?'clear': i===1?'blur-1': i===2?'blur-2':'blur-3';
+    var name = i<=1 ? a.nombre : (i===2 ? a.nombre : a.nombre);
+    return '<div class="prev-item '+cls+'">'+
+      '<span class="prev-name">'+name+'</span>'+
       '</div>';
   }).join('');
   ['pay-state-btn','pay-state-loading','pay-state-form','pay-state-processing'].forEach(function(id,i){
