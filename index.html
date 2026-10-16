@@ -653,42 +653,40 @@
     <div class="res-eyebrow">&#10003; An&aacute;lisis completado</div>
     <div id="res-aha" style="display:none;background:rgba(0,184,148,0.08);border:1px solid rgba(0,184,148,0.25);border-radius:10px;padding:14px 16px;font-size:0.88rem;color:var(--text);line-height:1.5;margin-bottom:16px;text-align:left;"></div>
     <h2 class="res-title">Hemos encontrado <span id="ayudas-count" class="res-count">0</span> ayudas para tu perfil</h2>
-    <p class="res-sub">Aqu&iacute; tienes una muestra gratuita. Desbloquea el informe completo por 6&euro;.</p>
+    <p class="res-sub">Esta es tu lista completa, gratis. Para tramitarlas, consigue tu gu&iacute;a por 6&euro;.</p>
   </div>
-  <div class="sample-card" id="sample-card">
+  <div class="sample-card" id="sample-card" style="display:none">
     <div class="sample-label">&#128275; Muestra gratuita &mdash; as&iacute; ser&aacute;n todas tus fichas</div>
     <div class="sample-inner" id="sample-inner"></div>
   </div>
   <div style="margin-bottom:20px;">
-    <div style="font-size:0.82rem;font-weight:700;color:var(--text);margin-bottom:8px;">Tus ayudas identificadas</div>
+    <div style="font-size:0.82rem;font-weight:700;color:var(--text);margin-bottom:8px;">Tu lista de ayudas</div>
     <div class="preview-list-wrap">
       <div id="preview-list" class="preview-list"></div>
-      <div class="preview-lock-overlay">
-        <div class="preview-lock-icon">&#128274;</div>
-        <div class="preview-lock-text">Desbloquea para ver todas</div>
-      </div>
+      
     </div>
   </div>
   <div class="paywall-box">
     <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:10px;">
       <div>
-        <div class="paywall-title">&#128275; Desbloquea tu informe completo</div>
+        <div class="paywall-title">Ya sabes a qu&eacute; tienes derecho. Ahora toca pedirlas.</div>
         <div class="paywall-price">6&euro; &middot; pago &uacute;nico &middot; sin suscripci&oacute;n</div>
       </div>
     </div>
     <div class="paywall-features">
-      <div class="pf-item">&#10003; Importe exacto de cada ayuda</div>
-      <div class="pf-item">&#10003; <span id="ayudas-count-2">0</span> fichas completas</div>
-      <div class="pf-item">&#10003; Instrucciones paso a paso</div>
-      <div class="pf-item">&#10003; Enlace oficial para solicitarla</div>
+      <div class="pf-item">&#10003; Gu&iacute;a paso a paso de cada ayuda</div>
+      <div class="pf-item">&#10003; <span id="ayudas-count-2">0</span> ayudas con su gu&iacute;a completa</div>
+      <div class="pf-item">&#10003; Documentos que necesitas en cada una</div>
+      <div class="pf-item">&#10003; Enlaces oficiales para solicitarlas</div>
     </div>
     <div id="pay-state-btn">
       <div style="margin-bottom:12px;">
         <label style="font-size:0.78rem;color:rgba(255,255,255,0.6);display:block;margin-bottom:5px;">&#128231; Recibe tu informe por email (opcional, para no perderlo)</label>
         <input type="email" id="pay-email" placeholder="tu@email.com" style="width:100%;padding:10px 14px;border-radius:8px;border:1px solid rgba(255,255,255,0.15);background:rgba(255,255,255,0.08);color:#fff;font-size:0.88rem;outline:none;box-sizing:border-box;"/>
       </div>
-      <button class="pay-btn-main" id="pay-btn" onclick="initStripePayment()">Desbloquear mi informe &mdash; 6&euro;</button>
+      <button class="pay-btn-main" id="pay-btn" onclick="initStripePayment()">Quiero mi gu&iacute;a &mdash; 6&euro;</button>
       <div class="pay-security">&#128274; Pago seguro con Stripe &middot; Visa, Mastercard, Apple Pay</div>
+      <div class="pay-security" style="margin-top:6px;">Garant&iacute;a de devoluci&oacute;n de 30 d&iacute;as &middot; <a href="#" onclick="openLegal('devoluciones');return false;" style="color:inherit;text-decoration:underline;">ver condiciones</a></div>
     </div>
     <div id="pay-state-loading" style="display:none;text-align:center;padding:20px;">
       <div class="pay-spinner"></div>
@@ -744,7 +742,7 @@
   <div class="unlocked-container">
     <div class="unlocked-header">
       <div class="success-badge">&#10003; Pago confirmado</div>
-      <h2 class="unlocked-title">¡Aquí están tus ayudas!</h2>
+      <h2 class="unlocked-title">Tu guía para pedir tus ayudas</h2>
       <p style="color:var(--text-muted);font-size:0.9rem;max-width:500px;margin:0 auto;">Estas son las ayudas a las que tienes derecho según tu perfil. Haz clic en cada una para ver cómo solicitarla.</p>
     </div>
     <div id="ayudas-list"></div>
@@ -1168,14 +1166,21 @@ function buildResults() {
       stepsHtml+
       '<div class="sample-org">&#128196; '+(top.organismo||'')+'</div>';
   } else { var sc=document.getElementById('sample-card'); if(sc) sc.style.display='none'; }
-  // Lista — solo nombres, sin importes
-  // Progressive blur: first clear, then increasing blur
-  document.getElementById('preview-list').innerHTML=ayudas.map(function(a,i){
-    var cls = i===0?'clear': i===1?'blur-1': i===2?'blur-2':'blur-3';
-    var name = i<=1 ? a.nombre : (i===2 ? a.nombre : a.nombre);
-    return '<div class="prev-item '+cls+'">'+
-      '<span class="prev-name">'+name+'</span>'+
-      '</div>';
+  // Lista completa gratis, con importes
+  var ambMap={nacional:'Nacional',autonomica:'Auton\u00f3mica',municipal:'Municipal'};
+  var ambCol={nacional:'#1d4ed8',autonomica:'#6d28d9',municipal:'#b45309'};
+  document.getElementById('preview-list').innerHTML=ayudas.map(function(a){
+    var amb=ambMap[a.ambito]||'';
+    var col=ambCol[a.ambito]||'#475569';
+    return '<div class="prev-item" style="flex-direction:column;align-items:stretch;gap:6px;">'+
+      '<div style="display:flex;justify-content:space-between;gap:12px;align-items:flex-start;">'+
+        '<span class="prev-name" style="font-weight:700;color:var(--text);line-height:1.3;">'+a.nombre+'</span>'+
+        (a.importe?'<span style="font-weight:800;color:#00725a;font-size:0.88rem;text-align:right;flex-shrink:0;max-width:45%;">'+a.importe+'</span>':'')+
+      '</div>'+
+      '<div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">'+
+        (amb?'<span style="font-size:0.68rem;font-weight:600;color:'+col+';border:1px solid '+col+'55;padding:1px 8px;border-radius:20px;">'+amb+'</span>':'')+
+        (a.organismo?'<span style="font-size:0.74rem;color:var(--text-muted);">'+a.organismo+'</span>':'')+
+      '</div></div>';
   }).join('');
   ['pay-state-btn','pay-state-loading','pay-state-form','pay-state-processing'].forEach(function(id,i){
     var el=document.getElementById(id); if(el) el.style.display=i===0?'block':'none';
@@ -1492,18 +1497,18 @@ function sendReportEmail() {
 <div class="pay-modal-overlay" id="pay-modal-overlay" onclick="if(event.target===this)closePayModal()">
   <div class="pay-modal">
     <div class="pay-modal-header">
-      <div class="pay-modal-title">&#128275; Desbloquear informe</div>
+      <div class="pay-modal-title">Tu gu&iacute;a de solicitud</div>
       <div class="pay-modal-price">6&euro;</div>
       <button class="pay-modal-close" onclick="closePayModal()">&times;</button>
     </div>
     <div class="pay-modal-body">
       <div class="pay-modal-what">
-        <div class="pay-modal-what-title">Incluido en tu informe</div>
+        <div class="pay-modal-what-title">Incluido en tu gu&iacute;a</div>
         <ul>
-          <li>Importe exacto de cada ayuda</li>
-          <li>C&oacute;mo solicitarla paso a paso</li>
+          <li>Gu&iacute;a paso a paso de cada ayuda</li>
+          <li>Documentos necesarios en cada una</li>
           <li>Enlace oficial a la solicitud</li>
-          <li>Todas las fichas completas de tu perfil</li>
+          <li>Garant&iacute;a de devoluci&oacute;n de 30 d&iacute;as</li>
         </ul>
       </div>
       <div id="modal-processing">
@@ -1532,10 +1537,10 @@ function sendReportEmail() {
 <!-- STICKY BUY BAR -->
 <div class="sticky-buy-bar" id="sticky-buy-bar">
   <div class="sticky-left">
-    <div class="sticky-title">&#128275; Desbloquear informe completo</div>
+    <div class="sticky-title">Tu gu&iacute;a de solicitud</div>
     <div class="sticky-price">6&euro; &middot; pago &uacute;nico &middot; sin suscripci&oacute;n</div>
   </div>
-  <button class="sticky-btn" onclick="initStripePayment()">Desbloquear &mdash; 6&euro;</button>
+  <button class="sticky-btn" onclick="initStripePayment()">Quiero mi gu&iacute;a &mdash; 6&euro;</button>
 </div>
 
 </body>
