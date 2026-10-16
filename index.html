@@ -1384,8 +1384,6 @@ async function initStripePayment() {
 }
 
 async function confirmModalPayment() {
-  var consent = document.getElementById('pay-consent');
-  if (consent && !consent.checked) { var e0 = document.getElementById('modal-error'); if (e0) { e0.textContent = 'Marca la casilla para continuar con el pago.'; e0.style.display = 'block'; } return; }
   var btn = document.getElementById('modal-submit-btn');
   if (btn) { btn.disabled = true; btn.textContent = 'Procesando...'; }
   var errEl = document.getElementById('modal-error');
@@ -1432,7 +1430,7 @@ var LEGAL_TEXTS = {
     '<p>Si has seguido la guía y la administración deniega tu solicitud, o si ninguna de las ayudas de tu lista te corresponde finalmente, te devolvemos los 6 &euro;.</p>' +
     '<p><strong>Cómo pedirla:</strong> escribe a <a href="mailto:hola@cobratusayudas.es">hola@cobratusayudas.es</a> en un plazo de 30 días desde la compra, indicando el correo con el que pagaste, a qué ayudas la solicitaste y adjuntando la resolución o la comunicación de denegación. Respondemos en un máximo de 5 días laborables y devolvemos el importe a la misma tarjeta.</p>' +
     '<p><strong>Qué no cubre:</strong> los casos en los que la solicitud no se ha presentado, o en los que no se cumple un requisito que la guía indica expresamente.</p>' +
-    '<p><strong>Desistimiento:</strong> al tratarse de contenido digital que se entrega de forma inmediata, al comprar aceptas expresamente el acceso inmediato y que pierdes el derecho de desistimiento de 14 días. Esta garantía es adicional y se aplica en las condiciones descritas arriba.</p>'
+    '<p><strong>Derecho de desistimiento:</strong> además de esta garantía, y conforme a la ley, dispones de 14 días desde la compra para desistir sin necesidad de indicar el motivo escribiendo al mismo correo.</p>'
 };
 window.openLegal = function(key) {
   var m = document.getElementById('legal-modal'), c = document.getElementById('legal-content');
@@ -1501,7 +1499,6 @@ function sendReportEmail() {
       </div>
       <div id="modal-stripe-element"></div>
       <div id="modal-error"></div>
-      <label style="display:flex;gap:8px;align-items:flex-start;font-size:0.78rem;color:#374151;line-height:1.4;margin:14px 0 12px;cursor:pointer;"><input type="checkbox" id="pay-consent" style="margin-top:2px;flex-shrink:0;width:18px;height:18px;"><span>Acepto el acceso inmediato al contenido digital y que, una vez entregado, pierdo el derecho de desistimiento de 14 días. He leído la <a href="#" onclick="openLegal('devoluciones');return false;" style="color:#00725a;">política de devolución</a>.</span></label>
       <button class="pay-modal-submit" id="modal-submit-btn" onclick="confirmModalPayment()" style="display:none;">
         Pagar 6&euro; y desbloquear
       </button>
