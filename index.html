@@ -1426,6 +1426,19 @@ function confirmPayment() { confirmModalPayment(); }
 
 
 var LEGAL_TEXTS = {
+  aviso: '<h2 style="font-size:1.2rem;color:#0a0f1e;margin:0 0 12px;">Aviso legal</h2>' +
+    '<p><strong>Titular del sitio web:</strong> cobratusayudas.es</p>' +
+    '<p><strong>Contacto:</strong> <a href="mailto:hola@cobratusayudas.es">hola@cobratusayudas.es</a></p>' +
+    '<p>La información de esta web es orientativa y se basa en fuentes oficiales. No sustituye al asesoramiento legal ni a la información de la administración competente, y no estamos vinculados a ningún organismo público. La concesión de cualquier ayuda depende siempre de la administración que la gestiona.</p>',
+  privacidad: '<h2 style="font-size:1.2rem;color:#0a0f1e;margin:0 0 12px;">Política de privacidad</h2>' +
+    '<p><strong>Responsable:</strong> cobratusayudas.es (<a href="mailto:hola@cobratusayudas.es">hola@cobratusayudas.es</a>).</p>' +
+    '<p><strong>Qué datos tratamos:</strong> las respuestas que das en el test (por ejemplo comunidad autónoma, situación familiar y laboral e ingresos aproximados) y, si lo indicas, tu correo electrónico. Los datos de la tarjeta los gestiona directamente Stripe y no pasan por nuestros servidores.</p>' +
+    '<p><strong>Para qué:</strong> calcular las ayudas que te pueden corresponder, darte acceso a la guía, enviarte el informe si lo pides, atender tus consultas y medir el funcionamiento de la web y de nuestra publicidad.</p>' +
+    '<p><strong>Quién nos ayuda:</strong> usamos proveedores como Stripe (pagos), Supabase (almacenamiento), EmailJS (envío de correos), Google Analytics y Meta (medición y publicidad).</p>' +
+    '<p><strong>Tus derechos:</strong> puedes pedirnos acceso, corrección o borrado de tus datos escribiendo a <a href="mailto:hola@cobratusayudas.es">hola@cobratusayudas.es</a>.</p>',
+  cookies: '<h2 style="font-size:1.2rem;color:#0a0f1e;margin:0 0 12px;">Cookies</h2>' +
+    '<p>Esta web utiliza cookies y tecnologías similares de análisis (Google Analytics) y de publicidad (Meta Pixel) para saber cómo se usa y medir el resultado de nuestros anuncios. También guarda en tu navegador tus respuestas del test para que no las pierdas.</p>' +
+    '<p>Puedes bloquearlas o borrarlas en cualquier momento desde la configuración de tu navegador.</p>',
   devoluciones: '<h2 style="font-size:1.2rem;color:#0a0f1e;margin:0 0 12px;">Garantía de devolución de 30 días</h2>' +
     '<p>Si has seguido la guía y la administración deniega tu solicitud, o si ninguna de las ayudas de tu lista te corresponde finalmente, te devolvemos los 6 &euro;.</p>' +
     '<p><strong>Cómo pedirla:</strong> escribe a <a href="mailto:hola@cobratusayudas.es">hola@cobratusayudas.es</a> en un plazo de 30 días desde la compra, indicando el correo con el que pagaste, a qué ayudas la solicitaste y adjuntando la resolución o la comunicación de denegación. Respondemos en un máximo de 5 días laborables y devolvemos el importe a la misma tarjeta.</p>' +
