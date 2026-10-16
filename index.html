@@ -1220,7 +1220,6 @@ async function markAsPaid() {
       }
       return;
     }
-    try { if (typeof fbq === 'function') fbq('track', 'Purchase', {value:6,currency:'EUR'}); } catch(e){}
     localStorage.setItem('cobratusayudas_paid', '1');
     sessionStorage.setItem('cobratusayudas_paid', '1');
     try { markAsPaid(); } catch(e){}
@@ -1235,7 +1234,7 @@ async function markAsPaid() {
       if (hasPI && piParam !== 'pi_test_simulation') {
         fetch('/api/verify-intent?payment_intent=' + piParam)
           .then(function(r) { return r.json(); })
-          .then(function(d) { if (d.paid || hasPago) showUnlocked(); else history.replaceState(null,'','/'); })
+          .then(function(d) { if (d.paid) { try { if (typeof fbq === 'function' && sessionStorage.getItem('purchase_tracked') !== piParam) { fbq('track', 'Purchase', {value:6,currency:'EUR'}); sessionStorage.setItem('purchase_tracked', piParam); } } catch(e){} } if (d.paid || hasPago) showUnlocked(); else history.replaceState(null,'','/'); })
           .catch(function() { if (hasPago) showUnlocked(); else history.replaceState(null,'','/'); });
       } else if (hasPago) {
         showUnlocked();
@@ -1330,8 +1329,8 @@ function closePayModal() {
 async function initStripePayment() {
   var emailEl = document.getElementById('pay-email');
   if (emailEl && emailEl.value) sessionStorage.setItem('user_email', emailEl.value);
-  if (typeof fbq === 'function') { fbq('track', 'InitiateCheckout', {value:6,currency:'EUR'}); }
-  try { trackEvent('begin_checkout', {value:6,currency:'EUR'}); } catch(e){}
+  if (typeof fbq === 'function') { fbq('trackCustom', 'OpenPayModal', {value:6,currency:'EUR'}); }
+  try { trackEvent('open_pay_modal', {value:6,currency:'EUR'}); } catch(e){}
 
   // CRITICAL: save respuestas NOW before any redirect
   try { localStorage.setItem('cta_respuestas', JSON.stringify(respuestas)); sessionStorage.setItem('respuestas_backup', JSON.stringify(respuestas)); } catch(e){}
@@ -1392,6 +1391,10 @@ async function confirmModalPayment() {
   if (stripeEl) stripeEl.style.display = 'none';
   if (procEl) procEl.style.display = 'block';
   if (btn) btn.style.display = 'none';
+
+  // Real payment attempt: user pressed Pay
+  if (typeof fbq === 'function') { fbq('track', 'InitiateCheckout', {value:6,currency:'EUR'}); }
+  try { trackEvent('begin_checkout', {value:6,currency:'EUR'}); } catch(e){}
 
   // Save respuestas before any potential redirect
   try { localStorage.setItem('cta_respuestas', JSON.stringify(respuestas)); sessionStorage.setItem('respuestas_backup', JSON.stringify(respuestas)); } catch(e){}
