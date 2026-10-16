@@ -469,6 +469,7 @@
     <a href="#" onclick="openLegal('aviso');return false;">Aviso legal</a>
     <a href="#" onclick="openLegal('privacidad');return false;">Política de privacidad</a>
     <a href="#" onclick="openLegal('cookies');return false;">Cookies</a>
+    <a href="#" onclick="openLegal('devoluciones');return false;">Devoluciones</a>
     <a href="mailto:hola@cobratusayudas.es">Contacto</a><br><br>
     © 2026 CobraTusAyudas.es · Datos obtenidos de fuentes oficiales (BDNS, infosubvenciones.es)
   </footer>
@@ -758,6 +759,7 @@
     <a href="#" onclick="openLegal('aviso');return false;">Aviso legal</a>
     <a href="#" onclick="openLegal('privacidad');return false;">Política de privacidad</a>
     <a href="#" onclick="openLegal('cookies');return false;">Cookies</a>
+    <a href="#" onclick="openLegal('devoluciones');return false;">Devoluciones</a>
     <a href="mailto:hola@cobratusayudas.es">Contacto</a><br><br>
     &copy; 2026 CobraTusAyudas.es &middot; Datos obtenidos de fuentes oficiales (BDNS, infosubvenciones.es)
   </footer>
@@ -781,7 +783,7 @@
 </div>
 
 <!-- MODAL LEGAL -->
-<div id="legal-modal" style="display:none;position:fixed;inset:0;z-index:2000;background:rgba(0,0,0,0.5);backdrop-filter:blur(4px);align-items:flex-start;justify-content:center;padding:20px;overflow-y:auto;">
+<div id="legal-modal" style="display:none;position:fixed;inset:0;z-index:3000;background:rgba(0,0,0,0.5);backdrop-filter:blur(4px);align-items:flex-start;justify-content:center;padding:20px;overflow-y:auto;">
   <div style="background:#fff;border-radius:20px;max-width:680px;width:100%;margin:40px auto;padding:40px 32px;position:relative;">
     <button onclick="closeLegal()" style="position:absolute;top:16px;right:16px;background:#f1f5f9;border:none;width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:1rem;color:#64748b;">&#10005;</button>
     <div id="legal-content" style="font-size:0.88rem;color:#475569;line-height:1.7;"></div>
@@ -1382,6 +1384,8 @@ async function initStripePayment() {
 }
 
 async function confirmModalPayment() {
+  var consent = document.getElementById('pay-consent');
+  if (consent && !consent.checked) { var e0 = document.getElementById('modal-error'); if (e0) { e0.textContent = 'Marca la casilla para continuar con el pago.'; e0.style.display = 'block'; } return; }
   var btn = document.getElementById('modal-submit-btn');
   if (btn) { btn.disabled = true; btn.textContent = 'Procesando...'; }
   var errEl = document.getElementById('modal-error');
@@ -1422,6 +1426,26 @@ async function confirmModalPayment() {
 
 function confirmPayment() { confirmModalPayment(); }
 
+
+var LEGAL_TEXTS = {
+  devoluciones: '<h2 style="font-size:1.2rem;color:#0a0f1e;margin:0 0 12px;">Garantía de devolución de 30 días</h2>' +
+    '<p>Si has seguido la guía y la administración deniega tu solicitud, o si ninguna de las ayudas de tu lista te corresponde finalmente, te devolvemos los 6 &euro;.</p>' +
+    '<p><strong>Cómo pedirla:</strong> escribe a <a href="mailto:hola@cobratusayudas.es">hola@cobratusayudas.es</a> en un plazo de 30 días desde la compra, indicando el correo con el que pagaste, a qué ayudas la solicitaste y adjuntando la resolución o la comunicación de denegación. Respondemos en un máximo de 5 días laborables y devolvemos el importe a la misma tarjeta.</p>' +
+    '<p><strong>Qué no cubre:</strong> los casos en los que la solicitud no se ha presentado, o en los que no se cumple un requisito que la guía indica expresamente.</p>' +
+    '<p><strong>Desistimiento:</strong> al tratarse de contenido digital que se entrega de forma inmediata, al comprar aceptas expresamente el acceso inmediato y que pierdes el derecho de desistimiento de 14 días. Esta garantía es adicional y se aplica en las condiciones descritas arriba.</p>'
+};
+window.openLegal = function(key) {
+  var m = document.getElementById('legal-modal'), c = document.getElementById('legal-content');
+  if (!m || !c) return;
+  c.innerHTML = LEGAL_TEXTS[key] || '<p>Para cualquier consulta sobre este apartado escríbenos a <a href="mailto:hola@cobratusayudas.es">hola@cobratusayudas.es</a>.</p>';
+  m.style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+};
+window.closeLegal = function() {
+  var m = document.getElementById('legal-modal');
+  if (m) m.style.display = 'none';
+  document.body.style.overflow = '';
+};
 
 // Ensure critical functions are globally accessible
 window.buildUnlocked = window.buildUnlocked || buildUnlocked;
@@ -1477,6 +1501,7 @@ function sendReportEmail() {
       </div>
       <div id="modal-stripe-element"></div>
       <div id="modal-error"></div>
+      <label style="display:flex;gap:8px;align-items:flex-start;font-size:0.78rem;color:#374151;line-height:1.4;margin:14px 0 12px;cursor:pointer;"><input type="checkbox" id="pay-consent" style="margin-top:2px;flex-shrink:0;width:18px;height:18px;"><span>Acepto el acceso inmediato al contenido digital y que, una vez entregado, pierdo el derecho de desistimiento de 14 días. He leído la <a href="#" onclick="openLegal('devoluciones');return false;" style="color:#00725a;">política de devolución</a>.</span></label>
       <button class="pay-modal-submit" id="modal-submit-btn" onclick="confirmModalPayment()" style="display:none;">
         Pagar 6&euro; y desbloquear
       </button>
