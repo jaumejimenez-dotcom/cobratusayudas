@@ -19,9 +19,10 @@
     }).catch(function () { session = { paid: false }; return session; });
   }
 
+  var AV = '<svg viewBox="0 0 64 64" width="100%" height="100%" aria-hidden="true"><rect width="64" height="64" fill="#cfeee9"/><path d="M10 64c2-15 13-19 22-19s20 4 22 19z" fill="#0f766e"/><rect x="28" y="38" width="8" height="10" rx="3" fill="#e3a982"/><path d="M15 31c0-15 8-21 17-21s17 6 17 21c0 11 2 17-2 21H17c-4-4-2-10-2-21z" fill="#4a2c1d"/><ellipse cx="32" cy="31" rx="11" ry="13" fill="#f1c4a1"/><path d="M20 29c2-10 9-13 15-11 5 1 9 5 9 11-4-5-10-7-15-6-4 1-7 3-9 6z" fill="#4a2c1d"/><circle cx="27.5" cy="32" r="1.4" fill="#2b1b14"/><circle cx="36.5" cy="32" r="1.4" fill="#2b1b14"/><circle cx="24.5" cy="36" r="2.2" fill="#f0a08a" opacity=".45"/><circle cx="39.5" cy="36" r="2.2" fill="#f0a08a" opacity=".45"/><path d="M28 38.5q4 3.6 8 0" stroke="#b5533c" fill="none" stroke-width="1.6" stroke-linecap="round"/></svg>';
   var css = '#lu-btn{position:fixed;right:16px;bottom:16px;z-index:9998;background:#0f766e;color:#fff;border:0;border-radius:999px;padding:12px 18px 12px 12px;font:600 15px/1 system-ui,sans-serif;display:flex;align-items:center;gap:10px;box-shadow:0 6px 20px rgba(0,0,0,.25);cursor:pointer}'
     + '#lu-btn .lu-av{width:32px;height:32px}'
-    + '.lu-av{border-radius:50%;background:#fff;color:#0f766e;display:flex;align-items:center;justify-content:center;font-weight:700;flex:none}'
+    + '.lu-av{border-radius:50%;background:#fff;color:#0f766e;display:flex;align-items:center;justify-content:center;font-weight:700;flex:none;overflow:hidden}'
     + '#lu-panel{position:fixed;z-index:9999;right:0;bottom:0;width:100%;height:100dvh;max-height:100dvh;background:#fff;display:none;flex-direction:column;font:15px/1.4 system-ui,sans-serif;color:#1f2937}'
     + '#lu-panel.open{display:flex}'
     + '@media(min-width:640px){#lu-panel{right:16px;bottom:16px;width:380px;height:560px;max-height:calc(100dvh - 32px);border-radius:16px;box-shadow:0 12px 40px rgba(0,0,0,.3)}}'
@@ -46,9 +47,9 @@
   var st = document.createElement('style'); st.textContent = css; document.head.appendChild(st);
 
   var btn = document.createElement('button'); btn.id = 'lu-btn'; btn.setAttribute('aria-label', 'Pregúntale a Lucía');
-  btn.innerHTML = '<span class="lu-av">L</span><span>Pregúntale a Lucía</span>';
+  btn.innerHTML = '<span class="lu-av">' + AV + '</span><span>Pregúntale a Lucía</span>';
   var p = document.createElement('div'); p.id = 'lu-panel'; p.setAttribute('role', 'dialog'); p.setAttribute('aria-label', 'Chat con Lucía');
-  p.innerHTML = '<div id="lu-head"><span class="lu-av">L</span><div><b>Lucía</b><small id="lu-sub">Asistente con IA · revisa siempre la fuente oficial</small></div><button id="lu-x" aria-label="Cerrar">×</button></div>'
+  p.innerHTML = '<div id="lu-head"><span class="lu-av">' + AV + '</span><div><b>Lucía</b><small id="lu-sub">Asistente con IA · revisa siempre la fuente oficial</small></div><button id="lu-x" aria-label="Cerrar">×</button></div>'
     + '<div id="lu-msgs"></div><button id="lu-cta">Hacer el test gratis (2 min)</button>'
     + '<div id="lu-tools"><a id="lu-human" href="#" target="_blank" rel="noopener">Hablar con una persona</a><button id="lu-del" type="button">Borrar mi conversación</button></div>'
     + '<form id="lu-form"><input id="lu-in" maxlength="500" placeholder="Escribe tu duda…" autocomplete="off"><button id="lu-send" type="submit">Enviar</button></form>'
@@ -69,7 +70,13 @@
   function show() { p.classList.add('open'); btn.style.display = 'none'; setTimeout(function () { input.focus(); }, 50); }
   function close() { p.classList.remove('open'); if (!unlockedVisible()) btn.style.display = 'flex'; }
   function unlockedVisible() { var u = document.getElementById('page-unlocked'); return !!(u && u.offsetParent !== null && session.paid); }
-  setInterval(function () { if (!p.classList.contains('open')) btn.style.display = unlockedVisible() ? 'none' : 'flex'; }, 1000);
+  function lift() {
+    var h = 0;
+    ['sticky-cta', 'sticky-buy-bar'].forEach(function (id) { var e = document.getElementById(id); if (e && getComputedStyle(e).display !== 'none') h = Math.max(h, e.getBoundingClientRect().height); });
+    btn.style.bottom = (h ? h + 12 : 16) + 'px';
+  }
+  setInterval(function () { lift(); if (!p.classList.contains('open')) btn.style.display = unlockedVisible() ? 'none' : 'flex'; }, 500);
+  window.addEventListener('scroll', lift, { passive: true }); window.addEventListener('resize', lift);
 
   // ───────── Modo ventas ─────────
   function openSales() {
