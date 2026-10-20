@@ -775,6 +775,15 @@
 </div>
 </div>
 
+<div class="page" id="page-paid">
+<div class="results-wrap" style="text-align:center;padding-top:48px;">
+  <div style="width:64px;height:64px;border-radius:50%;background:rgba(0,184,148,0.15);color:#00b894;font-size:2rem;line-height:64px;margin:0 auto 18px;">&#10003;</div>
+  <h2 class="res-title" style="font-size:1.6rem;line-height:1.25;margin-bottom:10px;">Pago de 6&euro; recibido</h2>
+  <p style="font-size:0.95rem;line-height:1.6;color:var(--text-muted);max-width:420px;margin:0 auto 22px;">Gracias. Tu gu&iacute;a ya est&aacute; desbloqueada. Si indicaste tu email, recibir&aacute;s el recibo de Stripe (mira en spam o promociones si no lo ves).</p>
+  <button class="pay-btn-main" style="max-width:420px;" onclick="openGuide()">Ver mi gu&iacute;a &rarr;</button>
+  <p style="font-size:0.8rem;color:var(--text-muted);margin-top:16px;">Si tienes alg&uacute;n problema, escr&iacute;benos a <a href="mailto:hola@cobratusayudas.es" style="color:inherit;">hola@cobratusayudas.es</a>.</p>
+</div>
+</div>
 <div class="page" id="page-unlocked">
   <div class="unlocked-container">
     <div class="unlocked-header">
@@ -1193,8 +1202,8 @@ async function markAsPaid() {
     localStorage.setItem('cobratusayudas_paid', '1');
     sessionStorage.setItem('cobratusayudas_paid', '1');
     try { markAsPaid(); } catch(e){}
-    buildUnlocked();
-    showPage('page-unlocked');
+    try { buildUnlocked(); } catch(e){}
+    showPage('page-paid');
     history.replaceState(null, '', '/');
   }
 
@@ -1311,7 +1320,8 @@ async function initStripePayment() {
   }
 
   try {
-    var resp = await fetch('/api/payment-intent', {method:'POST', headers:{'Content-Type':'application/json'}});
+    var _pb = {}; try { var _lt = localStorage.getItem('cta_lead_token'); if (_lt && /^[a-f0-9]{32}$/.test(_lt)) _pb.lt = _lt; var _pe = document.getElementById('pay-email'); var _em = (_pe && _pe.value) || sessionStorage.getItem('user_email') || localStorage.getItem('user_email'); if (_em) _pb.email = _em; } catch(e){}
+    var resp = await fetch('/api/payment-intent', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(_pb)});
     var data = await resp.json();
     if (!data.clientSecret) throw new Error('No client secret');
 
@@ -1382,10 +1392,11 @@ async function confirmModalPayment() {
     closePayModal();
     sessionStorage.setItem('cobratusayudas_paid', '1');
     localStorage.setItem('cta_respuestas', JSON.stringify(respuestas)); sessionStorage.setItem('respuestas_backup', JSON.stringify(respuestas));
-    buildUnlocked();
-    showPage('page-unlocked');
+    try { trackEvent('payment_confirmed_view', {value: 6, currency: 'EUR'}); } catch(e){}
+    showPage('page-paid');
   }
 }
+function openGuide() { try { buildUnlocked(); } catch(e){} showPage('page-unlocked'); try { trackEvent('guide_opened'); } catch(e){} }
 
 function confirmPayment() { confirmModalPayment(); }
 
