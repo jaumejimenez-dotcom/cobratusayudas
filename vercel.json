@@ -8,5 +8,11 @@
       "source": "/ayudas-:ccaa",
       "destination": "/ayudas-:ccaa.html"
     }
+  ],
+  "crons": [
+    {
+      "path": "/api/cron-emails",
+      "schedule": "0 8 * * *"
+    }
   ]
 }
