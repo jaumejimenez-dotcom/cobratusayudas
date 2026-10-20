@@ -20,6 +20,12 @@ module.exports = async (req, res) => {
     });
     const p = rows && rows[0];
     if (!p) throw new Error('no purchase row');
+    // marca el lead como comprado (para no enviarle más emails)
+    try {
+      const lt = String(req.query.lt || '');
+      if (/^[a-f0-9]{32}$/.test(lt)) await sb('leads?unsub_token=eq.' + lt, { method: 'PATCH', body: { purchased: true } });
+      if (intent.receipt_email) await sb('leads?email=eq.' + encodeURIComponent(String(intent.receipt_email).toLowerCase()), { method: 'PATCH', body: { purchased: true } });
+    } catch (e) { console.error('lead purchased mark', e.message); }
     setPassCookie(res, p.id);
     return res.status(200).json({ paid: true });
   } catch (e) {
