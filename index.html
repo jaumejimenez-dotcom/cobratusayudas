@@ -647,6 +647,28 @@
 </div>
 
 <!-- RESULTS LOCKED -->
+<div class="page" id="page-checkout">
+<div class="results-wrap">
+  <div class="res-header" style="padding-top:8px;">
+    <div class="res-eyebrow">&#10003; Tu lista est&aacute; guardada</div>
+    <h2 class="res-title" style="font-size:1.5rem;line-height:1.25;">La gu&iacute;a completa paso a paso para solicitar <span id="co-count-wrap">tus <span id="co-count">0</span> ayudas</span> ya est&aacute; lista</h2>
+  </div>
+  <div class="paywall-box">
+    <div class="paywall-title">Qu&eacute; recibes</div>
+    <div class="paywall-features" style="margin:12px 0 16px;">
+      <div class="pf-item">&#10003; Gu&iacute;a paso a paso de cada ayuda</div>
+      <div class="pf-item">&#10003; Documentos que necesitas en cada una</div>
+      <div class="pf-item">&#10003; Enlaces oficiales para solicitarlas</div>
+      <div class="pf-item">&#10003; Asistencia personalizada por chat con Luc&iacute;a, nuestra asistente de IA</div>
+    </div>
+    <div class="paywall-price" style="font-size:1.05rem;margin-bottom:14px;">6&euro; &middot; pago &uacute;nico &middot; sin suscripci&oacute;n</div>
+    <button class="pay-btn-main" id="co-pay-btn" onclick="try{trackEvent('checkout_cta_click',{source:'checkout_page'});}catch(e){}initStripePayment()">Pagar 6&euro; y recibir mi gu&iacute;a</button>
+    <div class="pay-security">&#128274; Pago seguro con Stripe &middot; Visa, Mastercard, Apple Pay</div>
+    <div class="pay-security" style="margin-top:6px;">Si te deniegan una ayuda que solicites con la gu&iacute;a, te devolvemos el dinero (90 d&iacute;as) &middot; <a href="#" onclick="openLegal('devoluciones');return false;" style="color:inherit;text-decoration:underline;">ver condiciones</a></div>
+  </div>
+  <div style="text-align:center;font-size:0.8rem;"><a href="#" onclick="coShowList();return false;" style="color:var(--text-muted);text-decoration:underline;">Ver de nuevo mi lista de ayudas</a></div>
+</div>
+</div>
 <div class="page" id="page-results">
 <div class="results-wrap">
   <div class="res-header">
@@ -665,6 +687,20 @@
       <div id="preview-list" class="preview-list"></div>
       
     </div>
+  </div>
+  <div id="lead-box" style="background:rgba(0,184,148,0.08);border:1px solid rgba(0,184,148,0.3);border-radius:14px;padding:18px 16px;margin-bottom:20px;color:var(--text);">
+    <div id="lead-form-wrap">
+      <div style="font-size:1rem;font-weight:800;margin-bottom:4px;">&#128233; Guarda tu lista de ayudas</div>
+      <p style="font-size:0.84rem;line-height:1.5;margin:0 0 12px;color:var(--text-muted);">Te enviamos tus <span id="lead-count">0</span> ayudas por email para que no las pierdas ni tengas que repetir el test.</p>
+      <form id="lead-form" novalidate>
+        <input type="email" id="lead-email" placeholder="tu@email.com" autocomplete="email" inputmode="email" style="width:100%;padding:12px 14px;border-radius:10px;border:1px solid var(--border);background:#fff;color:var(--text);font-size:0.95rem;outline:none;box-sizing:border-box;margin-bottom:10px;"/>
+        <input type="text" id="lead-hp" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0;"/>
+        <label style="display:flex;gap:8px;align-items:flex-start;font-size:0.76rem;line-height:1.45;color:var(--text-muted);margin-bottom:12px;cursor:pointer;"><input type="checkbox" id="lead-consent" style="margin-top:2px;flex-shrink:0;"/><span id="lead-consent-text">Acepto recibir mi lista de ayudas y emails comerciales de cobratusayudas.es. Puedo darme de baja cuando quiera. Info en la <a href="#" onclick="openLegal('privacidad');return false;" style="color:inherit;text-decoration:underline;">Política de privacidad</a>.</span></label>
+        <button type="submit" id="lead-btn" class="pay-btn-main" style="font-size:0.95rem;padding:14px;">Enviarme mi lista</button>
+        <div id="lead-err" style="display:none;color:#dc2626;font-size:0.8rem;margin-top:8px;text-align:center;"></div>
+      </form>
+    </div>
+    <div id="lead-ok" style="display:none;font-size:0.9rem;line-height:1.5;"><strong>&#10003; Listo, revisa tu email.</strong> Si no lo ves en unos minutos, mira en spam o promociones.</div>
   </div>
   <div class="paywall-box">
     <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:10px;">
@@ -687,7 +723,7 @@
       </div>
       <button class="pay-btn-main" id="pay-btn" onclick="initStripePayment()">Quiero mi gu&iacute;a &mdash; 6&euro;</button>
       <div class="pay-security">&#128274; Pago seguro con Stripe &middot; Visa, Mastercard, Apple Pay</div>
-      <div class="pay-security" style="margin-top:6px;">Garant&iacute;a de devoluci&oacute;n de 30 d&iacute;as &middot; <a href="#" onclick="openLegal('devoluciones');return false;" style="color:inherit;text-decoration:underline;">ver condiciones</a></div>
+      <div class="pay-security" style="margin-top:6px;">Si te deniegan una ayuda que solicites con la gu&iacute;a, te devolvemos el dinero (90 d&iacute;as) &middot; <a href="#" onclick="openLegal('devoluciones');return false;" style="color:inherit;text-decoration:underline;">ver condiciones</a></div>
     </div>
     <div id="pay-state-loading" style="display:none;text-align:center;padding:20px;">
       <div class="pay-spinner"></div>
@@ -1055,6 +1091,7 @@ function runCalculating() {
 function buildResults() {
   var ayudas = filtrarAyudas();
   ayudas.sort(function(a,b){ return (b.importeMax||0)-(a.importeMax||0); });
+  try { window.__leadAids = ayudas.map(function(a){ return a.id; }); var _lc=document.getElementById('lead-count'); if(_lc) _lc.textContent=ayudas.length; } catch(e){}
   try { if(typeof saveQuizResponse==='function') saveQuizResponse(ayudas); } catch(e){}
   try { trackEvent('quiz_results_shown',{count:ayudas.length}); } catch(e){}
   if(typeof fbq==='function'){fbq('track','ViewContent',{content_name:'resultados_ayudas'});}
@@ -1341,7 +1378,7 @@ async function confirmModalPayment() {
     if (stripeEl) stripeEl.style.display = 'block';
     if (btn) { btn.style.display = 'block'; btn.disabled = false; btn.textContent = 'Pagar 6\u20ac y desbloquear'; }
     if (errEl) { errEl.textContent = result.error.message; try { trackEvent('payment_error', {code: (result.error.code || result.error.type || 'unknown')}); } catch(e){} errEl.style.display = 'block'; }
-  } else if (result.paymentIntent && result.paymentIntent.status === 'succeeded') { var _pi = result.paymentIntent.id; try { localStorage.setItem('cta_pi', _pi); fetch('/api/pass?payment_intent=' + encodeURIComponent(_pi), {credentials: 'same-origin'}).catch(function(){}); if (typeof gtag === 'function') { gtag('event', 'purchase', {transaction_id: _pi, value: 6, currency: 'EUR', items: [{item_id: 'guia_solicitud', item_name: 'Guia de solicitud', price: 6, quantity: 1}]}); } sessionStorage.setItem('purchase_tracked', _pi); } catch(e){} if (typeof fbq === 'function') { fbq('track', 'Purchase', {value:6,currency:'EUR'}, {eventID: _pi}); }
+  } else if (result.paymentIntent && result.paymentIntent.status === 'succeeded') { var _pi = result.paymentIntent.id; try { localStorage.setItem('cta_pi', _pi); fetch('/api/pass?payment_intent=' + encodeURIComponent(_pi) + ctaLt(), {credentials: 'same-origin'}).catch(function(){}); if (typeof gtag === 'function') { gtag('event', 'purchase', {transaction_id: _pi, value: 6, currency: 'EUR', items: [{item_id: 'guia_solicitud', item_name: 'Guia de solicitud', price: 6, quantity: 1}]}); } sessionStorage.setItem('purchase_tracked', _pi); } catch(e){} if (typeof fbq === 'function') { fbq('track', 'Purchase', {value:6,currency:'EUR'}, {eventID: _pi}); }
     closePayModal();
     sessionStorage.setItem('cobratusayudas_paid', '1');
     localStorage.setItem('cta_respuestas', JSON.stringify(respuestas)); sessionStorage.setItem('respuestas_backup', JSON.stringify(respuestas));
@@ -1362,16 +1399,18 @@ var LEGAL_TEXTS = {
     '<p><strong>Responsable:</strong> cobratusayudas.es (<a href="mailto:hola@cobratusayudas.es">hola@cobratusayudas.es</a>).</p>' +
     '<p><strong>Qué datos tratamos:</strong> las respuestas que das en el test (por ejemplo comunidad autónoma, situación familiar y laboral e ingresos aproximados) y, si lo indicas, tu correo electrónico. Los datos de la tarjeta los gestiona directamente Stripe y no pasan por nuestros servidores.</p>' +
     '<p><strong>Para qué:</strong> calcular las ayudas que te pueden corresponder, darte acceso a la guía, enviarte el informe si lo pides, atender tus consultas y medir el funcionamiento de la web y de nuestra publicidad.</p>' +
-    '<p><strong>Quién nos ayuda:</strong> usamos proveedores como Stripe (pagos), Supabase (almacenamiento), Anthropic (inteligencia artificial del asistente Lucía), EmailJS (envío de correos), Google Analytics y Meta (medición y publicidad).</p>' + '<p><strong>Asistente Lucía (chat con IA):</strong> si usas el chat, tratamos los mensajes que escribes para responderte. Antes de pagar, el chat es orientativo y no guardamos tus conversaciones. Si has pagado la guía, guardamos tus conversaciones sobre cada ayuda, asociadas a tu compra, mientras dure tu acceso y hasta 90 días después, para que puedas retomarlas. Las respuestas las genera un modelo de inteligencia artificial de Anthropic, a quien enviamos esos mensajes (y tus respuestas del test) solo para responderte. Lucía es una IA, no una persona, y puede equivocarse: revisa siempre la fuente oficial. No escribas DNI, IBAN ni datos de salud. Puedes borrar una conversación con el botón Borrar mi conversación o escribiéndonos a hola@cobratusayudas.es.</p>' +
+    '<p><strong>Quién nos ayuda:</strong> usamos proveedores como Stripe (pagos), Supabase (almacenamiento), Anthropic (inteligencia artificial del asistente Lucía), EmailJS y Resend (envío de correos), Google Analytics y Meta (medición y publicidad).</p>' + '<p><strong>Asistente Lucía (chat con IA):</strong> si usas el chat, tratamos los mensajes que escribes para responderte. Antes de pagar, el chat es orientativo y no guardamos tus conversaciones. Si has pagado la guía, guardamos tus conversaciones sobre cada ayuda, asociadas a tu compra, mientras dure tu acceso y hasta 90 días después, para que puedas retomarlas. Las respuestas las genera un modelo de inteligencia artificial de Anthropic, a quien enviamos esos mensajes (y tus respuestas del test) solo para responderte. Lucía es una IA, no una persona, y puede equivocarse: revisa siempre la fuente oficial. No escribas DNI, IBAN ni datos de salud. Puedes borrar una conversación con el botón Borrar mi conversación o escribiéndonos a hola@cobratusayudas.es.</p>' +
+    '<p><strong>Emails con tu lista y recordatorios:</strong> si dejas tu email en la página de resultados y marcas la casilla, guardamos tu email, tus respuestas del test y las ayudas de tu resultado para enviarte tu lista y hasta dos recordatorios comerciales sobre la guía en los días siguientes. Base legal: tu consentimiento, que puedes retirar en cualquier momento con el enlace de baja que incluye cada email. Dejamos de escribirte si compras la guía o te das de baja. Conservamos estos datos mientras no retires el consentimiento; puedes pedir su borrado en hola@cobratusayudas.es.</p>' +
     '<p><strong>Tus derechos:</strong> puedes pedirnos acceso, corrección o borrado de tus datos escribiendo a <a href="mailto:hola@cobratusayudas.es">hola@cobratusayudas.es</a>.</p>',
   cookies: '<h2 style="font-size:1.2rem;color:#0a0f1e;margin:0 0 12px;">Cookies</h2>' +
     '<p>Esta web utiliza cookies y tecnologías similares de análisis (Google Analytics) y de publicidad (Meta Pixel) para saber cómo se usa y medir el resultado de nuestros anuncios. También guarda en tu navegador tus respuestas del test para que no las pierdas.</p>' +
     '<p>Puedes bloquearlas o borrarlas en cualquier momento desde la configuración de tu navegador.</p>',
-  devoluciones: '<h2 style="font-size:1.2rem;color:#0a0f1e;margin:0 0 12px;">Garantía de devolución de 30 días</h2>' +
-    '<p>Si has seguido la guía y la administración deniega tu solicitud, o si ninguna de las ayudas de tu lista te corresponde finalmente, te devolvemos los 6 &euro;.</p>' +
-    '<p><strong>Cómo pedirla:</strong> escribe a <a href="mailto:hola@cobratusayudas.es">hola@cobratusayudas.es</a> en un plazo de 30 días desde la compra, indicando el correo con el que pagaste, a qué ayudas la solicitaste y adjuntando la resolución o la comunicación de denegación. Respondemos en un máximo de 5 días laborables y devolvemos el importe a la misma tarjeta.</p>' +
+  devoluciones: '<h2 style="font-size:1.2rem;color:#0a0f1e;margin:0 0 12px;">Garantía de devolución de 90 días</h2>' +
+    '<p>Si solicitas una ayuda siguiendo la guía y la administración te la deniega, te devolvemos el dinero.</p>' +
+    '<p><strong>Cómo pedirla:</strong> escribe a <a href="mailto:devoluciones@cobratusayudas.es">devoluciones@cobratusayudas.es</a> en un plazo de 90 días desde la compra, indicando el correo con el que pagaste, a qué ayuda la solicitaste y adjuntando la resolución de denegación o un pantallazo que la acredite. Respondemos en un máximo de 5 días laborables y devolvemos el importe a la misma tarjeta.</p>' +
+    '<p><strong>Importe:</strong> te devolvemos 5,60 &euro;: descontamos 0,40 &euro; que nos carga nuestro proveedor de pagos por la devolución.</p>' +
     '<p><strong>Qué no cubre:</strong> los casos en los que la solicitud no se ha presentado, o en los que no se cumple un requisito que la guía indica expresamente.</p>' +
-    '<p><strong>Derecho de desistimiento:</strong> además de esta garantía, y conforme a la ley, dispones de 14 días desde la compra para desistir sin necesidad de indicar el motivo escribiendo al mismo correo.</p>'
+    '<p><strong>Derecho de desistimiento:</strong> además de esta garantía, y conforme a la ley, dispones de 14 días desde la compra para desistir sin necesidad de indicar el motivo escribiendo a <a href="mailto:hola@cobratusayudas.es">hola@cobratusayudas.es</a>.</p>'
 };
 window.openLegal = function(key) {
   var m = document.getElementById('legal-modal'), c = document.getElementById('legal-content');
@@ -1432,7 +1471,7 @@ function sendReportEmail() {
 <li>Asistencia personal por chat con Luc&iacute;a (IA) para solicitar cada ayuda</li>
           <li>Documentos necesarios en cada una</li>
           <li>Enlace oficial a la solicitud</li>
-          <li>Garant&iacute;a de devoluci&oacute;n de 30 d&iacute;as</li>
+          <li>Garant&iacute;a de devoluci&oacute;n de 90 d&iacute;as</li>
         </ul>
       </div>
       <div id="modal-processing">
@@ -1468,5 +1507,91 @@ function sendReportEmail() {
 </div>
 
 <script src="/chat-widget.js" defer></script>
+
+<script>
+/* ── Captura de email tras resultados + vuelta desde email ── */
+function ctaLt(){ try { var t = localStorage.getItem('cta_lead_token'); return (t && /^[a-f0-9]{32}$/.test(t)) ? '&lt=' + t : ''; } catch(e){ return ''; } }
+(function(){
+  // UTM first-touch
+  try {
+    var q = new URLSearchParams(location.search), u = {}, any = false;
+    ['utm_source','utm_medium','utm_campaign','utm_content','utm_term'].forEach(function(k){ var v = q.get(k); if (v) { u[k] = v.slice(0,80); any = true; } });
+    if (q.get('fbclid')) { u.fbclid = 1; any = true; }
+    if (any && !localStorage.getItem('cta_utm')) localStorage.setItem('cta_utm', JSON.stringify(u));
+  } catch(e){}
+
+  var CONSENT_TXT = 'Acepto recibir mi lista de ayudas y emails comerciales de cobratusayudas.es. Puedo darme de baja cuando quiera.';
+  var viewed = false;
+  function resultsActive(){ var p = document.getElementById('page-results'); return p && p.classList.contains('active'); }
+  var box = document.getElementById('lead-box');
+  if (box && 'IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function(es){
+      es.forEach(function(e){
+        if (e.isIntersecting && !viewed && resultsActive() && box.offsetParent !== null) {
+          viewed = true;
+          try { trackEvent('lead_form_view', {count: (window.__leadAids||[]).length}); } catch(x){}
+        }
+      });
+    }, {threshold: 0.5});
+    io.observe(box);
+  }
+  var form = document.getElementById('lead-form');
+  if (form) form.addEventListener('submit', function(ev){
+    ev.preventDefault();
+    var em = document.getElementById('lead-email'), ck = document.getElementById('lead-consent'),
+        er = document.getElementById('lead-err'), bt = document.getElementById('lead-btn'),
+        hp = document.getElementById('lead-hp');
+    function fail(m, code){ er.textContent = m; er.style.display = 'block'; try { trackEvent('lead_error', {reason: code}); } catch(x){} }
+    er.style.display = 'none';
+    var email = (em.value || '').trim();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) return fail('Revisa el email, parece incompleto.', 'email');
+    if (!ck.checked) return fail('Marca la casilla para que podamos enviarte la lista.', 'consent');
+    var aids = window.__leadAids || [];
+    if (!aids.length) return fail('No hemos podido leer tu resultado. Repite el test.', 'aids');
+    bt.disabled = true; bt.textContent = 'Enviando...';
+    var utm = null; try { utm = JSON.parse(localStorage.getItem('cta_utm') || 'null'); } catch(x){}
+    fetch('/api/lead', {method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({email: email, consent: true, consent_text: CONSENT_TXT, aids: aids, answers: respuestas, utm: utm, source: 'results', website: hp ? hp.value : ''})})
+    .then(function(r){ return r.json().then(function(d){ return {ok: r.ok, d: d}; }); })
+    .then(function(x){
+      if (!x.ok || !x.d || !x.d.ok) { bt.disabled = false; bt.textContent = 'Enviarme mi lista'; return fail(x.d && x.d.error === 'limit' ? 'Demasiados intentos. Inténtalo más tarde.' : 'No hemos podido enviarlo. Inténtalo de nuevo.', (x.d && x.d.error) || 'server'); }
+      var id = 'lead_' + Date.now();
+      try { trackEvent('generate_lead', {method: 'results_email', count: aids.length}); } catch(y){}
+      try { if (typeof fbq === 'function') fbq('track', 'Lead', {content_name: 'results_email'}, {eventID: id}); } catch(y){}
+      try { if (x.d.token) localStorage.setItem('cta_lead_token', x.d.token); sessionStorage.setItem('user_email', email); localStorage.setItem('user_email', email); } catch(y){}
+      var pe = document.getElementById('pay-email'); if (pe && !pe.value) pe.value = email;
+      document.getElementById('lead-form-wrap').style.display = 'none';
+      document.getElementById('lead-ok').style.display = 'block';
+    }).catch(function(){ bt.disabled = false; bt.textContent = 'Enviarme mi lista'; fail('Sin conexión. Inténtalo de nuevo.', 'network'); });
+  });
+
+  // Vuelta desde el email: ?lr=TOKEN → página de checkout
+  window.coShowList = function(){ try { buildResults(); showPage('page-results'); } catch(e){} };
+  try {
+    var q2 = new URLSearchParams(location.search), t = q2.get('lr');
+    if (t && /^[a-f0-9]{32}$/.test(t)) {
+      if (localStorage.getItem('cobratusayudas_paid') === '1' || sessionStorage.getItem('cobratusayudas_paid') === '1') return;
+      var camp = (q2.get('utm_campaign') || '').slice(0, 40);
+      try { localStorage.setItem('cta_lead_token', t); } catch(e){}
+      try { history.replaceState(null, '', '/?view=pago'); } catch(e){}
+      var go = function(n){
+        var w = document.getElementById('co-count-wrap');
+        if (n > 0) { document.getElementById('co-count').textContent = n; } else if (w) { w.textContent = 'tus ayudas'; }
+        showPage('page-checkout');
+        try { trackEvent('email_return', {campaign: camp}); trackEvent('checkout_view', {source: 'email', campaign: camp, count: n}); } catch(e){}
+        try { if (typeof fbq === 'function') fbq('track', 'ViewContent', {content_name: 'checkout_email'}); } catch(e){}
+      };
+      fetch('/api/lead?t=' + t).then(function(r){ return r.json(); }).then(function(d){
+        var n = 0;
+        if (d && d.ok) {
+          if (d.respuestas) { respuestas = d.respuestas; try { localStorage.setItem('cta_respuestas', JSON.stringify(respuestas)); sessionStorage.setItem('respuestas_backup', JSON.stringify(respuestas)); } catch(e){} }
+          n = d.count || 0;
+        }
+        go(n);
+      }).catch(function(){ go(0); });
+    }
+  } catch(e){}
+})();
+</script>
 </body>
 </html>
