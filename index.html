@@ -419,7 +419,7 @@
     <div class="steps-grid">
       <div class="step-card"><div class="step-num">1</div><div class="step-title">Responde 12 preguntas</div><div class="step-desc">Sobre tu perfil personal, familiar, laboral y de vivienda. Sin datos personales identificativos.</div></div>
       <div class="step-card"><div class="step-num">2</div><div class="step-title">Cruzamos tu perfil con +100 ayudas</div><div class="step-desc">Nacionales, autonómicas y locales vigentes que encajan exactamente con tu situación real.</div></div>
-      <div class="step-card"><div class="step-num">3</div><div class="step-title">Recibe tu informe personalizado</div><div class="step-desc">Con el listado completo, importes reales, links directos e instrucciones paso a paso.</div></div>
+      <div class="step-card"><div class="step-num">3</div><div class="step-title">Recibe tu informe personalizado</div><div class="step-desc">Tu listado gratis con importes reales. Y si quieres, la guía de solicitud con Lucía, tu asistente por chat que te ayuda a pedir cada ayuda.</div></div>
     </div>
   </div>
   <div class="testimonials-section">
@@ -675,6 +675,7 @@
     </div>
     <div class="paywall-features">
       <div class="pf-item">&#10003; Gu&iacute;a paso a paso de cada ayuda</div>
+<div class="pf-item">&#10003; Asistencia personal por chat con Luc&iacute;a (IA)</div>
       <div class="pf-item">&#10003; <span id="ayudas-count-2">0</span> ayudas con su gu&iacute;a completa</div>
       <div class="pf-item">&#10003; Documentos que necesitas en cada una</div>
       <div class="pf-item">&#10003; Enlaces oficiales para solicitarlas</div>
@@ -743,7 +744,8 @@
     <div class="unlocked-header">
       <div class="success-badge">&#10003; Pago confirmado</div>
       <h2 class="unlocked-title">Tu guía para pedir tus ayudas</h2>
-      <p style="color:var(--text-muted);font-size:0.9rem;max-width:500px;margin:0 auto;">Estas son las ayudas a las que tienes derecho según tu perfil. Haz clic en cada una para ver cómo solicitarla.</p>
+      <p style="color:var(--text-muted);font-size:0.9rem;max-width:500px;margin:0 auto;">Estas son las ayudas a las que tienes derecho según tu perfil. Haz clic en cada una para ver cómo solicitarla. Si te atascas, pulsa «Pregúntale a Lucía» dentro de cada ayuda y te acompaña paso a paso.</p>
+<p style="margin-top:14px;"><a href="#" onclick="showPage('page-hero');return false;" style="color:var(--accent);font-size:0.85rem;font-weight:600;">&larr; Ir al inicio</a></p>
     </div>
     <div id="ayudas-list"></div>
     <div class="share-section">
@@ -1165,10 +1167,8 @@ async function markAsPaid() {
       if (hasPI && piParam !== 'pi_test_simulation') {
         fetch('/api/verify-intent?payment_intent=' + piParam)
           .then(function(r) { return r.json(); })
-          .then(function(d) { if (d.paid) { try { if (typeof fbq === 'function' && sessionStorage.getItem('purchase_tracked') !== piParam) { fbq('track', 'Purchase', {value:6,currency:'EUR'}); sessionStorage.setItem('purchase_tracked', piParam); } } catch(e){} } if (d.paid || hasPago) showUnlocked(); else history.replaceState(null,'','/'); })
-          .catch(function() { if (hasPago) showUnlocked(); else history.replaceState(null,'','/'); });
-      } else if (hasPago) {
-        showUnlocked();
+          .then(function(d) { if (d.paid) { try { if (typeof fbq === 'function' && sessionStorage.getItem('purchase_tracked') !== piParam) { fbq('track', 'Purchase', {value:6,currency:'EUR'}); sessionStorage.setItem('purchase_tracked', piParam); } } catch(e){} } if (d.paid) showUnlocked(); else history.replaceState(null,'','/'); })
+          .catch(function() { /* sin cambios: al recargar se reintenta la verificacion */ });
       }
       return;
     }
@@ -1240,7 +1240,7 @@ function buildUnlocked() {
       '<div style="padding:14px 18px;">' +
         (desc ? '<p style="font-size:0.84rem;color:#4b5563;line-height:1.55;margin:0 0 4px;">'+desc+'</p>' : '') +
         stepsHtml + docsHtml +
-        (linkHtml ? '<div>'+linkHtml+'</div>' : '') +
+        (linkHtml ? '<div>'+linkHtml+'</div>' : '') + '<div><button type="button" class="lu-ask" data-aid="'+a.id+'" data-n="'+String(a.nombre).replace(/"/g,'&quot;')+'" onclick="window.Lucia&&Lucia.ask(this)">&#128172; Preg&uacute;ntale a Luc&iacute;a sobre esta ayuda</button></div>' +
       '</div>' +
     '</div>';
   }).join('');
@@ -1363,7 +1363,7 @@ var LEGAL_TEXTS = {
     '<p><strong>Responsable:</strong> cobratusayudas.es (<a href="mailto:hola@cobratusayudas.es">hola@cobratusayudas.es</a>).</p>' +
     '<p><strong>Qué datos tratamos:</strong> las respuestas que das en el test (por ejemplo comunidad autónoma, situación familiar y laboral e ingresos aproximados) y, si lo indicas, tu correo electrónico. Los datos de la tarjeta los gestiona directamente Stripe y no pasan por nuestros servidores.</p>' +
     '<p><strong>Para qué:</strong> calcular las ayudas que te pueden corresponder, darte acceso a la guía, enviarte el informe si lo pides, atender tus consultas y medir el funcionamiento de la web y de nuestra publicidad.</p>' +
-    '<p><strong>Quién nos ayuda:</strong> usamos proveedores como Stripe (pagos), Supabase (almacenamiento), EmailJS (envío de correos), Google Analytics y Meta (medición y publicidad).</p>' +
+    '<p><strong>Quién nos ayuda:</strong> usamos proveedores como Stripe (pagos), Supabase (almacenamiento), Anthropic (inteligencia artificial del asistente Lucía), EmailJS (envío de correos), Google Analytics y Meta (medición y publicidad).</p>' + '<p><strong>Asistente Lucía (chat con IA):</strong> si usas el chat, tratamos los mensajes que escribes para responderte. Antes de pagar, el chat es orientativo y no guardamos tus conversaciones. Si has pagado la guía, guardamos tus conversaciones sobre cada ayuda, asociadas a tu compra, mientras dure tu acceso y hasta 90 días después, para que puedas retomarlas. Las respuestas las genera un modelo de inteligencia artificial de Anthropic, a quien enviamos esos mensajes (y tus respuestas del test) solo para responderte. Lucía es una IA, no una persona, y puede equivocarse: revisa siempre la fuente oficial. No escribas DNI, IBAN ni datos de salud. Puedes borrar una conversación con el botón Borrar mi conversación o escribiéndonos a hola@cobratusayudas.es.</p>' +
     '<p><strong>Tus derechos:</strong> puedes pedirnos acceso, corrección o borrado de tus datos escribiendo a <a href="mailto:hola@cobratusayudas.es">hola@cobratusayudas.es</a>.</p>',
   cookies: '<h2 style="font-size:1.2rem;color:#0a0f1e;margin:0 0 12px;">Cookies</h2>' +
     '<p>Esta web utiliza cookies y tecnologías similares de análisis (Google Analytics) y de publicidad (Meta Pixel) para saber cómo se usa y medir el resultado de nuestros anuncios. También guarda en tu navegador tus respuestas del test para que no las pierdas.</p>' +
@@ -1430,6 +1430,7 @@ function sendReportEmail() {
         <div class="pay-modal-what-title">Incluido en tu gu&iacute;a</div>
         <ul>
           <li>Gu&iacute;a paso a paso de cada ayuda</li>
+<li>Asistencia personal por chat con Luc&iacute;a (IA) para solicitar cada ayuda</li>
           <li>Documentos necesarios en cada una</li>
           <li>Enlace oficial a la solicitud</li>
           <li>Garant&iacute;a de devoluci&oacute;n de 30 d&iacute;as</li>
