@@ -993,7 +993,7 @@ function trackEvent(name, params) {
 
 function startQuiz() { showPage("page-quiz"); trackEvent("quiz_started"); }
 
-function updateProgress(q) {
+function updateProgress(q) { if (q > 1) { try { trackEvent('quiz_step', {step: q}); } catch(e){} }
   const pct = Math.round((q / TOTAL_Q) * 100);
   document.getElementById("progress-fill").style.width = pct + "%";
   document.getElementById("progress-text").textContent = "Pregunta " + q + " de " + TOTAL_Q;
@@ -1167,7 +1167,7 @@ async function markAsPaid() {
       if (hasPI && piParam !== 'pi_test_simulation') {
         fetch('/api/verify-intent?payment_intent=' + piParam)
           .then(function(r) { return r.json(); })
-          .then(function(d) { if (d.paid) { try { if (typeof fbq === 'function' && sessionStorage.getItem('purchase_tracked') !== piParam) { fbq('track', 'Purchase', {value:6,currency:'EUR'}); sessionStorage.setItem('purchase_tracked', piParam); } } catch(e){} } if (d.paid) showUnlocked(); else history.replaceState(null,'','/'); })
+          .then(function(d) { if (d.paid) { try { if (sessionStorage.getItem('purchase_tracked') !== piParam) { if (typeof gtag === 'function') { gtag('event', 'purchase', {transaction_id: piParam, value: 6, currency: 'EUR', items: [{item_id: 'guia_solicitud', item_name: 'Guia de solicitud', price: 6, quantity: 1}]}); } if (typeof fbq === 'function') { fbq('track', 'Purchase', {value:6,currency:'EUR'}, {eventID: piParam}); } sessionStorage.setItem('purchase_tracked', piParam); } } catch(e){} } if (d.paid) showUnlocked(); else history.replaceState(null,'','/'); })
           .catch(function() { /* sin cambios: al recargar se reintenta la verificacion */ });
       }
       return;
@@ -1340,9 +1340,8 @@ async function confirmModalPayment() {
     if (procEl) procEl.style.display = 'none';
     if (stripeEl) stripeEl.style.display = 'block';
     if (btn) { btn.style.display = 'block'; btn.disabled = false; btn.textContent = 'Pagar 6\u20ac y desbloquear'; }
-    if (errEl) { errEl.textContent = result.error.message; errEl.style.display = 'block'; }
-  } else if (result.paymentIntent && result.paymentIntent.status === 'succeeded') {
-    if (typeof fbq === 'function') { fbq('track', 'Purchase', {value:6,currency:'EUR'}); }
+    if (errEl) { errEl.textContent = result.error.message; try { trackEvent('payment_error', {code: (result.error.code || result.error.type || 'unknown')}); } catch(e){} errEl.style.display = 'block'; }
+  } else if (result.paymentIntent && result.paymentIntent.status === 'succeeded') { var _pi = result.paymentIntent.id; try { localStorage.setItem('cta_pi', _pi); fetch('/api/pass?payment_intent=' + encodeURIComponent(_pi), {credentials: 'same-origin'}).catch(function(){}); if (typeof gtag === 'function') { gtag('event', 'purchase', {transaction_id: _pi, value: 6, currency: 'EUR', items: [{item_id: 'guia_solicitud', item_name: 'Guia de solicitud', price: 6, quantity: 1}]}); } sessionStorage.setItem('purchase_tracked', _pi); } catch(e){} if (typeof fbq === 'function') { fbq('track', 'Purchase', {value:6,currency:'EUR'}, {eventID: _pi}); }
     closePayModal();
     sessionStorage.setItem('cobratusayudas_paid', '1');
     localStorage.setItem('cta_respuestas', JSON.stringify(respuestas)); sessionStorage.setItem('respuestas_backup', JSON.stringify(respuestas));
