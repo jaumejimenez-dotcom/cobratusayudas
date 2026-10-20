@@ -19,7 +19,8 @@
     }).catch(function () { session = { paid: false }; return session; });
   }
 
-  var AV = '<svg viewBox="0 0 64 64" width="100%" height="100%" aria-hidden="true"><rect width="64" height="64" fill="#cfeee9"/><path d="M10 64c2-15 13-19 22-19s20 4 22 19z" fill="#0f766e"/><rect x="28" y="38" width="8" height="10" rx="3" fill="#e3a982"/><path d="M15 31c0-15 8-21 17-21s17 6 17 21c0 11 2 17-2 21H17c-4-4-2-10-2-21z" fill="#4a2c1d"/><ellipse cx="32" cy="31" rx="11" ry="13" fill="#f1c4a1"/><path d="M20 29c2-10 9-13 15-11 5 1 9 5 9 11-4-5-10-7-15-6-4 1-7 3-9 6z" fill="#4a2c1d"/><circle cx="27.5" cy="32" r="1.4" fill="#2b1b14"/><circle cx="36.5" cy="32" r="1.4" fill="#2b1b14"/><circle cx="24.5" cy="36" r="2.2" fill="#f0a08a" opacity=".45"/><circle cx="39.5" cy="36" r="2.2" fill="#f0a08a" opacity=".45"/><path d="M28 38.5q4 3.6 8 0" stroke="#b5533c" fill="none" stroke-width="1.6" stroke-linecap="round"/></svg>';
+  var SVGAV = '<svg viewBox="0 0 64 64" width="100%" height="100%" aria-hidden="true"><rect width="64" height="64" fill="#cfeee9"/><path d="M10 64c2-15 13-19 22-19s20 4 22 19z" fill="#0f766e"/><rect x="28" y="38" width="8" height="10" rx="3" fill="#e3a982"/><path d="M15 31c0-15 8-21 17-21s17 6 17 21c0 11 2 17-2 21H17c-4-4-2-10-2-21z" fill="#4a2c1d"/><ellipse cx="32" cy="31" rx="11" ry="13" fill="#f1c4a1"/><path d="M20 29c2-10 9-13 15-11 5 1 9 5 9 11-4-5-10-7-15-6-4 1-7 3-9 6z" fill="#4a2c1d"/><circle cx="27.5" cy="32" r="1.4" fill="#2b1b14"/><circle cx="36.5" cy="32" r="1.4" fill="#2b1b14"/><circle cx="24.5" cy="36" r="2.2" fill="#f0a08a" opacity=".45"/><circle cx="39.5" cy="36" r="2.2" fill="#f0a08a" opacity=".45"/><path d="M28 38.5q4 3.6 8 0" stroke="#b5533c" fill="none" stroke-width="1.6" stroke-linecap="round"/></svg>';
+  var AV = '<img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=112&h=112&fit=crop&crop=faces&q=80&fm=jpg" alt="" width="100%" height="100%" style="object-fit:cover;display:block">';
   var css = '#lu-btn{position:fixed;right:16px;bottom:16px;z-index:9998;background:#0f766e;color:#fff;border:0;border-radius:999px;padding:12px 18px 12px 12px;font:600 15px/1 system-ui,sans-serif;display:flex;align-items:center;gap:10px;box-shadow:0 6px 20px rgba(0,0,0,.25);cursor:pointer}'
     + '#lu-btn .lu-av{width:32px;height:32px}'
     + '.lu-av{border-radius:50%;background:#fff;color:#0f766e;display:flex;align-items:center;justify-content:center;font-weight:700;flex:none;overflow:hidden}'
@@ -55,6 +56,7 @@
     + '<form id="lu-form"><input id="lu-in" maxlength="500" placeholder="Escribe tu duda…" autocomplete="off"><button id="lu-send" type="submit">Enviar</button></form>'
     + '<div id="lu-note">No compartas DNI, IBAN ni datos de salud.</div>';
   document.body.appendChild(btn); document.body.appendChild(p);
+  Array.prototype.forEach.call(document.querySelectorAll('.lu-av img'), function (im) { im.onerror = function () { this.parentNode.innerHTML = SVGAV; }; });
   var msgs = p.querySelector('#lu-msgs'), input = p.querySelector('#lu-in'), sendBtn = p.querySelector('#lu-send');
   var cta = p.querySelector('#lu-cta'), tools = p.querySelector('#lu-tools'), sub = p.querySelector('#lu-sub'), note = p.querySelector('#lu-note');
 
