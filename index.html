@@ -322,6 +322,7 @@
 /* ── PAYMENT MODAL ── */
 .pay-modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:2000;display:none;align-items:flex-end;justify-content:center;overflow:hidden;box-sizing:border-box;}
 .pay-modal-overlay.open{display:flex;}
+body.pay-open #lu-btn{display:none!important;}
 .pay-modal{background:#fff;border-radius:20px 20px 0 0;width:100%;max-width:440px;max-height:90vh;overflow-y:auto;-webkit-overflow-scrolling:touch;box-shadow:0 -8px 40px rgba(0,0,0,0.18);animation:modalUp .28s ease;box-sizing:border-box;} @media(min-width:540px){.pay-modal{border-radius:20px;max-height:88vh;animation:modalIn .25s ease;}}
 @keyframes modalIn{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}} @keyframes modalUp{from{opacity:0;transform:translateY(60px);}to{opacity:1;transform:translateY(0);}}
 .pay-modal-header{background:linear-gradient(135deg,#0d1b2a,#1a3a5c);padding:20px 24px;display:flex;align-items:center;justify-content:space-between;}
@@ -688,20 +689,6 @@
       
     </div>
   </div>
-  <div id="lead-box" style="background:rgba(0,184,148,0.08);border:1px solid rgba(0,184,148,0.3);border-radius:14px;padding:18px 16px;margin-bottom:20px;color:var(--text);">
-    <div id="lead-form-wrap">
-      <div style="font-size:1rem;font-weight:800;margin-bottom:4px;">&#128233; Guarda tu lista de ayudas</div>
-      <p style="font-size:0.84rem;line-height:1.5;margin:0 0 12px;color:var(--text-muted);">Te enviamos tus <span id="lead-count">0</span> ayudas por email para que no las pierdas ni tengas que repetir el test.</p>
-      <form id="lead-form" novalidate>
-        <input type="email" id="lead-email" placeholder="tu@email.com" autocomplete="email" inputmode="email" style="width:100%;padding:12px 14px;border-radius:10px;border:1px solid var(--border);background:#fff;color:var(--text);font-size:0.95rem;outline:none;box-sizing:border-box;margin-bottom:10px;"/>
-        <input type="text" id="lead-hp" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0;"/>
-        <label style="display:flex;gap:8px;align-items:flex-start;font-size:0.76rem;line-height:1.45;color:var(--text-muted);margin-bottom:12px;cursor:pointer;"><input type="checkbox" id="lead-consent" style="margin-top:2px;flex-shrink:0;"/><span id="lead-consent-text">Acepto recibir mi lista de ayudas y emails comerciales de cobratusayudas.es. Puedo darme de baja cuando quiera. Info en la <a href="#" onclick="openLegal('privacidad');return false;" style="color:inherit;text-decoration:underline;">Política de privacidad</a>.</span></label>
-        <button type="submit" id="lead-btn" class="pay-btn-main" style="font-size:0.95rem;padding:14px;">Enviarme mi lista</button>
-        <div id="lead-err" style="display:none;color:#dc2626;font-size:0.8rem;margin-top:8px;text-align:center;"></div>
-      </form>
-    </div>
-    <div id="lead-ok" style="display:none;font-size:0.9rem;line-height:1.5;"><strong>&#10003; Listo, revisa tu email.</strong> Si no lo ves en unos minutos, mira en spam o promociones.</div>
-  </div>
   <div class="paywall-box">
     <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:10px;">
       <div>
@@ -739,6 +726,20 @@
       <div class="pay-spinner"></div>
       <div style="font-size:0.85rem;color:rgba(255,255,255,0.5);margin-top:10px;">Procesando pago...</div>
     </div>
+  </div>
+  <div id="lead-box" style="background:rgba(0,184,148,0.08);border:1px solid rgba(0,184,148,0.3);border-radius:14px;padding:18px 16px;margin-bottom:20px;color:var(--text);">
+    <div id="lead-form-wrap">
+      <div style="font-size:1rem;font-weight:800;margin-bottom:4px;">&#128233; Guarda tu lista de ayudas</div>
+      <p style="font-size:0.84rem;line-height:1.5;margin:0 0 12px;color:var(--text-muted);">Te enviamos tus <span id="lead-count">0</span> ayudas por email para que no las pierdas ni tengas que repetir el test.</p>
+      <form id="lead-form" novalidate>
+        <input type="email" id="lead-email" placeholder="tu@email.com" autocomplete="email" inputmode="email" style="width:100%;padding:12px 14px;border-radius:10px;border:1px solid var(--border);background:#fff;color:var(--text);font-size:0.95rem;outline:none;box-sizing:border-box;margin-bottom:10px;"/>
+        <input type="text" id="lead-hp" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0;"/>
+        <label style="display:flex;gap:8px;align-items:flex-start;font-size:0.76rem;line-height:1.45;color:var(--text-muted);margin-bottom:12px;cursor:pointer;"><input type="checkbox" id="lead-consent" style="margin-top:2px;flex-shrink:0;"/><span id="lead-consent-text">Acepto recibir mi lista de ayudas y emails comerciales de cobratusayudas.es. Puedo darme de baja cuando quiera. Info en la <a href="#" onclick="openLegal('privacidad');return false;" style="color:inherit;text-decoration:underline;">Política de privacidad</a>.</span></label>
+        <button type="submit" id="lead-btn" class="pay-btn-main" style="font-size:0.95rem;padding:14px;">Enviarme mi lista</button>
+        <div id="lead-err" style="display:none;color:#dc2626;font-size:0.8rem;margin-top:8px;text-align:center;"></div>
+      </form>
+    </div>
+    <div id="lead-ok" style="display:none;font-size:0.9rem;line-height:1.5;"><strong>&#10003; Listo, revisa tu email.</strong> Si no lo ves en unos minutos, mira en spam o promociones.</div>
   </div>
   <div class="res-testimonials">
     <div class="res-t-title">Lo que dicen otros usuarios</div>
@@ -1154,6 +1155,19 @@ function buildResults() {
         (a.organismo?'<span style="font-size:0.74rem;color:var(--text-muted);">'+a.organismo+'</span>':'')+
       '</div></div>';
   }).join('');
+  (function(){
+    var items=document.querySelectorAll('#preview-list .prev-item');
+    var old=document.getElementById('prev-more-btn'); if(old) old.remove();
+    if(items.length>6){
+      for(var i=5;i<items.length;i++) items[i].style.display='none';
+      var btn=document.createElement('button');
+      btn.id='prev-more-btn'; btn.type='button';
+      btn.textContent='Ver las '+(items.length-5)+' ayudas restantes \u25be';
+      btn.style.cssText='display:block;width:100%;padding:14px;border:0;border-top:1px solid var(--border);background:var(--surface);color:var(--text);font-weight:700;font-size:0.88rem;cursor:pointer;';
+      btn.onclick=function(){ for(var i=5;i<items.length;i++) items[i].style.display=''; btn.remove(); try{trackEvent('results_expand',{count:items.length});}catch(e){} };
+      document.getElementById('preview-list').parentNode.appendChild(btn);
+    }
+  })();
   ['pay-state-btn','pay-state-loading','pay-state-form','pay-state-processing'].forEach(function(id,i){
     var el=document.getElementById(id); if(el) el.style.display=i===0?'block':'none';
   });
@@ -1300,6 +1314,7 @@ var _si = null, _se = null;
 function closePayModal() {
   var overlay = document.getElementById('pay-modal-overlay');
   if (overlay) overlay.classList.remove('open');
+  document.body.classList.remove('pay-open');
   document.body.style.overflow = '';
 }
 
@@ -1316,6 +1331,7 @@ async function initStripePayment() {
   var overlay = document.getElementById('pay-modal-overlay');
   if (overlay) {
     overlay.classList.add('open');
+    document.body.classList.add('pay-open');
     document.body.style.overflow = 'hidden';
   }
 
