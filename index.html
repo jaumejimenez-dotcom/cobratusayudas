@@ -378,6 +378,66 @@ body.pay-open #lu-btn{display:none!important;}
     gtag('js', new Date());
     gtag('config', 'G-Q2DV7KRER0');
   </script>
+  <!-- Origen del visitante (first-touch + last-touch), id anónimo y eventos del embudo -->
+  <script>
+  (function(){
+    var VID_KEY='cta_vid', O_KEY='cta_origin', OL_KEY='cta_origin_last';
+    function lsGet(k){ try { return localStorage.getItem(k); } catch(e){ return null; } }
+    function lsSet(k,v){ try { localStorage.setItem(k,v); } catch(e){} }
+    function uuid(){ try { return crypto.randomUUID(); } catch(e){ return 'v' + Date.now().toString(36) + Math.random().toString(36).slice(2,12); } }
+    function cookie(n){ try { var m = document.cookie.match(new RegExp('(?:^|; )' + n + '=([^;]*)')); return m ? decodeURIComponent(m[1]) : ''; } catch(e){ return ''; } }
+    function hostOf(u){ try { return new URL(u).hostname.replace(/^www\./,''); } catch(e){ return ''; } }
+    var META = /^(fb|facebook|ig|instagram|meta)$/;
+    function classify(o, ref){
+      var s=(o.utm_source||'').toLowerCase(), m=(o.utm_medium||'').toLowerCase(), h=hostOf(ref);
+      if (s==='email' || m==='email' || m==='lifecycle') return 'email';
+      if (META.test(s) && /(cpc|paid|ppc|ads|social_paid|paidsocial)/.test(m)) return 'meta_ads';
+      if (/(cpc|paid|ppc)/.test(m)) return s || 'pago_otros';
+      if (s) return META.test(s) ? 'facebook_sin_etiquetar' : s;
+      if (o.fbclid || /(^|\.)(facebook|fb|instagram)\.com$/.test(h) || /^l\.(facebook|instagram)\.com$/.test(h)) return 'facebook_sin_etiquetar';
+      if (/(^|\.)(google|bing|duckduckgo|yahoo|ecosia)\./.test(h) || /^(google|bing|duckduckgo|yahoo|ecosia)\./.test(h)) return 'organic_search';
+      if (/(^|\.)(t\.co|twitter|x|linkedin|tiktok|youtube|reddit|pinterest|whatsapp)\./.test(h + '.') || h==='t.co') return 'organic_social';
+      if (h && h !== location.hostname.replace(/^www\./,'')) return 'referral';
+      return 'directo';
+    }
+    function build(){
+      var q = new URLSearchParams(location.search), o = {};
+      ['utm_source','utm_medium','utm_campaign','utm_content','utm_term'].forEach(function(k){ var v=q.get(k); if (v) o[k]=v.slice(0,100); });
+      var fb = q.get('fbclid'); if (fb) o.fbclid = fb.slice(0,120);
+      var ref = document.referrer || '';
+      if (ref && hostOf(ref) !== location.hostname.replace(/^www\./,'')) o.referrer = ref.slice(0,300);
+      o.landing = (location.pathname + location.search).slice(0,300);
+      o.first_seen = new Date().toISOString();
+      o.channel = classify(o, ref);
+      return o;
+    }
+    var cur = build();
+    var first = null; try { first = JSON.parse(lsGet(O_KEY) || 'null'); } catch(e){}
+    if (!first) { first = cur; lsSet(O_KEY, JSON.stringify(first)); }
+    var last = null; try { last = JSON.parse(lsGet(OL_KEY) || 'null'); } catch(e){}
+    if (cur.channel !== 'directo' && (cur.utm_source || cur.fbclid || cur.referrer)) { last = cur; lsSet(OL_KEY, JSON.stringify(last)); }
+    var vid = lsGet(VID_KEY); if (!vid) { vid = uuid(); lsSet(VID_KEY, vid); }
+
+    window.ctaVid = function(){ return vid; };
+    window.ctaOrigin = function(){ return first; };
+    window.ctaOriginLast = function(){ return last || first; };
+    window.ctaTrackingCtx = function(){
+      var fbp = cookie('_fbp'), fbc = cookie('_fbc');
+      if (!fbc && first && first.fbclid) fbc = 'fb.1.' + Date.parse(first.first_seen) + '.' + first.fbclid;
+      var ga = cookie('_ga').match(/GA\d\.\d\.(\d+\.\d+)$/);
+      var gs = cookie('_ga_Q2DV7KRER0'), sid = '';
+      var m1 = gs.match(/^GS1\.\d\.(\d+)\./), m2 = gs.match(/^GS2\.\d\.s(\d+)\$/);
+      if (m1) sid = m1[1]; else if (m2) sid = m2[1];
+      return { fbp: fbp, fbc: fbc, ga_client_id: ga ? ga[1] : '', ga_session_id: sid, page_url: location.href.split('#')[0].slice(0,300) };
+    };
+    var SEND = {visit:1, quiz_started:1, quiz_completed:1, quiz_results_shown:1, open_pay_modal:1, begin_checkout:1, generate_lead:1, checkout_view:1, guide_opened:1};
+    window.ctaSend = function(name, props){
+      if (!SEND[name]) return;
+      try { fetch('/api/event', {method:'POST', keepalive:true, headers:{'Content-Type':'application/json'}, body: JSON.stringify({event:name, vid:vid, origin: first, props: props || null})}).catch(function(){}); } catch(e){}
+    };
+    try { if (!sessionStorage.getItem('cta_visit')) { sessionStorage.setItem('cta_visit','1'); window.ctaSend('visit'); } } catch(e){}
+  })();
+  </script>
   <!-- Supabase -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 </head>
@@ -705,7 +765,7 @@ body.pay-open #lu-btn{display:none!important;}
     </div>
     <div id="pay-state-btn">
       <div style="margin-bottom:12px;">
-        <label style="font-size:0.78rem;color:rgba(255,255,255,0.6);display:block;margin-bottom:5px;">&#128231; Recibe tu informe por email (opcional, para no perderlo)</label>
+        <label style="font-size:0.78rem;color:rgba(255,255,255,0.6);display:block;margin-bottom:5px;">&#128231; Tu email, para enviarte la gu&iacute;a (lo confirmas al pagar)</label>
         <input type="email" id="pay-email" placeholder="tu@email.com" style="width:100%;padding:10px 14px;border-radius:8px;border:1px solid rgba(255,255,255,0.15);background:rgba(255,255,255,0.08);color:#fff;font-size:0.88rem;outline:none;box-sizing:border-box;"/>
       </div>
       <button class="pay-btn-main" id="pay-btn" onclick="initStripePayment()">Quiero mi gu&iacute;a &mdash; 6&euro;</button>
@@ -1035,6 +1095,17 @@ function trackEvent(name, params) {
     if (typeof gtag === 'function') gtag('event', name, params || {});
     if (window.dataLayer) window.dataLayer.push(Object.assign({event: name}, params || {}));
   } catch(e) {}
+  try { if (window.ctaSend) window.ctaSend(name); } catch(e) {}
+}
+
+// Purchase en el navegador: SOLO se llama cuando el servidor ha confirmado el pago (mismo id que el evento del servidor → sin duplicados)
+function firePurchase(pi) {
+  try {
+    if (!pi || sessionStorage.getItem('purchase_tracked') === pi) return;
+    sessionStorage.setItem('purchase_tracked', pi);
+    if (typeof gtag === 'function') gtag('event', 'purchase', {transaction_id: pi, value: 6, currency: 'EUR', items: [{item_id: 'guia_solicitud', item_name: 'Guia de solicitud', price: 6, quantity: 1}]});
+    if (typeof fbq === 'function') fbq('track', 'Purchase', {value:6,currency:'EUR'}, {eventID: pi});
+  } catch(e) {}
 }
 
 function startQuiz() { showPage("page-quiz"); trackEvent("quiz_started"); }
@@ -1189,6 +1260,7 @@ async function markAsPaid() {
   var params = new URLSearchParams(window.location.search);
   var hasPago = params.get('pago') === 'ok';
   var piParam = params.get('payment_intent') || '';
+  var accesoTk = params.get('acceso') || '';
   var hasPI = piParam.startsWith('pi_');
 
   function getBackup() {
@@ -1224,9 +1296,23 @@ async function markAsPaid() {
 
   // Delay execution until all JS functions are defined
   window.addEventListener('load', function() {
+    if (/^[a-f0-9]{32}$/.test(accesoTk)) {
+      fetch('/api/access?t=' + accesoTk, {credentials: 'same-origin'})
+        .then(function(r) { return r.json(); })
+        .then(function(d) {
+          if (!d || !d.ok) { history.replaceState(null, '', '/'); return; }
+          try { localStorage.setItem('cobratusayudas_paid', '1'); sessionStorage.setItem('cobratusayudas_paid', '1'); if (d.respuestas && d.respuestas.ccaa) { localStorage.setItem('cta_respuestas', JSON.stringify(d.respuestas)); sessionStorage.setItem('respuestas_backup', JSON.stringify(d.respuestas)); } } catch(e){}
+          showUnlocked();
+          try { if (respuestas && respuestas.ccaa) { buildUnlocked(); showPage('page-unlocked'); } } catch(e){}
+        })
+        .catch(function() {});
+      return;
+    }
     if (hasPago || hasPI) {
       if (hasPI && piParam !== 'pi_test_simulation') {
-        fetch('/api/verify-intent?payment_intent=' + piParam)
+        fetch('/api/pass?payment_intent=' + encodeURIComponent(piParam) + ctaLt(), {credentials: 'same-origin'})
+          .then(function(r) { return r.json(); })
+          .then(function(d) { if (d.paid) { firePurchase(d.event_id || piParam); showUnlocked(); } else history.replaceState(null,'','/'); })
           .then(function(r) { return r.json(); })
           .then(function(d) { if (d.paid) { try { if (sessionStorage.getItem('purchase_tracked') !== piParam) { if (typeof gtag === 'function') { gtag('event', 'purchase', {transaction_id: piParam, value: 6, currency: 'EUR', items: [{item_id: 'guia_solicitud', item_name: 'Guia de solicitud', price: 6, quantity: 1}]}); } if (typeof fbq === 'function') { fbq('track', 'Purchase', {value:6,currency:'EUR'}, {eventID: piParam}); } sessionStorage.setItem('purchase_tracked', piParam); } } catch(e){} } if (d.paid) showUnlocked(); else history.replaceState(null,'','/'); })
           .catch(function() { /* sin cambios: al recargar se reintenta la verificacion */ });
@@ -1320,6 +1406,7 @@ function closePayModal() {
   document.body.style.overflow = '';
 }
 
+var _clientSecret = '', _emailWarnedFor = '';
 async function initStripePayment() {
   var emailEl = document.getElementById('pay-email');
   if (emailEl && emailEl.value) sessionStorage.setItem('user_email', emailEl.value);
@@ -1338,10 +1425,11 @@ async function initStripePayment() {
   }
 
   try {
-    var _pb = {}; try { var _lt = localStorage.getItem('cta_lead_token'); if (_lt && /^[a-f0-9]{32}$/.test(_lt)) _pb.lt = _lt; var _pe = document.getElementById('pay-email'); var _em = (_pe && _pe.value) || sessionStorage.getItem('user_email') || localStorage.getItem('user_email'); if (_em) _pb.email = _em; } catch(e){}
+    var _pb = {}; try { var _lt = localStorage.getItem('cta_lead_token'); if (_lt && /^[a-f0-9]{32}$/.test(_lt)) _pb.lt = _lt; var _pe = document.getElementById('pay-email'); var _em = (_pe && _pe.value) || sessionStorage.getItem('user_email') || localStorage.getItem('user_email'); if (_em) _pb.email = _em; var _me = document.getElementById('modal-email'); if (_me && !_me.value && _em) _me.value = _em; _pb.origin = window.ctaOrigin && window.ctaOrigin(); _pb.origin_last = window.ctaOriginLast && window.ctaOriginLast(); _pb.respuestas = respuestas; _pb.aid_ids = window.__leadAids || []; var _tc = (window.ctaTrackingCtx && window.ctaTrackingCtx()) || {}; Object.keys(_tc).forEach(function(k){ _pb[k] = _tc[k]; }); } catch(e){}
     var resp = await fetch('/api/payment-intent', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(_pb)});
     var data = await resp.json();
     if (!data.clientSecret) throw new Error('No client secret');
+    _clientSecret = data.clientSecret;
 
     if (!_si) {
       await new Promise(function(resolve, reject) {
@@ -1379,6 +1467,24 @@ async function initStripePayment() {
 
 async function confirmModalPayment() {
   var btn = document.getElementById('modal-submit-btn');
+  // Email obligatorio: se valida y se guarda en el pago ANTES de cobrar
+  var emEl = document.getElementById('modal-email'), emMsg = document.getElementById('modal-email-msg');
+  var emVal = ((emEl && emEl.value) || '').trim().toLowerCase();
+  function emFail(t) { if (emMsg) { emMsg.textContent = t; emMsg.style.display = 'block'; } if (emEl) { emEl.style.borderColor = '#dc2626'; emEl.focus(); } if (btn) { btn.disabled = false; btn.textContent = 'Pagar 6\u20ac y desbloquear'; } }
+  if (emMsg) emMsg.style.display = 'none'; if (emEl) emEl.style.borderColor = '#cbd5e1';
+  if (!/^[^\s@]{1,64}@[^\s@]+\.[^\s@]{2,}$/.test(emVal)) { try { trackEvent('payment_error', {code: 'email_missing'}); } catch(e){} return emFail('Escribe tu email para poder enviarte la guía.'); }
+  if (btn) { btn.disabled = true; btn.textContent = 'Comprobando...'; }
+  try {
+    var _eb = {action: 'email', client_secret: _clientSecret, email: emVal, confirm_email: _emailWarnedFor === emVal, origin: window.ctaOrigin && window.ctaOrigin(), origin_last: window.ctaOriginLast && window.ctaOriginLast()};
+    var _tc2 = (window.ctaTrackingCtx && window.ctaTrackingCtx()) || {}; Object.keys(_tc2).forEach(function(k){ _eb[k] = _tc2[k]; });
+    var _er = await fetch('/api/payment-intent', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(_eb)});
+    var _ed = await _er.json().catch(function(){ return {}; });
+    if (!_ed.ok) {
+      if (_ed.warn) { _emailWarnedFor = emVal; return emFail((_ed.message || 'Revisa tu email.') + ' Si es correcto, pulsa de nuevo para pagar.'); }
+      return emFail(_ed.message || 'No hemos podido guardar tu email. Inténtalo de nuevo.');
+    }
+    try { sessionStorage.setItem('user_email', emVal); localStorage.setItem('user_email', emVal); } catch(e){}
+  } catch(e) { return emFail('Sin conexión. Inténtalo de nuevo.'); }
   if (btn) { btn.disabled = true; btn.textContent = 'Procesando...'; }
   var errEl = document.getElementById('modal-error');
   if (errEl) errEl.style.display = 'none';
@@ -1397,7 +1503,7 @@ async function confirmModalPayment() {
   
   var result = await _si.confirmPayment({
     elements: _se,
-    confirmParams: {return_url: window.location.origin + '/?pago=ok'},
+    confirmParams: {return_url: window.location.origin + '/?pago=ok', receipt_email: emVal},
     redirect: 'if_required'
   });
 
@@ -1406,7 +1512,7 @@ async function confirmModalPayment() {
     if (stripeEl) stripeEl.style.display = 'block';
     if (btn) { btn.style.display = 'block'; btn.disabled = false; btn.textContent = 'Pagar 6\u20ac y desbloquear'; }
     if (errEl) { errEl.textContent = result.error.message; try { trackEvent('payment_error', {code: (result.error.code || result.error.type || 'unknown')}); } catch(e){} errEl.style.display = 'block'; }
-  } else if (result.paymentIntent && result.paymentIntent.status === 'succeeded') { var _pi = result.paymentIntent.id; try { localStorage.setItem('cta_pi', _pi); fetch('/api/pass?payment_intent=' + encodeURIComponent(_pi) + ctaLt(), {credentials: 'same-origin'}).catch(function(){}); if (typeof gtag === 'function') { gtag('event', 'purchase', {transaction_id: _pi, value: 6, currency: 'EUR', items: [{item_id: 'guia_solicitud', item_name: 'Guia de solicitud', price: 6, quantity: 1}]}); } sessionStorage.setItem('purchase_tracked', _pi); } catch(e){} if (typeof fbq === 'function') { fbq('track', 'Purchase', {value:6,currency:'EUR'}, {eventID: _pi}); }
+  } else if (result.paymentIntent && result.paymentIntent.status === 'succeeded') { var _pi = result.paymentIntent.id; try { localStorage.setItem('cta_pi', _pi); fetch('/api/pass?payment_intent=' + encodeURIComponent(_pi) + ctaLt(), {credentials: 'same-origin'}).then(function(r){ return r.json(); }).then(function(d){ if (d && d.paid) firePurchase(d.event_id || _pi); }).catch(function(){}); } catch(e){}
     closePayModal();
     sessionStorage.setItem('cobratusayudas_paid', '1');
     try { localStorage.setItem('cobratusayudas_paid', '1'); } catch(e){}
@@ -1508,6 +1614,11 @@ function sendReportEmail() {
         <div class="modal-spinner"></div>
         <div style="font-size:0.85rem;color:#6b7280;">Procesando pago...</div>
       </div>
+      <div id="modal-email-wrap" style="margin-bottom:14px;">
+        <label for="modal-email" style="font-size:0.85rem;font-weight:700;color:#0a0f1e;display:block;margin-bottom:6px;">Tu email (obligatorio) &mdash; aqu&iacute; te enviamos tu gu&iacute;a</label>
+        <input type="email" id="modal-email" placeholder="tu@email.com" autocomplete="email" inputmode="email" required style="width:100%;padding:12px 14px;border-radius:8px;border:1px solid #cbd5e1;font-size:1rem;box-sizing:border-box;color:#0f172a;background:#fff;"/>
+        <div id="modal-email-msg" style="display:none;margin-top:6px;font-size:0.82rem;line-height:1.4;color:#b45309;"></div>
+      </div>
       <div id="modal-stripe-element"></div>
       <div id="modal-error"></div>
       <button class="pay-modal-submit" id="modal-submit-btn" onclick="confirmModalPayment()" style="display:none;">
@@ -1581,7 +1692,7 @@ function ctaLt(){ try { var t = localStorage.getItem('cta_lead_token'); return (
     bt.disabled = true; bt.textContent = 'Enviando...';
     var utm = null; try { utm = JSON.parse(localStorage.getItem('cta_utm') || 'null'); } catch(x){}
     fetch('/api/lead', {method:'POST', headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({email: email, consent: true, consent_text: CONSENT_TXT, aids: aids, answers: respuestas, utm: utm, source: 'results', website: hp ? hp.value : ''})})
+      body: JSON.stringify({email: email, consent: true, consent_text: CONSENT_TXT, aids: aids, answers: respuestas, utm: utm, origin: (window.ctaOrigin && window.ctaOrigin()) || null, source: 'results', website: hp ? hp.value : ''})})
     .then(function(r){ return r.json().then(function(d){ return {ok: r.ok, d: d}; }); })
     .then(function(x){
       if (!x.ok || !x.d || !x.d.ok) { bt.disabled = false; bt.textContent = 'Enviarme mi lista'; return fail(x.d && x.d.error === 'limit' ? 'Demasiados intentos. Inténtalo más tarde.' : 'No hemos podido enviarlo. Inténtalo de nuevo.', (x.d && x.d.error) || 'server'); }

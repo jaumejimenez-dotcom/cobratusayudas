@@ -80,4 +80,30 @@ function scrub(t) {
     .replace(/\b[A-Za-z]{2}\d{2}(?:[ ]?\d{4}){5}\b/g, '[dato ocultado]');
 }
 
-module.exports = { ALLOWED, SUPABASE_URL, signPass, readPass, setPassCookie, sb, cors, getCatalog, scrub };
+// ───── Email: formato y dominios sospechosos ─────
+const EMAIL_RE = /^[^\s@]{1,64}@[^\s@]+\.[^\s@]{2,}$/;
+const TYPO_DOMAINS = { 'gmial.com':'gmail.com','gmai.com':'gmail.com','gmaill.com':'gmail.com','gamil.com':'gmail.com','gmail.co':'gmail.com','gmail.con':'gmail.com','gmail.cm':'gmail.com','gmail.es':'gmail.com','hotmial.com':'hotmail.com','hotmai.com':'hotmail.com','hotmail.con':'hotmail.com','hotmail.co':'hotmail.com','hotnail.com':'hotmail.com','outlok.com':'outlook.com','outlook.con':'outlook.com','outlook.co':'outlook.com','yahoo.con':'yahoo.com','yahoo.co':'yahoo.com','yaho.com':'yahoo.com','icloud.con':'icloud.com' };
+function emailCheck(raw) {
+  const email = String(raw || '').trim().toLowerCase();
+  if (email.length > 254 || !EMAIL_RE.test(email)) return { ok: false, email, reason: 'formato' };
+  const domain = email.split('@')[1];
+  if (TYPO_DOMAINS[domain]) return { ok: true, suspicious: true, email, suggestion: email.split('@')[0] + '@' + TYPO_DOMAINS[domain], reason: 'dominio' };
+  if (/\.(co\.com|com\.com|con|cmo|vom|comm|cim)$/.test(domain) || /\.com\.[a-z]{2,3}$/.test(domain) && !/\.com\.(es|mx|ar|co|br|pe|ve|ec|uy|py|bo|cl|gt|do|pa|cr|hn|ni|sv|pr|au|tr|ua)$/.test(domain)) return { ok: true, suspicious: true, email, reason: 'dominio' };
+  if (!/^[a-z0-9.-]+\.[a-z]{2,}$/.test(domain)) return { ok: false, email, reason: 'formato' };
+  return { ok: true, email };
+}
+
+function clientIp(req) { return String((req.headers['x-forwarded-for'] || '')).split(',')[0].trim() || (req.socket && req.socket.remoteAddress) || ''; }
+function clipStr(v, n) { return v == null ? null : String(v).slice(0, n); }
+function clipObj(o, n) { try { const s = JSON.stringify(o || null); return s && s.length <= n ? JSON.parse(s) : null; } catch (e) { return null; } }
+
+// Oculta además emails y teléfonos (para guardar el chat de ventas sin datos personales)
+function scrubPII(t) {
+  return scrub(t)
+    .replace(/[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}/g, '[email]')
+    .replace(/(?:\+?\d[\s.-]?){9,}/g, '[teléfono]');
+}
+
+async function readRaw(req) { const chunks = []; for await (const c of req) chunks.push(typeof c === 'string' ? Buffer.from(c) : c); return Buffer.concat(chunks); }
+
+module.exports = { ALLOWED, SUPABASE_URL, signPass, readPass, setPassCookie, sb, cors, getCatalog, scrub, scrubPII, emailCheck, EMAIL_RE, clientIp, clipStr, clipObj, readRaw };

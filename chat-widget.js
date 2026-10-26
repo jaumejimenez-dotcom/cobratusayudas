@@ -101,7 +101,7 @@
     ev('chat_message_sent', { mode: 'sales', n: salesSent });
     var typing = add('bot', 'Lucía está escribiendo…');
     try {
-      var r = await fetch('/api/chat', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ messages: salesHist }) });
+      var r = await fetch('/api/chat', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ messages: salesHist, vid: (window.ctaVid && window.ctaVid()) || null, origin: (window.ctaOrigin && window.ctaOrigin()) || null }) });
       var d = await r.json().catch(function () { return {}; });
       var reply = d.reply || 'Ahora mismo no puedo responder, inténtalo en un minuto 😊';
       typing.textContent = reply;

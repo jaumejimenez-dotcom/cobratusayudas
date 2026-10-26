@@ -1,6 +1,10 @@
 {
   "rewrites": [
     {
+      "source": "/recuperar",
+      "destination": "/recuperar.html"
+    },
+    {
       "source": "/blog/:slug",
       "destination": "/blog/:slug.html"
     },

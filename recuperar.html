@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Recuperar mi acceso · CobraTusAyudas</title>
+<style>
+  body{margin:0;padding:40px 16px;background:#f3f5f9;font-family:Arial,Helvetica,sans-serif;color:#0a0f1e;}
+  .card{max-width:460px;margin:0 auto;background:#fff;border-radius:14px;padding:32px;box-shadow:0 2px 12px rgba(10,15,30,.06);}
+  h1{font-size:22px;margin:0 0 10px;}
+  p{font-size:15px;line-height:1.6;margin:0 0 16px;}
+  input[type=email]{width:100%;box-sizing:border-box;padding:14px;border:1px solid #d5dae3;border-radius:10px;font-size:16px;margin-bottom:12px;}
+  button{width:100%;padding:16px;border:0;border-radius:12px;background:#00b894;color:#0a0f1e;font-size:17px;font-weight:800;cursor:pointer;}
+  button[disabled]{opacity:.6;cursor:default;}
+  #msg{margin-top:16px;font-size:15px;line-height:1.5;}
+  .ok{color:#00725a;} .err{color:#c0392b;}
+  a{color:#00725a;}
+  .hp{position:absolute;left:-9999px;}
+</style>
+</head>
+<body>
+<div class="card">
+  <h1>Recuperar mi acceso</h1>
+  <p>Si ya has pagado tu guía, escribe el email que usaste al pagar y te enviamos de nuevo tu enlace de acceso.</p>
+  <form id="f" novalidate>
+    <input type="email" id="email" placeholder="tu@email.com" autocomplete="email" inputmode="email" required>
+    <input type="text" id="website" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+    <button type="submit" id="btn">Enviarme el enlace</button>
+  </form>
+  <div id="msg" role="status"></div>
+  <p style="margin-top:22px;font-size:13px;color:#6b7280;">¿No te llega? Escríbenos a <a href="mailto:hola@cobratusayudas.es">hola@cobratusayudas.es</a> con tu referencia o los 4 últimos dígitos de la tarjeta y lo resolvemos. <br><a href="/">Volver a cobratusayudas.es</a></p>
+</div>
+<script>
+document.getElementById('f').addEventListener('submit', function(e){
+  e.preventDefault();
+  var btn = document.getElementById('btn'), msg = document.getElementById('msg');
+  var email = document.getElementById('email').value.trim();
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) { msg.className = 'err'; msg.textContent = 'Escribe un email válido.'; return; }
+  btn.disabled = true; msg.className = ''; msg.textContent = 'Enviando…';
+  fetch('/api/recover', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({email: email, website: document.getElementById('website').value})})
+    .then(function(r){ return r.json().catch(function(){ return {}; }).then(function(d){ return {ok: r.ok, d: d}; }); })
+    .then(function(x){ msg.className = x.ok ? 'ok' : 'err'; msg.textContent = (x.d && x.d.message) || (x.ok ? 'Listo.' : 'No hemos podido procesarlo. Escribe a hola@cobratusayudas.es.'); btn.disabled = false; })
+    .catch(function(){ msg.className = 'err'; msg.textContent = 'No hemos podido procesarlo. Escribe a hola@cobratusayudas.es.'; btn.disabled = false; });
+});
+</script>
+</body>
+</html>

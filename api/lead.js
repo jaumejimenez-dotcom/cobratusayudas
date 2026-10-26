@@ -39,9 +39,10 @@ module.exports = async (req, res) => {
     if (!aids.length) return res.status(400).json({ ok: false, error: 'aids' });
     const answers = clip(b.answers, 3000);
     const utm = clip(b.utm, 1000);
+    const origin = clip(b.origin, 2000);
 
     const base = { email, consent: true, consent_at: new Date().toISOString(),
-      consent_text: String(b.consent_text || '').slice(0, 400), aids, answers, utm, source: String(b.source || 'results').slice(0, 40) };
+      consent_text: String(b.consent_text || '').slice(0, 400), aids, answers, utm, origin, source: String(b.source || 'results').slice(0, 40) };
     const prev = await sb('leads?email=eq.' + encodeURIComponent(email) + '&select=id,seq_step,last_sent_at,unsubscribed_at,purchased');
     let lead;
     if (prev && prev[0]) {

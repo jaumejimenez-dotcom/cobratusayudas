@@ -2,7 +2,7 @@
 //  · Ventas (gratis, sin aid_id): orienta, invita al test y a la guía.
 //  · Pago (con aid_id + pase verificado en servidor): ayuda a solicitar esa ayuda concreta.
 // La clave de la IA vive solo en el servidor.
-const { sb, cors, readPass, getCatalog, scrub } = require('./_lib');
+const { sb, cors, readPass, getCatalog, scrub, scrubPII, clipStr } = require('./_lib');
 
 const hits = new Map();
 let dayCount = 0, dayKey = '';
@@ -125,7 +125,16 @@ module.exports = async (req, res) => {
       if (!msgs.length || msgs[msgs.length - 1].role !== 'user') return res.status(400).json({ error: 'bad request' });
       dayCount++;
       const reply = await callModel(process.env.CHAT_MODEL || 'claude-haiku-5-5', salesPrompt(), msgs, 300);
-      return res.status(200).json({ reply: reply || 'No te he entendido bien, ¿me lo cuentas de otra forma?' });
+      const finalReply = reply || 'No te he entendido bien, ¿me lo cuentas de otra forma?';
+      // guarda la duda del visitante para analizarla (sin DNI/IBAN/email/teléfono; el visitante es un id anónimo)
+      try {
+        const vid = String(body.vid || '');
+        const o = body.origin && typeof body.origin === 'object' ? body.origin : {};
+        await sb('sales_chat', { method: 'POST', prefer: 'return=minimal', body: {
+          visitor_id: /^[a-zA-Z0-9-]{8,64}$/.test(vid) ? vid : null, channel: clipStr(o.channel, 60), campaign: clipStr(o.utm_campaign, 120),
+          user_msg: scrubPII(msgs[msgs.length - 1].content).slice(0, 500), bot_reply: scrubPII(finalReply).slice(0, 800) } });
+      } catch (e) { console.error('sales_chat', e.message); }
+      return res.status(200).json({ reply: finalReply });
     }
 
     // ───────── Modo pago ─────────

@@ -103,4 +103,58 @@ async function send(lead, mail) {
   return t;
 }
 
-module.exports = { build, send, unsubUrl };
+
+// ───────── Emails transaccionales (entrega de la guía y recuperación) ─────────
+const FROM_TX = 'CobraTusAyudas <hola@cobratusayudas.es>';
+function accessUrl(token) { return SITE + '/?acceso=' + token; }
+
+function txShell(preheader, inner) {
+  return '<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>CobraTusAyudas</title></head>' +
+    '<body style="margin:0;padding:0;background:#f3f5f9;font-family:Arial,Helvetica,sans-serif;color:#0a0f1e;">' +
+    '<div style="display:none;max-height:0;overflow:hidden;opacity:0;color:#f3f5f9;">' + esc(preheader) + '</div>' +
+    '<table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#f3f5f9;"><tr><td align="center" style="padding:24px 12px;">' +
+    '<table role="presentation" width="600" cellspacing="0" cellpadding="0" style="max-width:600px;width:100%;background:#ffffff;border-radius:14px;overflow:hidden;">' +
+    '<tr><td style="background:#0a0f1e;padding:18px 28px;"><span style="font-size:18px;font-weight:800;color:#ffffff;letter-spacing:-0.3px;">Cobra<span style="color:#00b894;">Tus</span>Ayudas</span></td></tr>' +
+    '<tr><td style="padding:28px;">' + inner + '</td></tr>' +
+    '<tr><td style="padding:18px 28px;background:#f8f9fc;font-size:12px;line-height:1.6;color:#6b7280;">' +
+    'Este es un email de servicio sobre tu compra en cobratusayudas.es. ' +
+    'Esta web es una gu&iacute;a informativa independiente, no es un organismo oficial.' +
+    '</td></tr></table></td></tr></table></body></html>';
+}
+
+function deliveryMail(token, ref, recovered) {
+  const url = accessUrl(token);
+  const title = recovered ? 'Aqu&iacute; tienes de nuevo el acceso a tu gu&iacute;a' : '&iexcl;Gracias! Tu gu&iacute;a est&aacute; lista';
+  const intro = recovered
+    ? 'Has pedido recuperar tu acceso. Este es tu enlace personal:'
+    : 'Hemos recibido tu pago de <strong>6&nbsp;&euro;</strong> (pago &uacute;nico, sin suscripci&oacute;n). Con este enlace abres tu gu&iacute;a y el chat con Luc&iacute;a desde <strong>cualquier dispositivo</strong>:';
+  const inner = '<h1 style="font-size:24px;line-height:1.25;margin:0 0 10px;">' + title + '</h1>' +
+    '<p style="font-size:15px;line-height:1.6;margin:0;">' + intro + '</p>' +
+    button(url, 'Abrir mi gu&iacute;a &rarr;', 'Guarda este email: el enlace es personal, no lo compartas') +
+    '<p style="font-size:14px;line-height:1.6;margin:18px 0 6px;"><strong>Qu&eacute; incluye tu acceso</strong></p>' +
+    '<ul style="font-size:14px;line-height:1.7;margin:0 0 14px;padding-left:20px;"><li>La gu&iacute;a paso a paso de cada ayuda de tu lista, con documentos y enlaces oficiales.</li>' +
+    '<li>Asistencia por chat con Luc&iacute;a, nuestra asistente de inteligencia artificial, dentro de cada ayuda.</li></ul>' +
+    '<p style="font-size:14px;line-height:1.6;margin:0 0 10px;"><strong>Si el enlace no te funciona</strong> o lo pierdes, pide uno nuevo en <a href="' + SITE + '/recuperar" style="color:#00725a;">' + SITE.replace('https://', '') + '/recuperar</a> con el email con el que pagaste, o escr&iacute;benos a <a href="mailto:hola@cobratusayudas.es" style="color:#00725a;">hola@cobratusayudas.es</a>.</p>' +
+    '<p style="font-size:14px;line-height:1.6;margin:0 0 10px;"><strong>Garant&iacute;a de 90 d&iacute;as:</strong> si solicitas una ayuda con la gu&iacute;a y te la deniegan, te devolvemos el dinero. Escr&iacute;benos a hola@cobratusayudas.es con tu referencia.</p>' +
+    '<p style="font-size:12px;color:#6b7280;margin:14px 0 0;">Referencia de compra: ' + esc(ref) + '</p>';
+  const subject = recovered ? 'Tu enlace de acceso a CobraTusAyudas' : 'Tu guía de CobraTusAyudas está lista';
+  const text = (recovered ? 'Tu enlace de acceso a CobraTusAyudas:\n\n' : 'Gracias por tu compra (6 €, pago único). Tu guía y el chat con Lucía (asistente de IA), desde cualquier dispositivo:\n\n') +
+    url + '\n\nEl enlace es personal, no lo compartas.\nSi lo pierdes: ' + SITE + '/recuperar o escribe a hola@cobratusayudas.es\nGarantía de 90 días: si te deniegan una ayuda solicitada con la guía, te devolvemos el dinero.\nReferencia: ' + ref;
+  return { subject, html: txShell(recovered ? 'Tu enlace personal de acceso.' : 'Abre tu guía desde cualquier dispositivo.', inner), text };
+}
+
+async function sendTx(to, mail) {
+  const r = await fetch('https://api.resend.com/emails', {
+    method: 'POST',
+    headers: { Authorization: 'Bearer ' + process.env.RESEND_API_KEY, 'Content-Type': 'application/json' },
+    body: JSON.stringify({ from: FROM_TX, to: [to], reply_to: REPLY_TO, subject: mail.subject, html: mail.html, text: mail.text })
+  });
+  const t = await r.text();
+  if (!r.ok) throw new Error('resend ' + r.status + ' ' + t.slice(0, 200));
+  return t;
+}
+async function sendDelivery({ to, token, ref }) { return sendTx(to, deliveryMail(token, ref, false)); }
+async function sendRecovery({ to, token, ref }) { return sendTx(to, deliveryMail(token, ref, true)); }
+
+module.exports = { build, send, unsubUrl, sendDelivery, sendRecovery, deliveryMail };
+
