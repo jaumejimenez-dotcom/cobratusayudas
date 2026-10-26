@@ -1095,7 +1095,7 @@ function runCalculating() {
     setTimeout(function(){ if(statusEl) statusEl.textContent=statuses[i]; animateBar(b.bar,b.pct,b.dur); }, startTimes[i]);
   });
   setTimeout(function(){ if(statusEl) statusEl.textContent=statuses[5]; }, 10200);
-  setTimeout(function(){ buildResults(); showPage('page-results'); }, 11000);
+  setTimeout(function(){ buildResults(); if (isPaidLocal()) { try { buildUnlocked(); } catch(e){} showPage('page-unlocked'); } else { showPage('page-results'); } }, 11000);
 }
 
 function buildResults() {
@@ -1201,7 +1201,8 @@ async function markAsPaid() {
     var backup = getBackup();
     if (backup) respuestas = backup;
     if (!respuestas || !respuestas.ccaa) {
-      // No quiz data — show confirmation and ask to redo
+      // No quiz data — recuerda el pago (ya verificado) para desbloquear al rehacer el test
+      try { localStorage.setItem('cobratusayudas_paid', '1'); if (piParam) localStorage.setItem('cta_pi', piParam); } catch(e){}
       history.replaceState(null, '', '/');
       showPage('page-hero');
       var btn = document.querySelector('.cta-btn, .hero-cta');
@@ -1242,6 +1243,7 @@ async function markAsPaid() {
   });
 })();
 
+function isPaidLocal() { try { return localStorage.getItem('cobratusayudas_paid') === '1' || sessionStorage.getItem('cobratusayudas_paid') === '1'; } catch(e) { return false; } }
 function buildUnlocked() {
   var ayudas = filtrarAyudas();
   ayudas.sort(function(a,b){ return (b.importeMax||0)-(a.importeMax||0); });
@@ -1407,6 +1409,7 @@ async function confirmModalPayment() {
   } else if (result.paymentIntent && result.paymentIntent.status === 'succeeded') { var _pi = result.paymentIntent.id; try { localStorage.setItem('cta_pi', _pi); fetch('/api/pass?payment_intent=' + encodeURIComponent(_pi) + ctaLt(), {credentials: 'same-origin'}).catch(function(){}); if (typeof gtag === 'function') { gtag('event', 'purchase', {transaction_id: _pi, value: 6, currency: 'EUR', items: [{item_id: 'guia_solicitud', item_name: 'Guia de solicitud', price: 6, quantity: 1}]}); } sessionStorage.setItem('purchase_tracked', _pi); } catch(e){} if (typeof fbq === 'function') { fbq('track', 'Purchase', {value:6,currency:'EUR'}, {eventID: _pi}); }
     closePayModal();
     sessionStorage.setItem('cobratusayudas_paid', '1');
+    try { localStorage.setItem('cobratusayudas_paid', '1'); } catch(e){}
     localStorage.setItem('cta_respuestas', JSON.stringify(respuestas)); sessionStorage.setItem('respuestas_backup', JSON.stringify(respuestas));
     try { trackEvent('payment_confirmed_view', {value: 6, currency: 'EUR'}); } catch(e){}
     showPage('page-paid');
@@ -1593,7 +1596,7 @@ function ctaLt(){ try { var t = localStorage.getItem('cta_lead_token'); return (
   });
 
   // Vuelta desde el email: ?lr=TOKEN → página de checkout
-  window.coShowList = function(){ try { buildResults(); showPage('page-results'); } catch(e){} };
+  window.coShowList = function(){ try { buildResults(); if (isPaidLocal()) { try { buildUnlocked(); } catch(e){} showPage('page-unlocked'); } else { showPage('page-results'); } } catch(e){} };
   try {
     var q2 = new URLSearchParams(location.search), t = q2.get('lr');
     if (t && /^[a-f0-9]{32}$/.test(t)) {
