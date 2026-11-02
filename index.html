@@ -724,7 +724,7 @@ body.pay-open #lu-btn{display:none!important;}
     </div>
     <div class="paywall-price" style="font-size:1.05rem;margin-bottom:14px;">6&euro; &middot; pago &uacute;nico &middot; sin suscripci&oacute;n</div>
     <button class="pay-btn-main" id="co-pay-btn" onclick="try{trackEvent('checkout_cta_click',{source:'checkout_page'});}catch(e){}initStripePayment()">Pagar 6&euro; y recibir mi gu&iacute;a</button>
-    <div class="pay-security">&#128274; Pago seguro con Stripe &middot; Visa, Mastercard, Apple Pay</div>
+    <div class="pay-security">&#128274; Pago seguro con Stripe &middot; Tarjeta, Apple Pay, Google Pay, Klarna</div>
     <div class="pay-security" style="margin-top:6px;">Si te deniegan una ayuda que solicites con la gu&iacute;a, te devolvemos el dinero (90 d&iacute;as) &middot; <a href="#" onclick="openLegal('devoluciones');return false;" style="color:inherit;text-decoration:underline;">ver condiciones</a></div>
   </div>
   <div style="text-align:center;font-size:0.8rem;"><a href="#" onclick="coShowList();return false;" style="color:var(--text-muted);text-decoration:underline;">Ver de nuevo mi lista de ayudas</a></div>
@@ -769,7 +769,7 @@ body.pay-open #lu-btn{display:none!important;}
         <input type="email" id="pay-email" placeholder="tu@email.com" style="width:100%;padding:10px 14px;border-radius:8px;border:1px solid rgba(255,255,255,0.15);background:rgba(255,255,255,0.08);color:#fff;font-size:0.88rem;outline:none;box-sizing:border-box;"/>
       </div>
       <button class="pay-btn-main" id="pay-btn" onclick="initStripePayment()">Quiero mi gu&iacute;a &mdash; 6&euro;</button>
-      <div class="pay-security">&#128274; Pago seguro con Stripe &middot; Visa, Mastercard, Apple Pay</div>
+      <div class="pay-security">&#128274; Pago seguro con Stripe &middot; Tarjeta, Apple Pay, Google Pay, Klarna</div>
       <div class="pay-security" style="margin-top:6px;">Si te deniegan una ayuda que solicites con la gu&iacute;a, te devolvemos el dinero (90 d&iacute;as) &middot; <a href="#" onclick="openLegal('devoluciones');return false;" style="color:inherit;text-decoration:underline;">ver condiciones</a></div>
     </div>
     <div id="pay-state-loading" style="display:none;text-align:center;padding:20px;">
@@ -1632,6 +1632,8 @@ function sendReportEmail() {
         <svg viewBox="0 0 38 24" width="38" height="24"><rect width="38" height="24" rx="4" fill="#1434CB"/><text x="19" y="16" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold">VISA</text></svg>
         <svg viewBox="0 0 38 24" width="38" height="24"><rect width="38" height="24" rx="4" fill="#EB001B" opacity=".9"/><circle cx="15" cy="12" r="7" fill="#EB001B"/><circle cx="23" cy="12" r="7" fill="#F79E1B"/><path d="M19 7.3a7 7 0 0 1 0 9.4A7 7 0 0 1 19 7.3z" fill="#FF5F00"/></svg>
         <svg viewBox="0 0 38 24" width="38" height="24"><rect width="38" height="24" rx="4" fill="#000"/><text x="19" y="16" text-anchor="middle" fill="#fff" font-size="8" font-weight="bold"> Pay</text></svg>
+        <svg viewBox="0 0 38 24" width="38" height="24"><rect width="38" height="24" rx="4" fill="#fff" stroke="#999"/><text x="19" y="16" text-anchor="middle" fill="#333" font-size="8" font-weight="bold">G Pay</text></svg>
+        <svg viewBox="0 0 38 24" width="38" height="24"><rect width="38" height="24" rx="4" fill="#FFB3C7"/><text x="19" y="16" text-anchor="middle" fill="#111" font-size="8" font-weight="bold">Klarna</text></svg>
       </div>
     </div>
   </div>
