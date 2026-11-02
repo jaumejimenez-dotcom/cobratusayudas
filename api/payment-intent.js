@@ -1,5 +1,5 @@
 // POST /api/payment-intent
-//  · sin "action": crea el PaymentIntent de 6 € (como antes) y guarda el contexto de atribución.
+//  · sin "action": crea el PaymentIntent (3 € en oferta hasta 30-nov-2026, 6 € después) (como antes) y guarda el contexto de atribución.
 //  · action "email": justo antes de confirmar el pago, valida el email OBLIGATORIO y lo guarda en el PaymentIntent (receipt_email) y en el contexto.
 const Stripe = require('stripe');
 const { sb, emailCheck, clientIp, clipStr, clipObj } = require('./_lib');
@@ -77,7 +77,7 @@ module.exports = async (req, res) => {
     if (originLast && originLast.utm_campaign) metadata.last_campaign = originLast.utm_campaign;
     if (originLast && originLast.channel) metadata.last_channel = originLast.channel;
 
-    const params = { amount: 600, currency: 'eur', automatic_payment_methods: { enabled: true }, metadata };
+    const params = { amount: require('./_pay').currentPriceCents(), currency: 'eur', automatic_payment_methods: { enabled: true }, metadata };
     if (email) params.receipt_email = email;
     const paymentIntent = await stripe.paymentIntents.create(params);
 

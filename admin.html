@@ -89,7 +89,7 @@ tbody td{padding:12px 16px;white-space:nowrap}
     <div class="kpi-grid">
       <div class="kpi"><div class="kpi-lbl">Total Usuarios</div><div class="kpi-val" id="k1">-</div><div class="kpi-sub">Han rellenado el quiz</div></div>
       <div class="kpi p"><div class="kpi-lbl">Han Pagado</div><div class="kpi-val" id="k2">-</div><div class="kpi-sub" id="k2s">-</div></div>
-      <div class="kpi o"><div class="kpi-lbl">Ingresos</div><div class="kpi-val" id="k3">-</div><div class="kpi-sub">x 6 EUR por pago</div></div>
+      <div class="kpi o"><div class="kpi-lbl">Ingresos</div><div class="kpi-val" id="k3">-</div><div class="kpi-sub">x 3 EUR por pago (oferta nov)</div></div>
       <div class="kpi r"><div class="kpi-lbl">Hoy</div><div class="kpi-val" id="k4">-</div><div class="kpi-sub" id="k4s">-</div></div>
     </div>
     <div class="charts">
@@ -159,7 +159,7 @@ function kpis(){
   document.getElementById('k1').textContent=total;
   document.getElementById('k2').textContent=paid;
   document.getElementById('k2s').textContent=(total?Math.round(paid/total*100):0)+'% conversion';
-  document.getElementById('k3').textContent=(paid*6).toLocaleString('es-ES')+'EUR';
+  document.getElementById('k3').textContent=(paid*3).toLocaleString('es-ES')+'EUR';
   document.getElementById('k4').textContent=td.length;
   document.getElementById('k4s').textContent=td.filter(r=>r.pagado).length+' pagos hoy';
 }

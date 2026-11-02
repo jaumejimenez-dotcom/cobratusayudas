@@ -138,7 +138,7 @@ function deliveryMail(token, ref, recovered) {
     '<p style="font-size:14px;line-height:1.6;margin:0 0 10px;"><strong>Garant&iacute;a de 90 d&iacute;as:</strong> si solicitas una ayuda con la gu&iacute;a y te la deniegan, te devolvemos el dinero. Escr&iacute;benos a hola@cobratusayudas.es con tu referencia.</p>' +
     '<p style="font-size:12px;color:#6b7280;margin:14px 0 0;">Referencia de compra: ' + esc(ref) + '</p>';
   const subject = recovered ? 'Tu enlace de acceso a CobraTusAyudas' : 'Tu guía de CobraTusAyudas está lista';
-  const text = (recovered ? 'Tu enlace de acceso a CobraTusAyudas:\n\n' : 'Gracias por tu compra (6 €, pago único). Tu guía y el chat con Lucía (asistente de IA), desde cualquier dispositivo:\n\n') +
+  const text = (recovered ? 'Tu enlace de acceso a CobraTusAyudas:\n\n' : 'Gracias por tu compra (pago único). Tu guía y el chat con Lucía (asistente de IA), desde cualquier dispositivo:\n\n') +
     url + '\n\nEl enlace es personal, no lo compartas.\nSi lo pierdes: ' + SITE + '/recuperar o escribe a hola@cobratusayudas.es\nGarantía de 90 días: si te deniegan una ayuda solicitada con la guía, te devolvemos el dinero.\nReferencia: ' + ref;
   return { subject, html: txShell(recovered ? 'Tu enlace personal de acceso.' : 'Abre tu guía desde cualquier dispositivo.', inner), text };
 }

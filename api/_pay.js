@@ -6,12 +6,14 @@ const { sendDelivery } = require('./_email');
 
 const PIXEL_ID = '1372837888300592';
 const GA4_ID = 'G-Q2DV7KRER0';
-const PRICE_CENTS = 600;
+const PRICE_FULL = 600, PRICE_PROMO = 300;
+const PROMO_END_MS = Date.parse('2026-12-01T00:00:00+01:00'); // oferta de lanzamiento hasta el 30-nov-2026 inclusive
+function currentPriceCents() { return Date.now() < PROMO_END_MS ? PRICE_PROMO : PRICE_FULL; }
 
 const sha = v => crypto.createHash('sha256').update(String(v)).digest('hex');
 const nowIso = () => new Date().toISOString();
 
-function isPaid(intent) { return intent && intent.status === 'succeeded' && intent.amount === PRICE_CENTS && intent.currency === 'eur'; }
+function isPaid(intent) { return intent && intent.status === 'succeeded' && (intent.amount === PRICE_FULL || intent.amount === PRICE_PROMO) && intent.currency === 'eur'; }
 
 function buyerFrom(intent, ctx) {
   const ch = intent.latest_charge && typeof intent.latest_charge === 'object' ? intent.latest_charge : null;
@@ -80,7 +82,7 @@ async function trackGa4(purchase, ctx, intent) {
   if (!claimed || !claimed.length) return 'already';
   try {
     const clientId = (ctx && ctx.ga_client_id) || ('srv.' + purchase.id);
-    const params = { transaction_id: intent.id, value: 6, currency: 'EUR', items: [{ item_id: 'guia_solicitud', item_name: 'Guia de solicitud', price: 6, quantity: 1 }], engagement_time_msec: 100 };
+    const params = { transaction_id: intent.id, value: intent.amount / 100, currency: 'EUR', items: [{ item_id: 'guia_solicitud', item_name: 'Guia de solicitud', price: intent.amount / 100, quantity: 1 }], engagement_time_msec: 100 };
     if (ctx && ctx.ga_session_id) params.session_id = ctx.ga_session_id;
     const url = 'https://www.google-analytics.com/mp/collect?measurement_id=' + GA4_ID + '&api_secret=' + encodeURIComponent(process.env.GA4_API_SECRET);
     const r = await fetch(url, { method: 'POST', body: JSON.stringify({ client_id: clientId, events: [{ name: 'purchase', params }] }) });
@@ -107,7 +109,7 @@ async function trackMeta(purchase, ctx, buyer, intent) {
     const payload = {
       data: [{ event_name: 'Purchase', event_time: intent.created || Math.floor(Date.now() / 1000), event_id: intent.id, action_source: 'website',
         event_source_url: (ctx && ctx.page_url) || 'https://www.cobratusayudas.es/', user_data: user,
-        custom_data: { value: 6, currency: 'EUR', content_name: 'guia_solicitud', content_type: 'product' } }],
+        custom_data: { value: intent.amount / 100, currency: 'EUR', content_name: 'guia_solicitud', content_type: 'product' } }],
       access_token: process.env.META_CAPI_TOKEN
     };
     if (process.env.META_TEST_EVENT_CODE) payload.test_event_code = process.env.META_TEST_EVENT_CODE;
@@ -130,4 +132,4 @@ async function processPayment(intent, source) {
   return { paid: true, purchaseId: purchase.id, delivery: delivery.status, ga4, meta };
 }
 
-module.exports = { processPayment, isPaid, deliver, recordPurchase };
+module.exports = { currentPriceCents, processPayment, isPaid, deliver, recordPurchase };
