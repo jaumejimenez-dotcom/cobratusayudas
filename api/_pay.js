@@ -67,7 +67,7 @@ async function deliver(purchase, buyer) {
   if (!claimed || !claimed.length) return { status: 'claimed_by_other' };
   const row = claimed[0];
   try {
-    await sendDelivery({ to: email, token: row.access_token, ref: String(row.id).slice(0, 8) });
+    await sendDelivery({ to: email, token: row.access_token, ref: String(row.id).slice(0, 8), amountCents: row.amount_cents });
     await sb('purchases?id=eq.' + row.id, { method: 'PATCH', body: { delivered_at: nowIso(), email_error: chk.suspicious ? 'entregado, pero el dominio del email parece erróneo' : null, email_attempts: (row.email_attempts || 0) + 1, delivery_claim_at: null }, prefer: 'return=minimal' });
     return { status: 'sent' };
   } catch (e) {

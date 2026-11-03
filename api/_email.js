@@ -39,10 +39,12 @@ function button(url, label, micro) {
     '<a href="' + url + '" style="display:block;padding:20px 18px;font-size:18px;font-weight:800;color:#0a0f1e;text-decoration:none;text-align:center;">' + label + '</a></td></tr></table>' +
     (micro ? '<div style="text-align:center;font-size:12px;color:#6b7280;margin:0 0 14px;">' + micro + '</div>' : '');
 }
-const MICRO = '6&nbsp;&euro; &middot; pago &uacute;nico &middot; si te deniegan una ayuda, te devolvemos el dinero';
+const PROMO_END_MS = Date.parse('2026-12-01T00:00:00+01:00');
+function priceNum() { return Date.now() < PROMO_END_MS ? 3 : 6; }
+const MICRO = priceNum() + '&nbsp;&euro; &middot; pago &uacute;nico &middot; si te deniegan una ayuda, te devolvemos el dinero';
 
 const OFFER_BOX = '<table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#0a0f1e;border-radius:12px;margin:8px 0 4px;"><tr><td style="padding:20px 22px;color:#ffffff;font-size:14px;line-height:1.6;">' +
-  '<div style="font-size:16px;font-weight:800;margin-bottom:8px;">Guía de solicitud + asistencia por chat &middot; 6&nbsp;&euro;</div>' +
+  '<div style="font-size:16px;font-weight:800;margin-bottom:8px;">Guía de solicitud + asistencia por chat &middot; ' + priceNum() + '&nbsp;&euro;</div>' +
   '&#10003; Guía paso a paso de cada ayuda<br>&#10003; Documentos que necesitas en cada una<br>&#10003; Enlaces oficiales para solicitarlas<br>' +
   '&#10003; Asistencia personalizada por chat con <strong>Luc&iacute;a, nuestra asistente de inteligencia artificial</strong><br>' +
   '<span style="color:#9fb3c8;font-size:12px;">Pago &uacute;nico, sin suscripci&oacute;n &middot; Garant&iacute;a de devoluci&oacute;n de 90 d&iacute;as</span>' +
@@ -70,7 +72,7 @@ function build(step, lead, catalog) {
       '<table role="presentation" width="100%" cellspacing="0" cellpadding="0">' + listRows(aids, 5) + '</table>' + more +
       button(ctaUrl(tk, 'results_0b'), 'Pedir mis ayudas ahora &rarr;', MICRO) + OFFER_BOX;
     return { subject: 'Tienes ' + n + ' ayudas por pedir: aquí está tu lista', html: shell('Tu lista completa y cómo pedirlas.', inner, tk),
-      text: 'Tienes ' + n + ' ayudas por pedir.\n\nQuiero que me ayuden a solicitarlas: ' + ctaUrl(tk, 'results_0') + '\n\n' + aids.slice(0, 5).map(a => '- ' + a.nombre + (a.importe ? ' (' + a.importe + ')' : '')).join('\n') + '\n\nGuía + asistencia por chat con Lucía, nuestra asistente de IA: 6 €, pago único, garantía de devolución de 90 días si te deniegan una ayuda.\n\nDarme de baja: ' + unsubUrl(tk) };
+      text: 'Tienes ' + n + ' ayudas por pedir.\n\nQuiero que me ayuden a solicitarlas: ' + ctaUrl(tk, 'results_0') + '\n\n' + aids.slice(0, 5).map(a => '- ' + a.nombre + (a.importe ? ' (' + a.importe + ')' : '')).join('\n') + '\n\nGuía + asistencia por chat con Lucía, nuestra asistente de IA: ' + priceNum() + ' €, pago único, garantía de devolución de 90 días si te deniegan una ayuda.\n\nDarme de baja: ' + unsubUrl(tk) };
   }
   if (step === 1) {
     const inner = '<h1 style="font-size:24px;line-height:1.25;margin:0 0 8px;">&iquest;Ya has pedido ' + (top ? esc(top.nombre) : 'tus ayudas') + '?</h1>' +
@@ -79,7 +81,7 @@ function build(step, lead, catalog) {
       '<p style="font-size:15px;line-height:1.6;margin:18px 0 14px;">Lo que m&aacute;s frena no es tener derecho, sino no saber por d&oacute;nde empezar: qu&eacute; documentos llevar, en qu&eacute; web pedirla y qu&eacute; paso va primero. La gu&iacute;a te lo da ayuda por ayuda.</p>' +
       '<p style="font-size:15px;line-height:1.6;margin:0 0 14px;">Y si te surge una duda, se la preguntas en el chat a Luc&iacute;a, nuestra asistente de IA.</p>' + OFFER_BOX;
     return { subject: top ? ('¿Ya has pedido «' + top.nombre + '»?') : '¿Ya has pedido tus ayudas?', html: shell('Es la ayuda de mayor importe de tu lista.', inner, tk),
-      text: '¿Ya has pedido ' + (top ? top.nombre : 'tus ayudas') + '?\n\nVer cómo pedirla: ' + ctaUrl(tk, 'results_1') + '\n\nGuía + chat con Lucía (asistente de IA): 6 €, garantía de devolución de 90 días si te deniegan una ayuda.\n\nDarme de baja: ' + unsubUrl(tk) };
+      text: '¿Ya has pedido ' + (top ? top.nombre : 'tus ayudas') + '?\n\nVer cómo pedirla: ' + ctaUrl(tk, 'results_1') + '\n\nGuía + chat con Lucía (asistente de IA): ' + priceNum() + ' €, garantía de devolución de 90 días si te deniegan una ayuda.\n\nDarme de baja: ' + unsubUrl(tk) };
   }
   const inner = '<h1 style="font-size:24px;line-height:1.25;margin:0 0 8px;">&Uacute;ltimo aviso: tu lista sigue guardada</h1>' +
     '<p style="font-size:15px;line-height:1.6;margin:0;">Tus ' + n + ' ayudas siguen esper&aacute;ndote. Y si solicitas una con la gu&iacute;a y te la deniegan, <strong>te devolvemos el dinero (90 d&iacute;as)</strong>.</p>' +
@@ -122,12 +124,13 @@ function txShell(preheader, inner) {
     '</td></tr></table></td></tr></table></body></html>';
 }
 
-function deliveryMail(token, ref, recovered) {
+function deliveryMail(token, ref, recovered, amountCents) {
+  const paid = amountCents ? String(amountCents / 100).replace('.', ',') : String(priceNum());
   const url = accessUrl(token);
   const title = recovered ? 'Aqu&iacute; tienes de nuevo el acceso a tu gu&iacute;a' : '&iexcl;Gracias! Tu gu&iacute;a est&aacute; lista';
   const intro = recovered
     ? 'Has pedido recuperar tu acceso. Este es tu enlace personal:'
-    : 'Hemos recibido tu pago de <strong>6&nbsp;&euro;</strong> (pago &uacute;nico, sin suscripci&oacute;n). Con este enlace abres tu gu&iacute;a y el chat con Luc&iacute;a desde <strong>cualquier dispositivo</strong>:';
+    : 'Hemos recibido tu pago de <strong>' + paid + '&nbsp;&euro;</strong> (pago &uacute;nico, sin suscripci&oacute;n). Con este enlace abres tu gu&iacute;a y el chat con Luc&iacute;a desde <strong>cualquier dispositivo</strong>:';
   const inner = '<h1 style="font-size:24px;line-height:1.25;margin:0 0 10px;">' + title + '</h1>' +
     '<p style="font-size:15px;line-height:1.6;margin:0;">' + intro + '</p>' +
     button(url, 'Abrir mi gu&iacute;a &rarr;', 'Guarda este email: el enlace es personal, no lo compartas') +
@@ -153,7 +156,7 @@ async function sendTx(to, mail) {
   if (!r.ok) throw new Error('resend ' + r.status + ' ' + t.slice(0, 200));
   return t;
 }
-async function sendDelivery({ to, token, ref }) { return sendTx(to, deliveryMail(token, ref, false)); }
+async function sendDelivery({ to, token, ref, amountCents }) { return sendTx(to, deliveryMail(token, ref, false, amountCents)); }
 async function sendRecovery({ to, token, ref }) { return sendTx(to, deliveryMail(token, ref, true)); }
 
 module.exports = { build, send, unsubUrl, sendDelivery, sendRecovery, deliveryMail };
